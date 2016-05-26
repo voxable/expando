@@ -1,10 +1,10 @@
 module Expando
   class Updater
     # The default location of intent source files
-    DEFAULT_INTENTS_DIR = File.join( File.dirname( __FILE__ ), '../../intents')
+    DEFAULT_INTENTS_DIR = File.join( Dir.getwd, '../../intents')
 
     # The default location of entity source files
-    DEFAULT_ENTITIES_DIR = File.join( File.dirname( __FILE__ ), '../../entities' )
+    DEFAULT_ENTITIES_DIR = File.join( Dir.getwd, '../../entities' )
 
     # Initialize a new `Updater`.
     #
