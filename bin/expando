@@ -1,0 +1,74 @@
+#!/usr/bin/env ruby
+
+$LOAD_PATH << File.expand_path( File.dirname( __FILE__ ) + '/../lib' )
+
+require 'expando'
+require 'gli'
+
+include GLI::App
+
+version Expando::VERSION
+
+program_desc 'A tool for managing files written in the Expando markup language.'
+
+config_file File.join(ENV['HOME'],'.expando.rc.yaml')
+
+flag :client_access_token,    desc: 'Api.ai Client Access Token'
+flag :developer_access_token, desc: 'Api.ai Developer Access Token'
+
+# Make credentials globally accessible
+pre do | global_options, command, options, args |
+  # TODO: Why are these being repeated in global_options?
+  global_options[:credentials] = {
+      client_access_token:    global_options[:client_access_token],
+      developer_access_token: global_options[:developer_access_token]
+  }
+end
+
+desc 'Update entities and/or intents'
+long_desc <<-DESC
+  Update Expando's entities and intents on Api.ai based on the contents of the
+  files in the entities and intents directories, respectively.
+DESC
+command [ :update, :u ] do | c |
+  c.desc "Update Expando's entities"
+  c.long_desc <<-DESC
+    Updates the specified entities. The entity names can be specified after this
+    argument in a comma delimited list, and should match the file name of the
+    specific entity in the entities directory. If no entity name is specified,
+    all entities are updated.
+  DESC
+  c.arg 'entity, entity[, entity]*'
+  c.command :entities do | entities |
+    entities.action do | global_options, options, args |
+      # TODO: update all by default
+      args.each do | entity |
+        updater = Expando::EntityUpdater.new( entity, client_keys: global_options[:credentials] )
+        updater.update!
+      end
+    end
+  end
+
+  c.desc "Update Api.ai intents"
+  c.long_desc <<-DESC
+    Updates the specified intents. The intent names can be specified after this
+    argument in a comma delimited list, and should match the file name of the
+    specific intent in the intents directory. If no intent name is specified,
+    all intents are updated.
+  DESC
+  c.arg 'intent, intent[, intent]*'
+  c.command :intents do | intents |
+    intents.action do | global_options, options, args |
+      # TODO: update all by default
+      args.each do | intent |
+        updater = Expando::IntentUpdater.new( intent, client_keys: global_options[:credentials] )
+        updater.update!
+      end
+    end
+  end
+
+  # TODO: Default to both in sequence
+  #c.default_command :entities
+end
+
+exit run(ARGV)

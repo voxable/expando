@@ -1,0 +1,4 @@
+coffee maker, coffee {machine|pot}
+thermostat, heat, air conditioning, ac
+lights, light, lamps
+garage door, garage {doors|opener}
