@@ -43,7 +43,10 @@ command [ :update, :u ] do | c |
     entities.action do | global_options, options, args |
       # TODO: update all by default
       args.each do | entity |
-        updater = Expando::EntityUpdater.new( entity, client_keys: global_options[:credentials] )
+        updater = Expando::EntityUpdater.new( entity,
+                                              client_keys:  global_options[:credentials],
+                                              intents_dir:  global_options[:intents_dir],
+                                              entities_dir: global_options[:entities_dir])
         updater.update!
       end
     end
@@ -61,7 +64,10 @@ command [ :update, :u ] do | c |
     intents.action do | global_options, options, args |
       # TODO: update all by default
       args.each do | intent |
-        updater = Expando::IntentUpdater.new( intent, client_keys: global_options[:credentials] )
+        updater = Expando::IntentUpdater.new( intent,
+                                              client_keys:  global_options[:credentials],
+                                              intents_dir:  global_options[:intents_dir],
+                                              entities_dir: global_options[:entities_dir])
         updater.update!
       end
     end
