@@ -44,7 +44,7 @@ module Expando
 
       {
           client_access_token: client_access_token,
-          developer_access_token: developer_access_token,
+          developer_access_token: developer_access_token
       }
     end
 
