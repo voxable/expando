@@ -1,17 +1,17 @@
 module Expando
   class Updater
     # The default location of intent source files
-    DEFAULT_INTENTS_DIR = File.join( Dir.getwd, '../../intents')
+    DEFAULT_INTENTS_PATH = File.join( Dir.getwd, '../../intents')
 
     # The default location of entity source files
-    DEFAULT_ENTITIES_DIR = File.join( Dir.getwd, '../../entities' )
+    DEFAULT_ENTITIES_PATH = File.join( Dir.getwd, '../../entities' )
 
     # Initialize a new `Updater`.
     #
     # @param [Symbol] name The name of the intent or entity to update. (default: `nil`)
-    # @param [String] entities_dir The path to the directory containing the
+    # @param [String] entities_path The path to the directory containing the
     #   entities text files. (default: `'entities'`)
-    # @param [String] intents_dir The path to the directory containing the
+    # @param [String] intents_path The path to the directory containing the
     #   intents source files. (default: 'intents')
     # @param [Hash] client_keys A hash of Api.ai credentials.
     # @option client_keys [String] :developer_access_token The Api.ai developer
@@ -19,10 +19,10 @@ module Expando
     # @option client_keys [String] :client_access_token The Api.ai client access
     #   token.
     # @return [Updater] The new `Updater`.
-    def initialize( name = nil, intents_dir: DEFAULT_INTENTS_DIR, entities_dir: DEFAULT_ENTITIES_DIR, client_keys: {})
+    def initialize( name = nil, intents_path: DEFAULT_INTENTS_PATH, entities_path: DEFAULT_ENTITIES_PATH, client_keys: {})
       @name = name
-      @intents_dir = intents_dir
-      @entities_dir = entities_dir
+      @intents_path = intents_path
+      @entities_path = entities_path
 
       @client = ApiAiRuby::Client.new( credentials( client_keys ) )
     end

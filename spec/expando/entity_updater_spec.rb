@@ -19,14 +19,14 @@ describe Expando::EntityUpdater do
       it 'sets a proper default location for entity files' do
         default_entity_dir = Pathname.new( File.join( File.dirname( __FILE__ ), '../../entities' ) ).realpath.to_s
 
-        expect( Pathname.new( subject.entities_dir ).realpath.to_s ).to eq( default_entity_dir )
+        expect( Pathname.new( subject.entities_path ).realpath.to_s ).to eq( default_entity_dir )
       end
 
       it 'allows overriding the location for entity files' do
-        test_entities_dir = entities_fixture_dir
-        updater = Expando::EntityUpdater.new :appliances, entities_dir: test_entities_dir
+        test_entities_path = entities_fixture_dir
+        updater = Expando::EntityUpdater.new :appliances, entities_path: test_entities_path
 
-        expect( updater.entities_dir ).to eq( test_entities_dir )
+        expect( updater.entities_path ).to eq( test_entities_path )
       end
     end
 
@@ -34,7 +34,7 @@ describe Expando::EntityUpdater do
   end
 
   describe '#update!' do
-    subject { Expando::EntityUpdater.new( :appliances, entities_dir: entities_fixture_dir ) }
+    subject { Expando::EntityUpdater.new( :appliances, entities_path: entities_fixture_dir ) }
 
     it 'opens the proper file in /entities' do
       allow( File ).to receive( :read ).and_call_original
@@ -85,7 +85,7 @@ describe Expando::EntityUpdater do
     end
 
     context 'when expansion tokens are present in the entity source' do
-      subject { Expando::EntityUpdater.new( :appliancesWithExpansion, entities_dir: entities_fixture_dir ) }
+      subject { Expando::EntityUpdater.new( :appliancesWithExpansion, entities_path: entities_fixture_dir ) }
 
       it 'constructs a proper entities object for the Api.ai API call' do
         appliance_entity = [

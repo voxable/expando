@@ -6,9 +6,9 @@ module Expando
     #   @return [String] the name of the entity to be updated
     attr_accessor :name
 
-    # !@attribute entities_dir
+    # !@attribute entities_path
     #   @return [String] the path to the directory containing the entities text files
-    attr_accessor :entities_dir
+    attr_accessor :entities_path
 
     # Initialize a new `EntityUpdater`.
     #
@@ -53,7 +53,7 @@ module Expando
 
     # @return [Array<String>] The expanded list of entities.
     def expanded_entities
-      entity_file_path = File.join( @entities_dir, @name.to_s + '.txt')
+      entity_file_path = File.join( @entities_path, @name.to_s + '.txt')
       Expander.expand! file_lines( entity_file_path )
     end
   end

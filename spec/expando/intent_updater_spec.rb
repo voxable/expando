@@ -22,16 +22,16 @@ describe Expando::IntentUpdater do
 
     context 'when setting the intents directory' do
       it 'sets a proper default location for intent source files' do
-        default_intents_dir = Pathname.new( File.join( File.dirname( __FILE__ ), '../../intents' ) ).realpath.to_s
+        DEFAULT_INTENTS_PATH = Pathname.new( File.join( File.dirname( __FILE__ ), '../../intents' ) ).realpath.to_s
 
-        expect( Pathname.new( subject.intents_dir ).realpath.to_s ).to eq( default_intents_dir )
+        expect( Pathname.new( subject.intents_path ).realpath.to_s ).to eq( DEFAULT_INTENTS_PATH )
       end
 
       it 'allows overriding the location for intent source files' do
-        test_intents_dir = intents_fixture_dir
-        updater = Expando::IntentUpdater.new :launchApp, intents_dir: test_intents_dir
+        test_intents_path = intents_fixture_dir
+        updater = Expando::IntentUpdater.new :launchApp, intents_path: test_intents_path
 
-        expect( updater.intents_dir ).to eq( test_intents_dir )
+        expect( updater.intents_path ).to eq( test_intents_path )
       end
     end
 
@@ -39,7 +39,7 @@ describe Expando::IntentUpdater do
   end
 
   describe '#update!' do
-    subject { Expando::IntentUpdater.new( :launchApp, intents_dir: intents_fixture_dir ) }
+    subject { Expando::IntentUpdater.new( :launchApp, intents_path: intents_fixture_dir ) }
     let(:intent_json_fixture_path) { File.join( intents_fixture_dir, 'launchApp.json' ) }
 
 
@@ -83,7 +83,7 @@ describe Expando::IntentUpdater do
     end
 
     context 'when expansion tokens are present in the intent source' do
-      subject { Expando::IntentUpdater.new( :launchAppWithExpansion, intents_dir: intents_fixture_dir ) }
+      subject { Expando::IntentUpdater.new( :launchAppWithExpansion, intents_path: intents_fixture_dir ) }
 
       it 'constructs a proper templates for the Api.ai API call' do
         launch_app_intent = JSON.parse( File.read( intent_json_fixture_path ), symbolize_names: true )

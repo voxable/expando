@@ -8,9 +8,9 @@ module Expando
     #   @return [String] the name of the intent to be updated
     attr_accessor :name
 
-    # !@attribute intents_dir
+    # !@attribute intents_path
     #   @return [String] the path to the directory containing the intent source files
-    attr_accessor :intents_dir
+    attr_accessor :intents_path
 
     # Initialize a new `IntentUpdater`.
     #
@@ -44,7 +44,7 @@ module Expando
       json[ :userSays ] = expanded_utterances
 
       # TODO: Make this a separate, tested method
-      responses = File.readlines File.join( @intents_dir, '..', 'responses', @name.to_s + '.txt' )
+      responses = File.readlines File.join( @intents_path, '..', 'responses', @name.to_s + '.txt' )
       responses = responses.collect { |response| response.chomp }
 
       responsesJson = json[ :responses ]
@@ -76,7 +76,7 @@ module Expando
 
     # @return [Array<String>] The expanded list of intent utterances.
     def expanded_utterances
-      intent_utterance_file_path = File.join( @intents_dir, @name.to_s + '.txt')
+      intent_utterance_file_path = File.join( @intents_path, @name.to_s + '.txt')
       # TODO: Test
       utterances = Expander.expand! file_lines( intent_utterance_file_path )
 

@@ -15,6 +15,8 @@ config_file File.join(ENV['HOME'],'.expando.rc.yaml')
 
 flag :client_access_token,    desc: 'Api.ai Client Access Token'
 flag :developer_access_token, desc: 'Api.ai Developer Access Token'
+flag :intents_path,           desc: 'The path to the directory containing intent files'
+flag :entities_path,          desc: 'The path to the directory containing entity files'
 
 # Make credentials globally accessible
 pre do | global_options, command, options, args |
@@ -44,9 +46,9 @@ command [ :update, :u ] do | c |
       # TODO: update all by default
       args.each do | entity |
         updater = Expando::EntityUpdater.new( entity,
-                                              client_keys:  global_options[:credentials],
-                                              intents_dir:  global_options[:intents_dir],
-                                              entities_dir: global_options[:entities_dir])
+                                              client_keys:   global_options[:credentials],
+                                              intents_path:  global_options[:intents_path],
+                                              entities_path: global_options[:entities_path])
         updater.update!
       end
     end
@@ -65,9 +67,9 @@ command [ :update, :u ] do | c |
       # TODO: update all by default
       args.each do | intent |
         updater = Expando::IntentUpdater.new( intent,
-                                              client_keys:  global_options[:credentials],
-                                              intents_dir:  global_options[:intents_dir],
-                                              entities_dir: global_options[:entities_dir])
+                                              client_keys:   global_options[:credentials],
+                                              intents_path:  global_options[:intents_path],
+                                              entities_path: global_options[:entities_path])
         updater.update!
       end
     end
