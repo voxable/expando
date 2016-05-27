@@ -20,9 +20,6 @@ flag :entities_path,          desc: 'The path to the directory containing entity
 
 # Make credentials globally accessible
 pre do | global_options, command, options, args |
-  # Expand ~ in path configurations
-  global_options[ :intents_path ] = File.expand_path( global_options[ :intents_path ] ) if global_options[ :intents_path ]
-  global_options[ :entities_path ] = File.expand_path( global_options[ :entities_path ] ) if global_options[ :entities_path ]
 
   # TODO: Why are these being repeated in global_options?
   global_options[ :credentials ] = {
@@ -31,12 +28,13 @@ pre do | global_options, command, options, args |
   }
 end
 
-desc 'Update entities and/or intents'
+desc 'Update an Api.ai agent\'s entities and/or intents'
 long_desc <<-DESC
   Update Expando's entities and intents on Api.ai based on the contents of the
   files in the entities and intents directories, respectively.
 DESC
 command [ :update, :u ] do | c |
+
   c.desc "Update an Api.ai agent's entities"
   c.long_desc <<-DESC
     Updates the specified entities. The entity names can be specified after this
@@ -46,9 +44,14 @@ command [ :update, :u ] do | c |
   DESC
   c.arg 'entity entity[ entity]*'
   c.command :entities do | entities |
+    entities.flag :entities_path, desc: 'The path to the directory containing entity files'
+
     entities.action do | global_options, options, args |
+      # Expand ~ in path configurations
+      entities_path = File.expand_path( options[ :entities_path ] || global_options[ :intents_path ] )
+
       if args.empty?
-        entity_names = Dir.entries( global_options[ :entities_path ] )[2..-1].collect { | f | f.gsub( '.txt', '' ) }
+        entity_names = Dir.entries( entities_path )[2..-1].collect { | f | f.gsub( '.txt', '' ) }
       else
         entity_names = args
       end
@@ -56,7 +59,7 @@ command [ :update, :u ] do | c |
       entity_names.each do | entity |
         updater = Expando::EntityUpdater.new( entity,
                                               client_keys:   global_options[ :credentials ],
-                                              entities_path: global_options[ :entities_path ])
+                                              entities_path: entities_path )
         updater.update!
       end
     end
@@ -71,18 +74,22 @@ command [ :update, :u ] do | c |
   DESC
   c.arg 'intent intent[ intent]*'
   c.command :intents do | intents |
+    intents.flag :intents_path, desc: 'The path to the directory containing intent files'
+
     intents.action do | global_options, options, args |
+      # Expand ~ in path configurations
+      intents_path = File.expand_path( options[ :intents_path ] || global_options[ :intents_path ] )
+
       if args.empty?
-        intent_names = Dir.entries( global_options[ :intents_path ] )[2..-1].collect { | f | f.gsub( '.txt', '' ) }
+        intent_names = Dir.entries( intents_path )[2..-1].collect { | f | f.gsub( '.txt', '' ) }
       else
         intent_names = args
       end
 
       intent_names.each do | intent |
         updater = Expando::IntentUpdater.new( intent,
-                                              client_keys:   global_options[:credentials],
-                                              intents_path:  global_options[:intents_path],
-                                              entities_path: global_options[:entities_path])
+                                              client_keys:   global_options[ :credentials ],
+                                              intents_path:  intents_path)
         updater.update!
       end
     end
