@@ -36,11 +36,11 @@ command [ :update, :u ] do | c |
   c.desc "Update Expando's entities"
   c.long_desc <<-DESC
     Updates the specified entities. The entity names can be specified after this
-    argument in a comma delimited list, and should match the file name of the
+    argument in a space delimited list, and should match the file name of the
     specific entity in the entities directory. If no entity name is specified,
     all entities are updated.
   DESC
-  c.arg 'entity, entity[, entity]*'
+  c.arg 'entity entity[ entity]*'
   c.command :entities do | entities |
     entities.action do | global_options, options, args |
       # TODO: update all by default
@@ -57,11 +57,11 @@ command [ :update, :u ] do | c |
   c.desc "Update Api.ai intents"
   c.long_desc <<-DESC
     Updates the specified intents. The intent names can be specified after this
-    argument in a comma delimited list, and should match the file name of the
+    argument in a space delimited list, and should match the file name of the
     specific intent in the intents directory. If no intent name is specified,
     all intents are updated.
   DESC
-  c.arg 'intent, intent[, intent]*'
+  c.arg 'intent intent[ intent]*'
   c.command :intents do | intents |
     intents.action do | global_options, options, args |
       # TODO: update all by default
