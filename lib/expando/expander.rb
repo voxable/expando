@@ -13,6 +13,8 @@
 # This greatly reduces the complexity of creating performant speech interfaces.
 module Expando
   module Expander
+    TOKEN_REGEX = /(?<!\\)\((.*?)\)/
+
     module_function
 
     # Generate a new `Expander`.
@@ -23,7 +25,7 @@ module Expando
       expanded_lines = []
 
       lines.each do |line|
-        tokens = line.scan /\{(.*?)\}/
+        tokens = line.scan TOKEN_REGEX
 
         # Don't perform expansion if no tokens are present.
         if tokens.empty?
