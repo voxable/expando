@@ -46,7 +46,7 @@ module Expando
           expanded_line = line
 
           replacement_values.each do |value|
-            expanded_line = expanded_line.sub( /\{(.*?)\}/, value )
+            expanded_line = expanded_line.sub( TOKEN_REGEX, value )
           end
 
           expanded_lines << expanded_line
