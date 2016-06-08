@@ -47,7 +47,7 @@ module Expando
       responses_path = File.join( File.expand_path( @intents_path ), '..', 'responses', @name.to_s + '.txt' )
 
       if File.exist?(responses_path)
-        responses = File.readlines
+        responses = File.readlines responses_path
         responses = responses.collect { |response| response.chomp }
 
         responsesJson = json[ :responses ]
