@@ -49,7 +49,8 @@ module Expando
             expanded_line = expanded_line.sub( TOKEN_REGEX, value )
           end
 
-          expanded_lines << expanded_line
+          # TODO: Replace multiple spaces with a single space
+          expanded_lines << expanded_line.strip
         end
       end
 
