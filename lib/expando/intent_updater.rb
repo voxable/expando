@@ -44,12 +44,16 @@ module Expando
       json[ :userSays ] = expanded_utterances
 
       # TODO: Make this a separate, tested method
-      responses = File.readlines File.join( File.expand_path( @intents_path ), '..', 'responses', @name.to_s + '.txt' )
-      responses = responses.collect { |response| response.chomp }
+      responses_path = File.join( File.expand_path( @intents_path ), '..', 'responses', @name.to_s + '.txt' )
 
-      responsesJson = json[ :responses ]
-      responsesJson[ 0 ][ :speech ] = responses
-      json[:responses] = responsesJson
+      if File.exist?(responses_path)
+        responses = File.readlines
+        responses = responses.collect { |response| response.chomp }
+
+        responsesJson = json[ :responses ]
+        responsesJson[ 0 ][ :speech ] = responses
+        json[:responses] = responsesJson
+      end
 
       # Clean up portions of the JSON response that we don't need in the request
       %w{templates state priority webhookUsed}.each { |key| json.delete( key.to_sym ) }
