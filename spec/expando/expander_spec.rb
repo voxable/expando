@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Expando::Expander do
   it 'properly expands tokenized text' do
-    lines = [ '{I|we|they} heard you {love|hate} {cars|boats|bikes}' ]
+    lines = [ '(I|we|they) heard you (love|hate) (cars|boats|bikes)' ]
     expanded_lines = [
       'I heard you love cars',
       'I heard you love boats',

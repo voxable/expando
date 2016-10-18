@@ -1,0 +1,50 @@
+{
+  "id": "1dbfe740-2fbd-4c5e-95ef-0b3090fda942",
+  "name": "launchScan",
+  "auto": true,
+  "contexts": [],
+  "templates": [
+    "launch a @scan:scanName",
+    "run a @scan:scanName"
+  ],
+  "userSays": [
+    {
+      "id": "8b542e93-2003-4d06-8184-1220698d88ce",
+      "data": [
+        {
+          "text": "launch a @scan:scanName"
+        }
+      ],
+      "isTemplate": true,
+      "count": 0,
+      "updated": 1476829357
+    },
+    {
+      "id": "5b6a742f-9503-4a31-8db7-8d9a90476f9a",
+      "data": [
+        {
+          "text": "run a @scan:scanName"
+        }
+      ],
+      "isTemplate": true,
+      "count": 0,
+      "updated": 1476829357
+    }
+  ],
+  "responses": [
+    {
+      "resetContexts": false,
+      "affectedContexts": [],
+      "parameters": [],
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "cortanaCommand": {
+    "navigateOrService": "NAVIGATE",
+    "target": ""
+  },
+  "webhookUsed": false,
+  "lastUpdate": 1476829357,
+  "fallbackIntent": false
+}

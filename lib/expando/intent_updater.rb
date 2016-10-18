@@ -56,7 +56,7 @@ module Expando
       end
 
       # Clean up portions of the JSON response that we don't need in the request
-      %w{templates state priority webhookUsed}.each { |key| json.delete( key.to_sym ) }
+      %w{auto templates state priority webhookUsed lastUpdate fallbackIntent cortanaCommand}.each { |key| json.delete( key.to_sym ) }
 
       json
     end

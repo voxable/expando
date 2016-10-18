@@ -1,0 +1,24 @@
+{
+  "id": "1dbfe740-2fbd-4c5g-95ef-0c3090eda942",
+  "name": "launchScan",
+  "templates": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "launchScan",
+      "affectedContexts": [],
+      "parameters": [
+        {
+          "required": true,
+          "dataType": "@scan",
+          "name": "scanName",
+          "value": "$scanName",
+          "prompts": [
+            "Okay, which scan would you like to run?"
+          ]
+        }
+      ],
+      "speech": "okay, launching $scanName simulation"
+    }
+  ]
+}

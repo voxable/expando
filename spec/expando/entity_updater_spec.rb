@@ -17,9 +17,9 @@ describe Expando::EntityUpdater do
 
     context 'when setting the entities directory' do
       it 'sets a proper default location for entity files' do
-        default_entity_dir = Pathname.new( File.join( File.dirname( __FILE__ ), '../../entities' ) ).realpath.to_s
+        default_entity_dir = File.join( Dir.pwd, 'entities' ).to_s
 
-        expect( Pathname.new( subject.entities_path ).realpath.to_s ).to eq( default_entity_dir )
+        expect( subject.entities_path ).to eq( default_entity_dir )
       end
 
       it 'allows overriding the location for entity files' do

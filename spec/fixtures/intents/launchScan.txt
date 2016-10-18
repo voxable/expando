@@ -1,0 +1,2 @@
+launch a @scan:scanName
+run a @scan:scanName
