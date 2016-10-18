@@ -99,4 +99,15 @@ command [ :update, :u ] do | c |
   #c.default_command :entities
 end
 
+desc 'Initialize a new Expando project'
+long_desc <<-DESC
+  Create the necessary files and directories for a new Expando project in the
+  current working directory.
+DESC
+command [ :init, :i ] do | c |
+  c.action do
+    Expando::ProjectTemplate.init!
+  end
+end
+
 exit run(ARGV)
