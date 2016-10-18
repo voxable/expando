@@ -1,0 +1,35 @@
+script: bundle exec rspec spec
+cache: bundler
+language: ruby
+
+rvm:
+  - &ruby1 2.3.1
+  - &ruby2 2.2.5
+  - &ruby3 2.1.9
+  - &jruby jruby-9.1.2.0
+
+matrix:
+  include:
+    - rvm: *ruby1
+      env: TEST_SUITE=fmt
+    - rvm: *ruby1
+      env: TEST_SUITE=default-site
+  exclude:
+    - rvm: *jruby
+      env: TEST_SUITE=cucumber
+
+notifications:
+  flowdock:
+    secure: "\
+      tTIHwkZu67u3G4wkSYmN0suFk34RKLRX6njmP1JgtYzofTM8y07DyYj0viBbeBAFOV6\
+      TZrhmRhzShd5HwCNaHjYBY/CbLxaJyUgd96J5uw7Z2whOX4egETALuDl1sekjOBXeJp\
+      UQ7UtxhhcMLeAZUGafXOJJ0qP27bjpeij0sgOfYf/3Wad+EJA2ADdgwm3iVZ7lB2DFo\
+      /s2OD/XBf2EDDj8YVU8vZde/FpCZMLV1WGYvzTPhH1Umuni+OlCHsYCLajZ5kuKBswC\
+      9T5Rkx2Ad0gEoMsnZPLgqunsFgi+kkpWRHN+9O4zmG1LfllrRE+cNIPk3kK6J2MyC+Q\
+      FEHpLKfyW8mEsVov3+yDJm/N9+tgQhp+X22UIo4AK4uVBwghpNytYU8O2UgACpk4tPH\
+      K5X/q6nLJRuCzf9bxBzdQO9+oMgr/Scz+9hdRfEer8T59W0YyMuErJc9OxqnWw61JvR\
+      +9eMztpeNdh4XldkAIymG7QjXBJk3l0CkUbhDaJMhiTjDuyuCrFrMp0sDfo//5K4IR/\
+      lF01iYsSFYaPknkYiPXRpcbIRHBQILMRX/ALUUbfNSd3VUwP5V/oYCUEnWlkalxvzWg\
+      7IpwWlZbxqp5N2UR4egeR+1Pn4SW8Sry/BusNox5idrXGc2jS19VVspoLy260Z7ILg9\
+      +oEcVztS3wu3c=\
+    "
