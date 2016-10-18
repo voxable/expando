@@ -57,12 +57,13 @@ command [ :update, :u ] do | c |
     entities.flag :entities_path, desc: 'The path to the directory containing entity files'
 
     entities.action do | global_options, options, args |
-      # Expand ~ in path configurations
-      entities_path = File.expand_path( options[ :entities_path ] || global_options[ :intents_path ] ) ||
-        File.join(Dir.pwd, 'entities')
+      # Determine path to entity files
+      entities_path_from_options = options[ :entities_path ] || global_options[ :entities_path ]
+      entities_path = entities_path_from_options ?
+          File.expand_path( entities_path_from_options ) : File.join( Dir.pwd, 'entities' )
 
       if args.empty?
-        entity_names = Dir.entries( entities_path )[2..-1].collect { | f | f.gsub( '.txt', '' ) }
+        entity_names = Dir.entries( entities_path )[ 2..-1 ].collect { | f | f.gsub( '.txt', '' ) }
       else
         entity_names = args
       end
@@ -88,12 +89,13 @@ command [ :update, :u ] do | c |
     intents.flag :intents_path, desc: 'The path to the directory containing intent files'
 
     intents.action do | global_options, options, args |
-      # Expand ~ in path configurations
-      intents_path = File.expand_path( options[ :intents_path ] || global_options[ :intents_path ] ) ||
-        File.join(Dir.pwd, 'intents')
+      # Determine path to intent files
+      intents_path_from_options = options[ :intents_path ] || global_options[ :intents_path ]
+      intents_path = intents_path_from_options ?
+          File.expand_path( intents_path_from_options ) : File.join( Dir.pwd, 'intents' )
 
       if args.empty?
-        intent_names = Dir.entries( intents_path )[2..-1].collect { | f | f.gsub( '.txt', '' ) }
+        intent_names = Dir.entries( intents_path )[ 2..-1 ].collect { | f | f.gsub( '.txt', '' ) }
       else
         intent_names = args
       end
