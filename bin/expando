@@ -59,8 +59,7 @@ command [ :update, :u ] do | c |
     entities.action do | global_options, options, args |
       # Determine path to entity files
       entities_path_from_options = options[ :entities_path ] || global_options[ :entities_path ]
-      entities_path = entities_path_from_options ?
-          File.expand_path( entities_path_from_options ) : File.join( Dir.pwd, 'entities' )
+      entities_path = entities_path_from_options ? File.expand_path( entities_path_from_options ) : nil
 
       if args.empty?
         entity_names = Dir.entries( entities_path )[ 2..-1 ].collect { | f | f.gsub( '.txt', '' ) }
@@ -91,8 +90,7 @@ command [ :update, :u ] do | c |
     intents.action do | global_options, options, args |
       # Determine path to intent files
       intents_path_from_options = options[ :intents_path ] || global_options[ :intents_path ]
-      intents_path = intents_path_from_options ?
-          File.expand_path( intents_path_from_options ) : File.join( Dir.pwd, 'intents' )
+      intents_path = intents_path_from_options ? File.expand_path( intents_path_from_options ) : nil
 
       if args.empty?
         intent_names = Dir.entries( intents_path )[ 2..-1 ].collect { | f | f.gsub( '.txt', '' ) }
