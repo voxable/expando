@@ -7,3 +7,13 @@
 /pkg/
 /spec/reports/
 /tmp/
+
+# RubyMine
+/.idea/
+
+# OSX
+.DS_Store
+
+.ruby-version
+.ruby-gemset
+

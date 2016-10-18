@@ -9,9 +9,19 @@ include GLI::App
 
 version Expando::VERSION
 
-program_desc 'A tool for managing files written in the Expando markup language.'
+program_desc 'A tool for managing files written in the Expando language.'
 
-config_file File.join(ENV['HOME'],'.expando.rc.yaml')
+# Prefer using config file frow current working directory. Otherwise, use config
+# file in home directory.
+config_filename = '.expando.rc.yaml'
+current_directory_config_filename = File.join(Dir.pwd, config_filename)
+home_directory_config_filename = File.join(ENV['HOME'], config_filename)
+
+if File.exist?(current_directory_config_filename)
+  config_file current_directory_config_filename
+else
+  config_file home_directory_config_filename
+end
 
 flag :client_access_token,    desc: 'Api.ai Client Access Token'
 flag :developer_access_token, desc: 'Api.ai Developer Access Token'
@@ -47,11 +57,13 @@ command [ :update, :u ] do | c |
     entities.flag :entities_path, desc: 'The path to the directory containing entity files'
 
     entities.action do | global_options, options, args |
-      # Expand ~ in path configurations
-      entities_path = File.expand_path( options[ :entities_path ] || global_options[ :intents_path ] )
+      # Determine path to entity files
+      entities_path_from_options = options[ :entities_path ] || global_options[ :entities_path ]
+      entities_path = entities_path_from_options ?
+          File.expand_path( entities_path_from_options ) : File.join( Dir.pwd, 'entities' )
 
       if args.empty?
-        entity_names = Dir.entries( entities_path )[2..-1].collect { | f | f.gsub( '.txt', '' ) }
+        entity_names = Dir.entries( entities_path )[ 2..-1 ].collect { | f | f.gsub( '.txt', '' ) }
       else
         entity_names = args
       end
@@ -77,11 +89,13 @@ command [ :update, :u ] do | c |
     intents.flag :intents_path, desc: 'The path to the directory containing intent files'
 
     intents.action do | global_options, options, args |
-      # Expand ~ in path configurations
-      intents_path = File.expand_path( options[ :intents_path ] || global_options[ :intents_path ] )
+      # Determine path to intent files
+      intents_path_from_options = options[ :intents_path ] || global_options[ :intents_path ]
+      intents_path = intents_path_from_options ?
+          File.expand_path( intents_path_from_options ) : File.join( Dir.pwd, 'intents' )
 
       if args.empty?
-        intent_names = Dir.entries( intents_path )[2..-1].collect { | f | f.gsub( '.txt', '' ) }
+        intent_names = Dir.entries( intents_path )[ 2..-1 ].collect { | f | f.gsub( '.txt', '' ) }
       else
         intent_names = args
       end
@@ -97,6 +111,17 @@ command [ :update, :u ] do | c |
 
   # TODO: Default to both in sequence
   #c.default_command :entities
+end
+
+desc 'Initialize a new Expando project'
+long_desc <<-DESC
+  Create the necessary files and directories for a new Expando project in the
+  current working directory.
+DESC
+command [ :init, :i ] do | c |
+  c.action do
+    Expando::ProjectTemplate.init!
+  end
 end
 
 exit run(ARGV)
