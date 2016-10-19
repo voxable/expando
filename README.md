@@ -187,8 +187,11 @@ $ expando --help
 $ expando update --help
 ```
 
-## Credits
+## Documentation
 
+Documentation for the source code of the `expando` gem itself can be viewed [here](http://www.rubydoc.info/github/expando-lang/expando/master).
+
+## Credits
 
 <p align="center"><a href="https://voxable.io"><img title="Voxable logo" src="https://cloud.githubusercontent.com/assets/2220/14663745/8b5688dc-0689-11e6-95b9-7765fa59128e.png" /></a></p>
 
