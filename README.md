@@ -4,11 +4,13 @@
 [![Linux Build Status](https://img.shields.io/travis/expando-lang/expando/master.svg?label=Linux%20build)][travis]
 [![Code Climate](https://img.shields.io/codeclimate/github/expando-lang/expando.svg)][codeclimate]
 [![Dependency Status](https://img.shields.io/gemnasium/expando-lang/expando.svg)][gemnasium]
+[![Security](https://hakiri.io/github/expando-lang/expando/master.svg)][hakiri]
 
 [ruby-gems]: https://rubygems.org/gems/expando
-[gemnasium]: https://gemnasium.com/expando-lang/expando
-[codeclimate]: https://codeclimate.com/github/expando-lang/expando
 [travis]: https://travis-ci.org/expando-lang/expando
+[codeclimate]: https://codeclimate.com/github/expando-lang/expando
+[gemnasium]: https://gemnasium.com/expando-lang/expando
+[hakiri]: https://hakiri.io/github/expando-lang/expando/master
 
 Expando is a translation language for easily defining user utterance examples when building conversational interfaces. The following line of Expando:
 
