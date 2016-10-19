@@ -3,8 +3,12 @@
 [![Gem Version](https://img.shields.io/gem/v/expando.svg)][ruby-gems]
 [![Linux Build Status](https://img.shields.io/travis/expando-lang/expando/master.svg?label=Linux%20build)][travis]
 [![Code Climate](https://img.shields.io/codeclimate/github/expando-lang/expando.svg)][codeclimate]
-[![Dependency Status](https://img.shields.io/gemnasium/jekyll/jekyll.svg)][gemnasium]
+[![Dependency Status](https://img.shields.io/gemnasium/expando-lang/expando.svg)][gemnasium]
 
+[ruby-gems]: https://rubygems.org/gems/expando
+[gemnasium]: https://gemnasium.com/expando-lang/expando
+[codeclimate]: https://codeclimate.com/github/expando-lang/expando
+[travis]: https://travis-ci.org/expando-lang/expando
 
 Expando is a translation language for easily defining user utterance examples when building conversational interfaces. The following line of Expando:
 
