@@ -4,7 +4,7 @@
 
 [Full Changelog](https://github.com/expando-lang/expando/compare/v0.1.0...v0.2.0)
 
-**Added**
+**Added:**
 
 - Enable using config file in current directory. See [1ab20a5](https://github.com/expando-lang/expando/commit/04004f4b3639d31492ebc9f3aa55a1fd67ad1a00)
 
