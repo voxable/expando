@@ -1,5 +1,11 @@
 # Expando
 
+[![Gem Version](https://img.shields.io/gem/v/expando.svg)][ruby-gems]
+[![Linux Build Status](https://img.shields.io/travis/expando-lang/expando/master.svg?label=Linux%20build)][travis]
+[![Code Climate](https://img.shields.io/codeclimate/github/expando-lang/expando.svg)][codeclimate]
+[![Dependency Status](https://img.shields.io/gemnasium/jekyll/jekyll.svg)][gemnasium]
+
+
 Expando is a translation language for easily defining user utterance examples when building conversational interfaces. The following line of Expando:
 
 ```text
