@@ -6,7 +6,7 @@
 
 **Added**
 
-- Enable using config file in current directory. See 1ab20a55ffe65db61ec6c7cdaabccb91e470c16e
+- Enable using config file in current directory. See [1ab20a5](https://github.com/expando-lang/expando/commit/04004f4b3639d31492ebc9f3aa55a1fd67ad1a00)
 
 **Closed issues:**
 
