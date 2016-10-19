@@ -6,7 +6,7 @@
 
 **Added**
 
-- Enable using config file in current directory. See 1ab20a5
+- Enable using config file in current directory. See 1ab20a55ffe65db61ec6c7cdaabccb91e470c16e
 
 **Closed issues:**
 
