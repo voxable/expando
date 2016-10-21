@@ -1,8 +1,8 @@
 # Change Log
 
-## [v0.2.1](https://github.com/expando-lang/expando/tree/HEAD)
+## [v0.2.1](https://github.com/expando-lang/expando/tree/v0.2.1)
 
-[Full Changelog](https://github.com/expando-lang/expando/compare/v0.2.0...HEAD)
+[Full Changelog](https://github.com/expando-lang/expando/compare/v0.2.0...v0.2.1)
 
 **Fixed bugs:**
 
