@@ -1,5 +1,13 @@
 # Change Log
 
+## [v0.2.1](https://github.com/expando-lang/expando/tree/HEAD)
+
+[Full Changelog](https://github.com/expando-lang/expando/compare/v0.2.0...HEAD)
+
+**Fixed bugs:**
+
+- Use forked version of api-ai-ruby gem [\#3](https://github.com/expando-lang/expando/issues/3)
+
 ## [v0.2.0](https://github.com/expando-lang/expando/tree/v0.2.0)
 
 [Full Changelog](https://github.com/expando-lang/expando/compare/v0.1.0...v0.2.0)
