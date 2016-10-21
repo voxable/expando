@@ -24,7 +24,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rspec_junit_formatter', '~> 0.2.2'
   spec.add_development_dependency 'climate_control', '~> 0.0.3'
 
-  spec.add_runtime_dependency 'api-ai-ruby'
+  spec.add_runtime_dependency 'voxable-api-ai-ruby', '~> 1.1.0'
   spec.add_runtime_dependency 'gli', '~> 2.14.0'
   spec.add_runtime_dependency 'colorize', '~> 0.8.1'
   spec.add_runtime_dependency 'awesome_print', '~> 1.7.0'
