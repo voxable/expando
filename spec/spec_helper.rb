@@ -2,6 +2,8 @@ $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 require 'expando'
 require 'rspec'
 require 'climate_control'
+require "codeclimate-test-reporter"
+CodeClimate::TestReporter.start
 
 require 'shared_examples/building_client'
 

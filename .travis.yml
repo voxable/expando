@@ -7,6 +7,23 @@ rvm:
   - 2.2.5
   - jruby-9.1.2.0
 
+addons:
+  code_climate:
+    repo_token:
+      secure: "\
+        oWhRGUKEW/qCflibguhoCNW0WDpsHEtgChlBR6gV7xW2fch2H9LHDXeAwfezlLLHt\
+        SQYLM+YWqx5rPODnA3qccvrrFGq1cPYkTzdA9aovlrHTQP1Kq9DCFOga8CDXcnAsN\
+        jYVZbqBMqOKCk4zHcSkD4SsxhmOUZ35P2E3zhMofO8eQ6Dvx8mYaQ4hy3cd+x+ksW\
+        MHRjTM0eMabIefF14SftDmVO18VCldN7JscoKNt15BFzsxKN+Llnq1eKZqjQpjNgC\
+        UtZvyeoA1gUliK/qRLL3FZz+XmKr1y0N15uxRIM2SHd6sxSfs2LLayPEbd826xSuH\
+        ZDGJTNlxJEZIfyRNdR5I15BZ/lytGCNINkilaG7bczhMuglBkxSKjZ3Gyn3P4Rq2a\
+        QKkCqBGbKaCskF4FKiSTCny6l9sP5GGfcdlhb6YhIH4bapiMyQT2Y+QvkwucgT3Om\
+        tO1JY7gaJyIhA5w8szsa2EOfkGlMxnGxhZWwbDeF62BmuaVNCWym7FdC7GsFoul4+\
+        UZjQy0MtvL1C8oAfi4LucSw7GCX9mY1ImW2jOhatMWN46B8tXxiLaoFnt+VarpZC6\
+        BEX8bHUPspabfrsBlnwzJbmTWdTyltDWFRisbZKMAC8BRnwxCjhlhv8yCrQ19/vjj\
+        apFnmj0CRNLKbvevi2nFwVB+wAHRPWbuw=\
+      "
+
 notifications:
   flowdock:
     secure: "\
