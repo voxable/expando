@@ -12,6 +12,9 @@
   <a title="Code Climate" href="https://codeclimate.com/github/expando-lang/expando">
     <img src="https://img.shields.io/codeclimate/github/expando-lang/expando.svg" />
   </a>
+  <a title="Test Coverage" href="https://codeclimate.com/github/expando-lang/expando/coverage">
+    <img src="https://img.shields.io/codeclimate/coverage/github/expando-lang/expando.svg" />
+  </a>
   <a title="Dependency Status" href="https://gemnasium.com/expando-lang/expando">
     <img src="https://img.shields.io/gemnasium/expando-lang/expando.svg" />
   </a>
