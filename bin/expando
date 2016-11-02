@@ -59,7 +59,6 @@ command [ :update, :u ] do | c |
     entities.action do | global_options, options, args |
       # Determine path to entity files
       entities_path_from_options = options[ :entities_path ] || global_options[ :entities_path ]
-      entities_path = entities_path_from_options ? File.expand_path( entities_path_from_options ) : nil
 
       if args.empty?
         entity_names = Dir.entries( entities_path )[ 2..-1 ].collect { | f | f.gsub( '.txt', '' ) }
@@ -68,9 +67,15 @@ command [ :update, :u ] do | c |
       end
 
       entity_names.each do | entity |
-        updater = Expando::EntityUpdater.new( entity,
-                                              client_keys:   global_options[ :credentials ],
-                                              entities_path: entities_path )
+        updater = if entities_path_from_options
+                    Expando::EntityUpdater.new( entity,
+                                                client_keys:   global_options[ :credentials ],
+                                                entities_path: File.expand_path( entities_path_from_options ) )
+                  else
+                    Expando::EntityUpdater.new( entity,
+                                                client_keys:   global_options[ :credentials ])
+                  end
+
         updater.update!
       end
     end
@@ -90,7 +95,6 @@ command [ :update, :u ] do | c |
     intents.action do | global_options, options, args |
       # Determine path to intent files
       intents_path_from_options = options[ :intents_path ] || global_options[ :intents_path ]
-      intents_path = intents_path_from_options ? File.expand_path( intents_path_from_options ) : nil
 
       if args.empty?
         intent_names = Dir.entries( intents_path )[ 2..-1 ].collect { | f | f.gsub( '.txt', '' ) }
@@ -99,9 +103,15 @@ command [ :update, :u ] do | c |
       end
 
       intent_names.each do | intent |
-        updater = Expando::IntentUpdater.new( intent,
-                                              client_keys:   global_options[ :credentials ],
-                                              intents_path:  intents_path)
+        updater = if intents_path_from_options
+                    Expando::IntentUpdater.new( intent,
+                                                client_keys:   global_options[ :credentials ],
+                                                intents_path:  File.expand_path( intents_path_from_options ) )
+                  else
+                    Expando::IntentUpdater.new( intent,
+                                                client_keys:   global_options[ :credentials ])
+                  end
+
         updater.update!
       end
     end
