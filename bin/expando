@@ -74,7 +74,6 @@ command [ :update, :u ] do | c |
                   else
                     Expando::EntityUpdater.new( entity,
                                                 client_keys:   global_options[ :credentials ])
-                  end
 
         updater.update!
       end
