@@ -1,5 +1,12 @@
 # Change Log
 
+## [v0.2.3](https://github.com/expando-lang/expando/tree/v0.2.3) (2016-01-12)
+[Full Changelog](https://github.com/expando-lang/expando/compare/v0.2.2...v0.2.3)
+
+**Fixed bugs:**
+
+- Fix bug with default entity and intent paths. See [6cb45f0](https://github.com/expando-lang/expando/commit/6cb45f0c2d6eb64e2cf4463ea41ad15b6429cc52)
+
 ## [v0.2.2](https://github.com/expando-lang/expando/tree/v0.2.2) (2016-11-02)
 [Full Changelog](https://github.com/expando-lang/expando/compare/v0.2.1...v0.2.2)
 
