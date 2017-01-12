@@ -36,6 +36,12 @@ pre do | global_options, command, options, args |
     client_access_token:    global_options[ :client_access_token ],
     developer_access_token: global_options[ :developer_access_token ]
   }
+
+  # The default location of intent source files
+  global_options[ :intents_path ] = File.join( Dir.pwd, 'intents')
+
+  # The default location of entity source files
+  global_options[ :entities_path ] = File.join( Dir.pwd, 'entities' )
 end
 
 desc 'Update an Api.ai agent\'s entities and/or intents'
@@ -61,7 +67,7 @@ command [ :update, :u ] do | c |
       entities_path_from_options = options[ :entities_path ] || global_options[ :entities_path ]
 
       if args.empty?
-        entity_names = Dir.entries( entities_path )[ 2..-1 ].collect { | f | f.gsub( '.txt', '' ) }
+        entity_names = Dir.entries( entities_path_from_options )[ 2..-1 ].collect { | f | f.gsub( '.txt', '' ) }
       else
         entity_names = args
       end
@@ -74,6 +80,7 @@ command [ :update, :u ] do | c |
                   else
                     Expando::EntityUpdater.new( entity,
                                                 client_keys:   global_options[ :credentials ])
+                  end
 
         updater.update!
       end
@@ -96,7 +103,7 @@ command [ :update, :u ] do | c |
       intents_path_from_options = options[ :intents_path ] || global_options[ :intents_path ]
 
       if args.empty?
-        intent_names = Dir.entries( intents_path )[ 2..-1 ].collect { | f | f.gsub( '.txt', '' ) }
+        intent_names = Dir.entries( intents_path_from_options )[ 2..-1 ].collect { | f | f.gsub( '.txt', '' ) }
       else
         intent_names = args
       end
