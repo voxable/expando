@@ -62,7 +62,7 @@ module Expando
           puts failed_update_message(type )
           ap response
         end
-      rescue Exception => e
+      rescue StandardError => e
         puts e.message
         puts e.backtrace.inspect
 
