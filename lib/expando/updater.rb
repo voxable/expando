@@ -83,7 +83,7 @@ module Expando
     # @param [Symbol] type The type of update (`:entity` or `:intent`).
     # @return [String] The failed update message.
     def failed_update_message( type )
-      '• '.colorize( :blue ) + "#{ @name } #{ type.to_s } update failed:".colorize(:red )
+      '• '.colorize( :blue ) + "#{ @name } #{ type } update failed:".colorize(:red )
     end
 
     # Output a log message.
@@ -99,7 +99,7 @@ module Expando
     # @param [Symbol] type The type of update (`:entity` or `:intent`).
     # @return [void]
     def log_completion_message( type )
-      puts "• ".colorize( :blue ) + "#{ @name } #{ type.to_s } successfully updated!".colorize( :green )
+      puts "• ".colorize( :blue ) + "#{ @name } #{ type } successfully updated!".colorize( :green )
       puts "\nExpando:".colorize( :magenta ) + " Api.ai agent updated."
     end
 
