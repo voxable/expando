@@ -60,7 +60,7 @@ describe Expando::IntentUpdater do
       it 'throws an error' do
         subject.name = 'foobar'
 
-        expect{ subject.update! }.to raise_error
+        expect{ subject.update! }.to raise_error(RuntimeError, "There is no intent named foobar")
       end
     end
 
