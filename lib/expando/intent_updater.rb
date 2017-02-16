@@ -44,7 +44,7 @@ module Expando
       json[ :userSays ] = expanded_utterances
 
       # TODO: Make this a separate, tested method
-      responses_path = File.join( File.expand_path( @intents_path ), '..', 'responses', @name.to_s + '.txt' )
+      responses_path = File.join( File.expand_path( @intents_path ), '..', 'responses', "#{@name}.txt" )
 
       if File.exist?(responses_path)
         responses = File.readlines responses_path
@@ -80,7 +80,7 @@ module Expando
 
     # @return [Array<String>] The expanded list of intent utterances.
     def expanded_utterances
-      intent_utterance_file_path = File.join( File.expand_path( @intents_path ), @name.to_s + '.txt')
+      intent_utterance_file_path = File.join( File.expand_path( @intents_path ), "#{@name}.txt")
       # TODO: Test
       utterances = Expander.expand! file_lines( intent_utterance_file_path )
 

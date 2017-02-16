@@ -53,7 +53,7 @@ module Expando
 
     # @return [Array<String>] The expanded list of entities.
     def expanded_entities
-      entity_file_path = File.join( File.expand_path( @entities_path ), @name.to_s + '.txt')
+      entity_file_path = File.join( File.expand_path( @entities_path ), "#{@name}.txt")
       Expander.expand! file_lines( entity_file_path )
     end
   end
