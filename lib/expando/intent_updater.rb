@@ -60,14 +60,29 @@ module Expando
       json
     end
 
+    # Generate the path for the intent source file.
+    #
+    # @param name [String] The name of the intent.
+    #
+    # @return [String] The path to the intent source file.
     def intents_file_path(name)
       file_path_for("#{name}.txt")
     end
 
+    # Generate the path for the intent response file.
+    #
+    # @param name [String] The name of the intent.
+    #
+    # @return [String] The path to the intent response file.
     def responses_file_path(name)
       file_path_for('..', 'responses', "#{name}.txt")
     end
 
+    # Generate a source file path, based on the root intents source path.
+    #
+    # @param segments [Array<String>] The segments of the file path.
+    #
+    # @return [String] The full intent source file path.
     def file_path_for(*segments)
       File.send(:join, File.expand_path(@intents_path), segments)
     end
