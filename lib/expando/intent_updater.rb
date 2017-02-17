@@ -43,8 +43,7 @@ module Expando
 
       json[ :userSays ] = expanded_utterances
 
-      # TODO: Make this a separate, tested method
-      responses_path = File.join( File.expand_path( @intents_path ), '..', 'responses', @name.to_s + '.txt' )
+      responses_path = responses_file_path(@name)
 
       if File.exist?(responses_path)
         responses = File.readlines responses_path
@@ -59,6 +58,18 @@ module Expando
       %w{auto templates state priority webhookUsed lastUpdate fallbackIntent cortanaCommand}.each { |key| json.delete( key.to_sym ) }
 
       json
+    end
+
+    def intents_file_path(name)
+      file_path_for("#{name}.txt")
+    end
+
+    def responses_file_path(name)
+      file_path_for('..', 'responses', "#{name}.txt")
+    end
+
+    def file_path_for(*segments)
+      File.send(:join, File.expand_path(@intents_path), segments)
     end
 
     # Fetch the ID of the intent with this name on Api.ai.
@@ -80,7 +91,7 @@ module Expando
 
     # @return [Array<String>] The expanded list of intent utterances.
     def expanded_utterances
-      intent_utterance_file_path = File.join( File.expand_path( @intents_path ), @name.to_s + '.txt')
+      intent_utterance_file_path = intents_file_path(@name)
       # TODO: Test
       utterances = Expander.expand! file_lines( intent_utterance_file_path )
 
