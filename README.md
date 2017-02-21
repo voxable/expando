@@ -137,7 +137,7 @@ what times are you guys open
 By making the final phrase in a set blank, you can make it optional. The following Expando:
 
 ```text
-what are your (open|) hours
+what are your (open| ) hours
 ```
 
 ...would result in:
@@ -150,7 +150,7 @@ what are your hours
 It's also possible to make an entire set of phrases optional:
 
 ```text
-what are your (open|business|) hours
+what are your (open|business| ) hours
 ```
 
 ...results in:
@@ -162,6 +162,23 @@ what are your hours
 ```
 
 Essentially, you're making the last phrase in the set an empty string.
+
+### Comments
+
+Starting a line with a `#` indicates that it is a comment, and should be ignored. The following Expando:
+
+```text
+# TODO: need to add more synonyms for good
+I'm feeling (good|great|grand)
+```
+
+...results in:
+
+```text
+I'm feeling good
+I'm feeling great
+I'm feeling grand
+```
 
 ## Updating API.AI
 
