@@ -13,7 +13,10 @@
 # This greatly reduces the complexity of creating performant speech interfaces.
 module Expando
   module Expander
-    TOKEN_REGEX = /(?<!\\)\((.*?)\)/
+    # Find all text enclosed within parentheses.
+    EXPANSION_TOKEN_REGEX = /(?<!\\)\((.*?)\)/
+    # Find any line beginning with a '#' as its first non-whitespace character.
+    COMMENT_REGEX = /^\s*#/
 
     module_function
 
@@ -24,29 +27,37 @@ module Expando
     def expand!( lines )
       expanded_lines = []
 
-      lines.each do |line|
-        tokens = line.scan TOKEN_REGEX
+      # Ignore any commented lines
+      lines.reject! { |line| line.match(COMMENT_REGEX) }
 
-        # Don't perform expansion if no tokens are present.
-        if tokens.empty?
+      lines.each do |line|
+        expansion_tokens = line.scan EXPANSION_TOKEN_REGEX
+
+        # Don't perform expansion if no expansion tokens are present.
+        if expansion_tokens.empty?
           expanded_lines << line
           next
         end
 
+        # For each set of expansion tokens, create an array of all the tokenized
+        # values contained within the parentheses, separated by `|`.
         expanded_tokens = []
-        tokens.each_with_index do |token, index|
+        expansion_tokens.each_with_index do |token, index|
           expanded_tokens[index] = token[0].split( '|' )
         end
 
         # Produce Cartesian product of all tokenized values.
         token_product = expanded_tokens[ 0 ].product( *expanded_tokens[ 1..-1 ] )
 
-        # Generate new expanded lines.
+        # For each combination of tokenized values...
         token_product.each do |replacement_values|
           expanded_line = line
 
+          # For each individual tokenized value...
           replacement_values.each do |value|
-            expanded_line = expanded_line.sub( TOKEN_REGEX, value )
+            # ...replace the first location of an expansion token in the line with
+            # the replacement tokenized expansion value.
+            expanded_line = expanded_line.sub(EXPANSION_TOKEN_REGEX, value )
           end
 
           # TODO: Replace multiple spaces with a single space

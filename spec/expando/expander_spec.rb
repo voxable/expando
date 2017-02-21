@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 describe Expando::Expander do
-  it 'properly expands tokenized text' do
-    lines = [ '(I|we|they) heard you (love|hate) (cars|boats|bikes)' ]
-    expanded_lines = [
+  let(:lines) { [ '(I|we|they) heard you (love|hate) (cars|boats|bikes)' ] }
+  let(:expanded_lines) {
+    [
       'I heard you love cars',
       'I heard you love boats',
       'I heard you love bikes',
@@ -23,7 +23,22 @@ describe Expando::Expander do
       'they heard you hate boats',
       'they heard you hate bikes',
     ]
+  }
 
+  it 'properly expands the tokenized text' do
     expect( Expando::Expander.expand!( lines ) ).to eq( expanded_lines )
+  end
+
+  context 'when some lines are commented out' do
+    let(:lines) {
+      [
+        '# this is a comment',
+        '(I|we|they) heard you (love|hate) (cars|boats|bikes)'
+      ]
+    }
+
+    it 'properly expands the tokenized text, ignoring the commented lines' do
+      expect( Expando::Expander.expand!( lines ) ).to eq( expanded_lines )
+    end
   end
 end
