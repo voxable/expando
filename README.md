@@ -37,6 +37,7 @@ Expando is a translation language for easily defining user utterance examples wh
   * [Phrase combination](#phrase-combination)
   * [Optional phrases](#optional-phrases)
   * [Comments](#comments)
+  * [Metadata](#metadata)
 * [Updating API.AI](#updating-apiai)
 * [Documentation](#documentation)
 * [Credits](#credits)
@@ -196,6 +197,23 @@ I'm feeling great
 I'm feeling grand
 ```
 
+### Metadata
+
+You can store arbitrary metadata on your intents in the form of YAML front-matter:
+
+```ruby
+# ---
+# description: Asking about open hours.
+# link: http://realtimeboard/app/board/...
+# ---
+
+what are your (open|business| ) hours
+```
+
+You can then list this metadata with the command `expando list intents`:
+
+![metadata example](https://cloud.githubusercontent.com/assets/2220/24306516/dfb6bf7c-108e-11e7-8b19-cfb7b17b7526.png)
+
 ## Updating API.AI
 
 In order to update intents or entities on API.AI, use the following commands:
@@ -222,23 +240,6 @@ $ expando --help
 ```console
 $ expando update --help
 ```
-
-## Metadata
-
-You can store arbitrary metadata on your intents in the form of YAML front-matter:
-
-```ruby
-# ---
-# description: Asking about open hours.
-# link: http://realtimeboard/app/board/...
-# ---
-
-what are your (open|business| ) hours
-```
-
-You can then list this metadata with the command `expando list intents`:
-
-![metadata example](https://cloud.githubusercontent.com/assets/2220/24306516/dfb6bf7c-108e-11e7-8b19-cfb7b17b7526.png)
 
 ## Documentation
 
