@@ -1,5 +1,9 @@
 # Change Log
 
+**Added:**
+
+- Enable YAML metadata storage for intents. See b2b56af
+
 ## [v0.2.3](https://github.com/expando-lang/expando/tree/v0.2.3) (2016-01-12)
 [Full Changelog](https://github.com/expando-lang/expando/compare/v0.2.2...v0.2.3)
 

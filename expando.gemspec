@@ -30,4 +30,6 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'gli', '~> 2.14.0'
   spec.add_runtime_dependency 'colorize', '~> 0.8.1'
   spec.add_runtime_dependency 'awesome_print', '~> 1.7.0'
+  spec.add_runtime_dependency 'front_matter_parser', '~> 0.0.4'
+  spec.add_runtime_dependency 'tty-table', '~> 0.8.0'
 end

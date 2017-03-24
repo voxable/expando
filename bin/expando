@@ -4,6 +4,8 @@ $LOAD_PATH << File.expand_path( File.dirname( __FILE__ ) + '/../lib' )
 
 require 'expando'
 require 'gli'
+require 'front_matter_parser'
+require 'tty-table'
 
 include GLI::App
 
@@ -125,6 +127,86 @@ command [ :update, :u ] do | c |
 
   # TODO: Default to both in sequence
   #c.default_command :entities
+end
+
+desc 'List entities and/or intents'
+long_desc <<-DESC
+  List entities and intents, and their metadata, based on the front-matter in the
+  files in the entities and intents directories, respectively.
+DESC
+command [ :list, :l ] do | c |
+
+
+  c.desc 'List intents and their associated metadata'
+  c.long_desc <<-DESC
+    List intents and their associated YAML front-matter metadata.
+  DESC
+  c.command :intents do |intents|
+    intents.flag :intents_path, desc: 'The path to the directory containing intent files'
+
+    intents.action do |global_options, options|
+      pastel = Pastel.new
+
+      # Determine path to intent files
+      intents_path_from_options = options[:intents_path] || global_options[:intents_path]
+
+      intent_file_names = Dir.entries(intents_path_from_options)[2..-1]
+
+      table_headers = Set.new
+      table_data = []
+      intent_metadata = []
+
+      # For each intent file...
+      intent_file_names.each do |intent_file_name|
+        intent_file_path = File.join(intents_path_from_options, intent_file_name)
+
+        # ...parse its YAML front-matter.
+        intent_metadata << FrontMatterParser.parse_file(
+          intent_file_path,
+          comment: '#'
+        )
+      end
+
+      # Intent name should always be present.
+      table_headers << pastel.magenta.bold.italic('INTENT')
+
+      # Build a list of each table header.
+      intent_metadata.each do |data|
+        data.front_matter.each do |key, value|
+          table_headers << key
+        end
+      end
+      table_headers = table_headers.to_a
+
+      # Build a table of intent data, matched to its proper column.
+      intent_metadata.each_with_index do |data, index|
+        row = []
+
+        # Add the intent name to the row data.
+        row << pastel.magenta.bold.italic(intent_file_names[index].gsub('.txt', ''))
+
+        # Add the intent data to the proper columns.
+        table_headers[1..-1].each do |column|
+          value = data.front_matter[column]
+          row << (value) #&& value[0..10].gsub(/\s\w+\s*$/, '...'))
+        end
+
+        table_data << row unless row[1..-1].all?(&:nil?)
+      end
+
+      # Render the table.
+      table = TTY::Table.new table_headers, table_data
+      renderer = TTY::Table::Renderer::Unicode.new(
+        table,
+        border: {
+          style: :magenta
+        },
+        multiline: true
+      )
+
+      puts renderer.render
+    end
+  end
 end
 
 desc 'Initialize a new Expando project'

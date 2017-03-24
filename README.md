@@ -25,6 +25,22 @@
 
 Expando is a translation language for easily defining user utterance examples when building conversational interfaces for Natural Language Understanding services like [API.AI](https://api.ai), [LUIS](https://www.luis.ai/), or the [Alexa Skills Kit](https://developer.amazon.com/alexa). This is roughly analagous to the concept of building grammars for speech recognition systems. 
 
+## Table of Contents
+
+* [What's all this, then?](#whats-all-this-then)
+* [Installation](#installation)
+* [Getting started](#getting-started)
+  * [Configure API.AI integration](#configure-apiai-integration)
+  * [Set up continuous integration](#set-up-continuous-integration)
+  * [Create intent and entity files](#create-intent-and-entity-files)
+* [Syntax](#syntax)
+  * [Phrase combination](#phrase-combination)
+  * [Optional phrases](#optional-phrases)
+  * [Comments](#comments)
+* [Updating API.AI](#updating-apiai)
+* [Documentation](#documentation)
+* [Credits](#credits)
+      
 ## What's all this, then?
 
 The following line of Expando:
@@ -206,6 +222,23 @@ $ expando --help
 ```console
 $ expando update --help
 ```
+
+## Metadata
+
+You can store arbitrary metadata on your intents in the form of YAML front-matter:
+
+```ruby
+# ---
+# description: Asking about open hours.
+# link: http://realtimeboard/app/board/...
+# ---
+
+what are your (open|business| ) hours
+```
+
+You can then list this metadata with the command `expando list intents`:
+
+![metadata example](https://cloud.githubusercontent.com/assets/2220/24306516/dfb6bf7c-108e-11e7-8b19-cfb7b17b7526.png)
 
 ## Documentation
 
