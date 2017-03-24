@@ -223,6 +223,23 @@ $ expando --help
 $ expando update --help
 ```
 
+## Metadata
+
+You can store arbitrary metadata on your intents in the form of YAML front-matter:
+
+```ruby
+# ---
+# description: Asking about open hours.
+# link: http://realtimeboard/app/board/...
+# ---
+
+what are your (open|business| ) hours
+```
+
+You can then list this metadata with the command `expando list intents`:
+
+![metadata example](https://cloud.githubusercontent.com/assets/2220/24306516/dfb6bf7c-108e-11e7-8b19-cfb7b17b7526.png)
+
 ## Documentation
 
 Documentation for the source code of the `expando` gem itself can be viewed [here](http://www.rubydoc.info/github/expando-lang/expando/master).
