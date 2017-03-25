@@ -1,6 +1,6 @@
 module Expando
   # Represents an Expando intent source file.
-  class IntentFile
+  class SourceFiles::IntentFile < SourceFiles::Base
 
 
   end

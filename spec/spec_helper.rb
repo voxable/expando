@@ -6,8 +6,6 @@ $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 require 'expando'
 require 'rspec'
 
-require 'shared_examples/building_client'
-
 RSpec.configure do |config|
   config.expect_with :rspec do |c|
     c.syntax = :expect
@@ -16,7 +14,7 @@ end
 
 # @return [String] the base fixtures directory
 def fixture_path
-  File.join( File.dirname(__FILE__), 'fixtures')
+  File.join( File.dirname(__FILE__), 'support', 'fixtures')
 end
 
 # Generate the proper path to the directory of entity fixtures.

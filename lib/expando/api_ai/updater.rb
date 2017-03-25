@@ -34,6 +34,12 @@ module Expando::ApiAi
     option :client_access_token, Expando::Types::Strict::String,
            default: proc { ENV['API_AI_CLIENT_ACCESS_TOKEN'] }
 
+
+    # Update
+    def update
+
+    end
+
     private
 
     # @return [APIAiRuby::Client] An API.ai API client for this project's agent.
