@@ -24,6 +24,8 @@ module Expando::ApiAi
     # @return [Hash] if request successful. This is the response body.
     # @return [ApiAiRuby::RequestError] if request is in error.
     def update!
+      # Create a new version of the intent
+      Intent.new()
       response = @client.update_intent_request( intent_json )
 
       handle_response( response, :intent )
@@ -87,22 +89,7 @@ module Expando::ApiAi
       File.send(:join, File.expand_path(@intents_path), segments)
     end
 
-    # Fetch the ID of the intent with this name on Api.ai.
-    #
-    # @return [String] The ID of the intent with this `@name` on Api.ai.
-    def intent_id
-      log_message "Fetching id of #{ @name } intent"
-      intents = @client.get_intents_request
 
-      matching_intent = intents.select { |intent| intent[ :name ] == @name.to_s }
-
-      if matching_intent.empty?
-        # TODO: Consult Exceptional Ruby for a better way to do this
-        raise "There is no intent named #{@name}"
-      else
-        return matching_intent.first[ :id ]
-      end
-    end
 
     # @return [Array<String>] The expanded list of intent utterances.
     def expanded_utterances

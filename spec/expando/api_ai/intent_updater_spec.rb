@@ -49,12 +49,7 @@ describe Expando::ApiAi::IntentUpdater do
       expect( File ).to have_received( :read ).with( File.join(intents_fixture_dir, 'launchScan.txt' ) )
     end
 
-    it 'properly sets the id of the intent for the Api.ai API call' do
-      launch_scan_intent_id = '1dbfe740-2fbd-4c5e-95ef-0b3090fda942'
 
-      subject.update!
-      expect( @client ).to have_received( :update_intent_request ).with( hash_including( id: launch_scan_intent_id ) )
-    end
 
     context 'when no intent with the same name is found on Api.ai' do
       it 'throws an error' do
