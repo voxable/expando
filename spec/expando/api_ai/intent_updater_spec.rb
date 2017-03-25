@@ -23,7 +23,7 @@ describe Expando::ApiAi::Updaters::IntentUpdater do
     allow(Expando::ApiAi::Objects::Intent).to receive(:new).and_return(intent_object)
     allow(intent_object).to receive(:update!)
   end
-  
+
   describe '#update!' do
     context 'when specific intent names are passed' do
       let(:intent_names) { [intent_name] }
