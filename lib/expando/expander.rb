@@ -1,7 +1,7 @@
 # The `Expander` module is responsible for taking an array of intents or utterances,
 # and expanding any strings containing the following tokens:
 #
-#     {I|we} heard you {love|hate} computers
+#     (I|we) heard you (love|hate) computers
 #
 # into the following Cartesian product:
 #
@@ -13,11 +13,6 @@
 # This greatly reduces the complexity of creating performant speech interfaces.
 module Expando
   module Expander
-    # Find all text enclosed within parentheses.
-    EXPANSION_TOKEN_REGEX = /(?<!\\)\((.*?)\)/
-    # Find any line beginning with a '#' as its first non-whitespace character.
-    COMMENT_REGEX = /^\s*#/
-
     module_function
 
     # Generate a new `Expander`.
@@ -28,10 +23,10 @@ module Expando
       expanded_lines = []
 
       # Ignore any commented lines
-      lines.reject! { |line| line.match(COMMENT_REGEX) }
+      lines.reject! { |line| line.match(Tokens::COMMENT_MATCHER) }
 
       lines.each do |line|
-        expansion_tokens = line.scan EXPANSION_TOKEN_REGEX
+        expansion_tokens = line.scan Tokens::EXPANSION_MATCHER
 
         # Don't perform expansion if no expansion tokens are present.
         if expansion_tokens.empty?
@@ -57,7 +52,7 @@ module Expando
           replacement_values.each do |value|
             # ...replace the first location of an expansion token in the line with
             # the replacement tokenized expansion value.
-            expanded_line = expanded_line.sub(EXPANSION_TOKEN_REGEX, value )
+            expanded_line = expanded_line.sub(Tokens::EXPANSION_MATCHER, value )
           end
 
           # TODO: Replace multiple spaces with a single space
