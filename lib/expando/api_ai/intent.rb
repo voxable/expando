@@ -7,8 +7,7 @@ module Expando::ApiAi
   class Intent
     extend ::Dry::Initializer
 
-    # The path to the Expando source for the intent.
-    param  :source_path,     Expando::Types::Strict::String
+
 
     # Properly perform all Expando transformations (expansion, annotation) to the
     # source for the intent and generate a new version of the intent's JSON.

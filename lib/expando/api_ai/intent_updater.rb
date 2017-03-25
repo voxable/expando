@@ -4,21 +4,6 @@ module Expando::ApiAi
   # Responsible for updating intent objects on Api.ai based on the contents of
   # files in `/intents`.
   class IntentUpdater < Updater
-    # !@attribute name
-    #   @return [String] the name of the intent to be updated
-    attr_accessor :name
-
-    # !@attribute intents_path
-    #   @return [String] the path to the directory containing the intent source files
-    attr_accessor :intents_path
-
-    # Initialize a new `IntentUpdater`.
-    #
-    # @see Updater#initialize
-    def initialize( * )
-      super
-    end
-
     # Update the named entity on Api.ai.
     #
     # @return [Hash] if request successful. This is the response body.

@@ -1,51 +1,47 @@
 module Expando::ApiAi
   class Updater
+    extend ::Dry::Initializer
+
     # The default location of intent source files
     DEFAULT_INTENTS_PATH = File.join( Dir.pwd, 'intents')
 
     # The default location of entity source files
     DEFAULT_ENTITIES_PATH = File.join( Dir.pwd, 'entities' )
 
-    # Initialize a new `Updater`.
-    #
-    # @param [Symbol] name The name of the intent or entity to update. (default: `nil`)
-    # @param [String] entities_path The path to the directory containing the
-    #   entities text files. (default: `'entities'`)
-    # @param [String] intents_path The path to the directory containing the
-    #   intents source files. (default: 'intents')
-    # @param [Hash] client_keys A hash of Api.ai credentials.
-    # @option client_keys [String] :developer_access_token The Api.ai developer
-    #   access token.
-    # @option client_keys [String] :client_access_token The Api.ai client access
-    #   token.
-    # @return [Updater] The new `Updater`.
-    def initialize( name = nil, intents_path: DEFAULT_INTENTS_PATH, entities_path: DEFAULT_ENTITIES_PATH, client_keys: {})
-      @name = name
-      @intents_path = intents_path
-      @entities_path = entities_path
+    # !@attribute object_names
+    #   @return [Array<String>] The names of the objects to be updated.
+    param :object_names, Expando::Types::Strict::Array, optional: true
 
-      @client = ApiAiRuby::Client.new( credentials( client_keys ) )
-    end
+    # !@attribute intents_path
+    #   @return [String] The path to the directory containing the intent source
+    #     files. (default: './intents')
+    option :intents_path, Expando::Types::Strict::String,
+           default: proc { DEFAULT_INTENTS_PATH }
+
+    # !@attribute entities_path
+    #   @return [String] The path to the directory containing the entity source
+    #     files. (default: './entities')
+    option :entities_path, Expando::Types::Strict::String,
+           default: proc { DEFAULT_INTENTS_PATH }
+
+    # !@attribute developer_access_token
+    #   @return [String] The Api.ai developer access token.
+    option :developer_access_token, Expando::Types::Strict::String,
+           default: proc { ENV['API_AI_DEVELOPER_ACCESS_TOKEN'] }
+
+    # !@attribute client_access_token
+    #   @return [String] The Api.ai client access token.
+    option :client_access_token, Expando::Types::Strict::String,
+           default: proc { ENV['API_AI_CLIENT_ACCESS_TOKEN'] }
 
     private
 
-    # Generate a credentials hash for Api.ai from environment variables or passed
-    # arguments, whichever is provided.
-    #
-    # @param [Hash] client_keys A hash of Api.ai credentials.
-    # @option client_keys [String] :developer_access_token The Api.ai developer
-    #   access token.
-    # @option client_keys [String] :client_access_token The Api.ai client access
-    #   token.
-    # @return [Hash] The Api.ai client credentials.
-    def credentials(client_keys)
-      developer_access_token = ENV['API_AI_DEVELOPER_ACCESS_TOKEN'] || client_keys[:developer_access_token]
-      client_access_token = ENV['API_AI_CLIENT_ACCESS_TOKEN'] || client_keys[:client_access_token]
-
-      {
-          client_access_token: client_access_token,
-          developer_access_token: developer_access_token
-      }
+    # @return [APIAiRuby::Client] An API.ai API client for this project's agent.
+    def client
+      @client ||= ApiAiRuby::Client.new({
+        client_access_token:    client_access_token,
+        developer_access_token: developer_access_token
+      })
     end
 
     # Properly handle the response from Api.ai.
