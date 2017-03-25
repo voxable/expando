@@ -76,11 +76,11 @@ command [ :update, :u ] do | c |
 
       entity_names.each do | entity |
         updater = if entities_path_from_options
-                    Expando::EntityUpdater.new( entity,
+                    Expando::ApiAi::EntityUpdater.new( entity,
                                                 client_keys:   global_options[ :credentials ],
                                                 entities_path: File.expand_path( entities_path_from_options ) )
                   else
-                    Expando::EntityUpdater.new( entity,
+                    Expando::ApiAi::EntityUpdater.new( entity,
                                                 client_keys:   global_options[ :credentials ])
                   end
 
@@ -112,11 +112,11 @@ command [ :update, :u ] do | c |
 
       intent_names.each do | intent |
         updater = if intents_path_from_options
-                    Expando::IntentUpdater.new( intent,
+                    Expando::ApiAi::IntentUpdater.new( intent,
                                                 client_keys:   global_options[ :credentials ],
                                                 intents_path:  File.expand_path( intents_path_from_options ) )
                   else
-                    Expando::IntentUpdater.new( intent,
+                    Expando::ApiAi::IntentUpdater.new( intent,
                                                 client_keys:   global_options[ :credentials ])
                   end
 

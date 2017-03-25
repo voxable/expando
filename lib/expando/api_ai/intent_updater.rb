@@ -1,6 +1,6 @@
 require 'json'
 
-module Expando
+module Expando::ApiAi
   # Responsible for updating intent objects on Api.ai based on the contents of
   # files in `/intents`.
   class IntentUpdater < Updater
@@ -108,7 +108,7 @@ module Expando
     def expanded_utterances
       intent_utterance_file_path = intents_file_path(@name)
       # TODO: Test
-      utterances = Expander.expand! file_lines( intent_utterance_file_path )
+      utterances = Expando::Expander.expand! file_lines( intent_utterance_file_path )
 
       utterances.collect do |utterance|
         {

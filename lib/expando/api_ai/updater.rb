@@ -1,4 +1,4 @@
-module Expando
+module Expando::ApiAi
   class Updater
     # The default location of intent source files
     DEFAULT_INTENTS_PATH = File.join( Dir.pwd, 'intents')

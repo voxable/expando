@@ -1,9 +1,11 @@
 # The regular expressions used to match Expando tokens.
 module Expando
   module Tokens
-    # Find all text enclosed within parentheses.
-    EXPANSION_MATCHER = /(?<!\\)\((.*?)\)/
-    # Find any line beginning with a '#' as its first non-whitespace character.
-    COMMENT_MATCHER   = /^\s*#/
+    # All text enclosed within parentheses.
+    EXPANSION_MATCHER  = /(?<!\\)\((.*?)\)/
+    # Any line beginning with a '#' as its first non-whitespace character.
+    COMMENT_MATCHER    = /^\s*#/
+    # Any entity references (e.g. @location:locationName)
+    ENTITY_REF_MATCHER = /@(\w*):(\w*)/
   end
 end

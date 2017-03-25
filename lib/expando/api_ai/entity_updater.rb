@@ -1,4 +1,4 @@
-module Expando
+module Expando::ApiAi
   # Responsible for updating entity objects on Api.ai based on the contents of
   # files in `/entities`.
   class EntityUpdater < Updater
@@ -54,7 +54,7 @@ module Expando
     # @return [Array<String>] The expanded list of entities.
     def expanded_entities
       entity_file_path = File.join( File.expand_path( @entities_path ), "#{@name}.txt")
-      Expander.expand! file_lines( entity_file_path )
+      Expando::Expander.expand! file_lines( entity_file_path )
     end
   end
 end

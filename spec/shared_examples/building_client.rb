@@ -51,7 +51,7 @@ RSpec.shared_examples 'building the Api.ai client' do
         }
 
         ClimateControl.modify( nil_env_vars ) do
-          Expando::EntityUpdater.new( :appliances, client_keys: { developer_access_token: token } )
+          Expando::ApiAi::EntityUpdater.new( :appliances, client_keys: { developer_access_token: token } )
           expect( ApiAiRuby::Client ).to have_received( :new ).with( credentials )
         end
       end
@@ -63,7 +63,7 @@ RSpec.shared_examples 'building the Api.ai client' do
         }
 
         ClimateControl.modify( nil_env_vars ) do
-          Expando::EntityUpdater.new( :appliances, client_keys: { client_access_token: token } )
+          Expando::ApiAi::EntityUpdater.new( :appliances, client_keys: { client_access_token: token } )
           expect( ApiAiRuby::Client ).to have_received( :new ).with( credentials )
         end
       end

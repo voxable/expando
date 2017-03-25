@@ -1,8 +1,8 @@
 require 'spec_helper'
 require 'pathname'
 
-describe Expando::IntentUpdater do
-  subject { Expando::IntentUpdater.new( :launchScan ) }
+describe Expando::ApiAi::IntentUpdater do
+  subject { Expando::ApiAi::IntentUpdater.new( :launchScan ) }
 
   before(:each) do
     get_intents_response = JSON.parse( File.read( File.join( intents_fixture_dir, 'requests/get_intents.json' ) ), symbolize_names: true )
@@ -29,7 +29,7 @@ describe Expando::IntentUpdater do
 
       it 'allows overriding the location for intent source files' do
         test_intents_path = intents_fixture_dir
-        updater = Expando::IntentUpdater.new :launchScan, intents_path: test_intents_path
+        updater = Expando::ApiAi::IntentUpdater.new :launchScan, intents_path: test_intents_path
 
         expect( updater.intents_path ).to eq( test_intents_path )
       end
@@ -39,7 +39,7 @@ describe Expando::IntentUpdater do
   end
 
   describe '#update!' do
-    subject { Expando::IntentUpdater.new( :launchScan, intents_path: intents_fixture_dir ) }
+    subject { Expando::ApiAi::IntentUpdater.new( :launchScan, intents_path: intents_fixture_dir ) }
     let(:intent_json_fixture_path) { File.join( intents_fixture_dir, 'launchScan.json' ) }
 
     it 'opens the proper txt file in /intents' do
@@ -87,7 +87,7 @@ describe Expando::IntentUpdater do
     # TODO: Same problem as above. Shouldn't be checking this against the get request fixture.
     # Create a new fixture for comparison.
     context 'when expansion tokens are present in the intent source' do
-      subject { Expando::IntentUpdater.new( :launchScanWithExpansion, intents_path: intents_fixture_dir ) }
+      subject { Expando::ApiAi::IntentUpdater.new( :launchScanWithExpansion, intents_path: intents_fixture_dir ) }
 
       it 'constructs a proper templates for the Api.ai API call' do
         launch_scan_intent = JSON.parse( File.read( intent_json_fixture_path ), symbolize_names: true )
