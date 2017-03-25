@@ -8,7 +8,8 @@ module Expando
     class Intent
       extend ::Dry::Initializer
 
-      param :existing_intent
+      param  :intent_path,     Expando::Types::Strict::String
+      option :existing_intent, Expando::Types::Hash, optional: true
     end
   end
 end

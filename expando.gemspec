@@ -38,7 +38,7 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'front_matter_parser', '~> 0.0.4'
   # Outputting intent lists for CLI
   spec.add_runtime_dependency 'tty-table', '~> 0.8.0'
-  # Object initialization
+  # dry-rb framework
   spec.add_runtime_dependency 'dry-initializer', '~> 1.3.0'
   spec.add_runtime_dependency 'dry-types', '0.9.4'
 end
