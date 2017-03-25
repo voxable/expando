@@ -6,6 +6,10 @@ module Expando::ApiAi::Objects
   # @see https://docs.api.ai/docs/intents#intent-object
   class Intent < Base
 
+    def update!
+
+    end
+
     # Properly perform all Expando transformations (expansion, annotation) to the
     # source for the intent and generate a new version of the intent's JSON.
     def to_json

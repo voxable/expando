@@ -14,7 +14,8 @@ module Expando::ApiAi::Updaters
       # Create intent objects for each intent source file.
       intents = generate_intents(intent_files)
 
-      puts intents.inspect
+      # Update each intent.
+      intents.each { |intent| intent.update! }
     end
 
     private
