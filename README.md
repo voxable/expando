@@ -184,7 +184,7 @@ Essentially, you're making the last phrase in the set an empty string.
 
 ### Referencing API.ai developer entities
 
-If you had the following [API.ai developer entity](https://docs.api.ai/docs/concept-entities#section-developer-entities) `location.txt`:
+If you had the following [API.ai developer entity](https://docs.api.ai/docs/concept-entities#section-developer-entities) `location` in a file `location.txt`:
 
 ```
 home, house
@@ -204,14 +204,19 @@ what is the temperature at home
 tell me the temperature at work
 ```
 
-Expando will properly annotate the above utterances:
+Expando will also automatically annotate the above utterances:
 
 ```
 what is the temperature at home
                            ‾‾‾‾
                            @location:locationName => entity:    location
                                                      parameter: locationName 
-```                           
+```
+
+If the message "what is the temperature at home" was received by the API.ai agent, it would recognize the following:
+
+* `intentName`: `getTemp`
+* `locationName`: `home`                         
 
 ### Referencing API.ai system entities
 
