@@ -106,7 +106,7 @@ command [ :update, :u ] do | c |
         intents_path_from_options = File.expand_path(intents_path_from_options)
       end
 
-      Expando::ApiAi::IntentUpdater.new(
+      Expando::ApiAi::Updaters::IntentUpdater.new(
         args,
         intents_path:           intents_path_from_options,
         developer_access_token: global_options[:credentials][:developer_access_token],

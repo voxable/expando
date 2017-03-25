@@ -8,7 +8,6 @@ module Expando::ApiAi
     extend ::Dry::Initializer
 
 
-
     # Properly perform all Expando transformations (expansion, annotation) to the
     # source for the intent and generate a new version of the intent's JSON.
     def to_json

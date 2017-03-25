@@ -11,9 +11,9 @@ require 'expando/project_template'
 require 'expando/tokens'
 require 'expando/source_files/base'
 require 'expando/source_files/intent_file'
-require 'expando/api_ai/intent'
-require 'expando/api_ai/updater'
-require 'expando/api_ai/entity_updater'
-require 'expando/api_ai/intent_updater'
+require 'expando/api_ai/objects/intent'
+require 'expando/api_ai/updaters/base'
+require 'expando/api_ai/updaters/entity_updater'
+require 'expando/api_ai/updaters/intent_updater'
 
 module Expando; end

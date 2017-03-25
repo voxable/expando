@@ -1,7 +1,7 @@
-module Expando::ApiAi
+module Expando::ApiAi::Updaters
   # Responsible for updating entity objects on Api.ai based on the contents of
   # files in `/entities`.
-  class EntityUpdater < Updater
+  class EntityUpdater < Base
     # !@attribute name
     #   @return [String] the name of the entity to be updated
     attr_accessor :name
