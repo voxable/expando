@@ -11,9 +11,10 @@ module Expando::ApiAi::Updaters
       # Create source file objects for each intent that needs to be updated.
       intent_files = generate_intent_files(object_names)
 
-      puts intent_files.inspect
       # Create intent objects for each intent source file.
       intents = generate_intents(intent_files)
+
+      puts intents.inspect
     end
 
     private
@@ -31,9 +32,8 @@ module Expando::ApiAi::Updaters
         intent_file_names = Dir.entries(intents_path)[2..-1]
 
         # If the intents to update have been specified...
-        if intent_names
+        if intent_names.any?
           # ...reduce the list of file names only to those that match the requested intents.
-
           intent_file_names.reject! do |file_name|
             intent_file_base_name = File.basename(file_name, '.*')
 
@@ -48,6 +48,14 @@ module Expando::ApiAi::Updaters
         intent_file_paths.collect { |path| Expando::SourceFiles::IntentFile.new(path) }
       end
 
+      # @return [ApiAiRuby::Client] An API.ai client for this project's agent.
+      def client
+        @client ||= ApiAiRuby::Client.new(
+           developer_access_token: developer_access_token,
+           client_access_token:    client_access_token
+        )
+      end
+
       # Generate `Expando::ApiAi::Intent` objects for each passed intent source file.
       #
       # @param [Array<Expando::SourceFiles::IntentFile>] intent_files The intent source files.
@@ -55,7 +63,7 @@ module Expando::ApiAi::Updaters
       # @return [Array<Expando::ApiAi::Intent>] The generated intent objects.
       def generate_intents(intent_files)
         intent_files.collect do |file|
-
+          Expando::ApiAi::Objects::Intent.new(source_file: file, api_client: client)
         end
       end
 

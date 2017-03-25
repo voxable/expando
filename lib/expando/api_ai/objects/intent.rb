@@ -1,12 +1,10 @@
-module Expando::ApiAi
+module Expando::ApiAi::Objects
   # Initialized with a hash representing an existing API.ai intent, and the path
   # to an Expando file for that intent, generates the JSON for a new version of
   # the intent.
   #
   # @see https://docs.api.ai/docs/intents#intent-object
-  class Intent
-    extend ::Dry::Initializer
-
+  class Intent < Base
 
     # Properly perform all Expando transformations (expansion, annotation) to the
     # source for the intent and generate a new version of the intent's JSON.

@@ -35,7 +35,6 @@ module Expando::ApiAi
       option :client_access_token, Expando::Types::Strict::String,
              default: proc { ENV['API_AI_CLIENT_ACCESS_TOKEN'] }
 
-
       # Update
       def update
 
