@@ -7,12 +7,18 @@ module Expando
       # The path to the Expando source file.
       param :source_path, Expando::Types::Strict::String
 
-
       # Generate an array of strings for each line in the file.
       #
       # @return [Array<String>] An array of all of the lines in the file.
       def lines
-        File.read(source_path).lines.collect{ |line| line.chomp }
+        File.read(@source_path).lines.collect{ |line| line.chomp }
+      end
+
+      # Generate the name of the intent based on the name of its associated source file.
+      #
+      # @return [String] The name of this intent.
+      def object_name
+        @name ||= File.split(@source_path).last.gsub('.txt', '')
       end
     end
   end

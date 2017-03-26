@@ -6,12 +6,33 @@ module Expando
   module Logger
     module_function
 
-    # Output a log message.
+    # Log a message.
     #
-    # @param [String] The message.
+    # @param [String] message The message.
     # @return [void]
-    def log( message )
-      puts '• '.colorize( :blue ) + message
+    def log(message)
+      puts '• '.colorize(:blue) + message
+    end
+
+    # Log a successful update message.
+    #
+    # @param [Symbol] type The type of update (`:entity` or `:intent`).
+    #
+    # @return [void]
+    def log_successful_update(type)
+      puts "• ".colorize(:blue) + "#{@name} #{type} successfully updated!".colorize(:green)
+      puts "\nExpando:".colorize(:magenta) + ' Api.ai agent updated.'
+    end
+
+    # Log a failed update message.
+    #
+    # @param [Symbol] type The type of update (`:entity` or `:intent`).
+    # @param [Hash] response The API response.
+    #
+    # @return [String] The failed update message.
+    def log_failed_update(type, response)
+      '• '.colorize(:blue) + "#{@name} #{type} update failed:".colorize(:red)
+      ap(response)
     end
   end
 end

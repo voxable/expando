@@ -5,6 +5,7 @@ module Expando
       def init!
         mkdir 'intents'
         mkdir 'entities'
+        mkdir 'responses'
 
         config_file_contents = <<-CONFIG_FILE
 # API.AI credentials - add the credentials for your agent below

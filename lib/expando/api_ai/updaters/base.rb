@@ -9,6 +9,9 @@ module Expando::ApiAi
       # The default location of entity source files
       DEFAULT_ENTITIES_PATH = File.join( Dir.pwd, 'entities' )
 
+      # The default location of intent response source files
+      DEFAULT_RESPONSES_PATH = File.join( Dir.pwd, 'responses' )
+
       # !@attribute object_names
       #   @return [Array<String>] The names of the objects to be updated.
       param :object_names, Expando::Types::Strict::Array, optional: true
@@ -23,7 +26,13 @@ module Expando::ApiAi
       #   @return [String] The path to the directory containing the entity source
       #     files. (default: './entities')
       option :entities_path, Expando::Types::Strict::String,
-             default: proc { DEFAULT_INTENTS_PATH }
+             default: proc { DEFAULT_ENTITIES_PATH }
+
+      # !@attribute responses_path
+      #   @return [String] The path to the directory containing the intent response
+      #     source files. (default: './responses')
+      option :responses_path, Expando::Types::Strict::String,
+             default: proc { DEFAULT_RESPONSES_PATH }
 
       # !@attribute developer_access_token
       #   @return [String] The Api.ai developer access token.
@@ -35,9 +44,8 @@ module Expando::ApiAi
       option :client_access_token, Expando::Types::Strict::String,
              default: proc { ENV['API_AI_CLIENT_ACCESS_TOKEN'] }
 
-      # Update
       def update
-
+        raise NotImplementedError, '#update must be overridden in subclass'
       end
 
       private
@@ -56,19 +64,18 @@ module Expando::ApiAi
         # @param [Symbol] type Either `:intent` or `:entity`, depending on what is
         #   being updated.
         # @return [void]
-        def handle_response( response, type )
+        def handle_response(response, type)
           begin
-            if successful?( response )
-              log_completion_message(type )
+            if successful?(response)
+              Expando::Logger.log_successful_update(type)
             else
-              puts failed_update_message(type )
-              ap response
+              Expando::Logger.log_failed_update(type, response)
             end
           rescue StandardError => e
             puts e.message
             puts e.backtrace.inspect
 
-            abort( failed_update_message )
+            abort(failed_update_message)
           end
         end
 
@@ -76,41 +83,8 @@ module Expando::ApiAi
         #
         # @param [Hash] response The raw response from Api.ai
         # @return [Boolean] `true` if successful, `false` otherwise.
-        def successful?( response )
-          response && response[ :status ] && ( response[ :status ][ :code ] == 200 )
-        end
-
-        # Generate a failed entity update message.
-        #
-        # @param [Symbol] type The type of update (`:entity` or `:intent`).
-        # @return [String] The failed update message.
-        def failed_update_message( type )
-          '• '.colorize( :blue ) + "#{ @name } #{ type } update failed:".colorize(:red )
-        end
-
-        # Output a log message.
-        #
-        # @param [String] The message.
-        # @return [void]
-        def log_message( message )
-          puts '• '.colorize( :blue ) + message
-        end
-
-        # Output a successful update message.
-        #
-        # @param [Symbol] type The type of update (`:entity` or `:intent`).
-        # @return [void]
-        def log_completion_message( type )
-          puts "• ".colorize( :blue ) + "#{ @name } #{ type } successfully updated!".colorize( :green )
-          puts "\nExpando:".colorize( :magenta ) + " Api.ai agent updated."
-        end
-
-        # Read a file into an array of strings.
-        #
-        # @param [String] file_path The path to the file to convert.
-        # @return [Array<String>] An array of all of the lines in the file.
-        def file_lines( file_path )
-          File.read( file_path ).lines.collect{ |line| line.chomp }
+        def successful?(response)
+          response && response[:status] && (response[:status][:code] == 200)
         end
     end
   end

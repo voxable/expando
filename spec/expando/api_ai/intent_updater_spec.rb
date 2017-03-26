@@ -2,12 +2,12 @@ require 'spec_helper'
 require 'pathname'
 
 describe Expando::ApiAi::Updaters::IntentUpdater do
-  let(:intent_name) { 'updateStatus' }
-  let(:intent_names) { [] }
-  let(:intent_path) { '/intents' }
+  let(:intent_name)              { 'updateStatus' }
+  let(:intent_names)             { [] }
+  let(:intent_path)              { '/intents' }
   let(:intent_directory_entries) { ['.', '..', "#{intent_name}.txt", 'removeStatus.txt'] }
-  let(:intent_object) { instance_double(Expando::ApiAi::Objects::Intent) }
-  let(:token) { 's0m3t0k3n' }
+  let(:intent_object)            { instance_double(Expando::ApiAi::Objects::Intent) }
+  let(:token)                    { 's0m3t0k3n' }
 
   subject {
     described_class.new(

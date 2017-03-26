@@ -29,6 +29,7 @@ flag :client_access_token,    desc: 'API.ai Client Access Token'
 flag :developer_access_token, desc: 'API.ai Developer Access Token'
 flag :intents_path,           desc: 'The path to the directory containing intent files'
 flag :entities_path,          desc: 'The path to the directory containing entity files'
+flag :responses_path,         desc: 'The path to the directory containing intent responses files'
 
 # Make credentials globally accessible
 pre do |global_options|
@@ -44,6 +45,9 @@ pre do |global_options|
 
   # The default location of entity source files
   global_options[:entities_path] = File.join(Dir.pwd, 'entities')
+
+  # The default location of intent response source files
+  global_options[:responses_path] = File.join(Dir.pwd, 'responses')
 end
 
 desc 'Update an Api.ai agent\'s entities and/or intents'
@@ -125,7 +129,6 @@ long_desc <<-DESC
   files in the entities and intents directories, respectively.
 DESC
 command [ :list, :l ] do | c |
-
 
   c.desc 'List intents and their associated metadata'
   c.long_desc <<-DESC

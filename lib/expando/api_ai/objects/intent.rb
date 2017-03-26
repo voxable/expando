@@ -5,14 +5,29 @@ module Expando::ApiAi::Objects
   #
   # @see https://docs.api.ai/docs/intents#intent-object
   class Intent < Base
+    # The list of attributes that can be removed from the intent JSON before updating.
+    ATTRIBUTES_TO_REMOVE = %w{auto templates state priority webhookUsed lastUpdate fallbackIntent cortanaCommand}
 
-    # Update this intent on API.ai.
+    # Properly perform all Expando transformations (expansion, annotation) to the
+    # source for the intent, generate a new version of the intent's JSON, and update
+    # it on API.ai.
     def update!
       # Fetch the latest version of the intent from API.ai.
       intent_json = current_version
 
-      # Replace the `userSays` attribute with the properly expanded utterances.
+      # Replace the original utterances with the Expando-processed utterances.
       intent_json[:userSays] = processed_utterances
+
+      # Replace the responses, if a response file exists for this intent.
+      intent_json[:responses] = responses
+
+      # Clean up portions of the JSON response that we don't need in the request
+      ATTRIBUTES_TO_REMOVE.each { |key| intent_json.delete(key.to_sym) }
+
+      response = @api_client.update_intent_request(intent_json)
+
+      handle_response( response, :intent )
+      intent_json
     end
 
     private
@@ -34,10 +49,15 @@ module Expando::ApiAi::Objects
         end
       end
 
-      # Properly perform all Expando transformations (expansion, annotation) to the
-      # source for the intent and generate a new version of the intent's JSON.
-      def to_json
+      def responses
+        if File.exist?(responses_path)
+          responses = File.readlines responses_path
+          responses = responses.collect { |response| response.chomp }
 
+          responsesJson             = json[:responses]
+          responsesJson[0][:speech] = responses
+          json[:responses]          = responsesJson
+        end
       end
 
       # Fetch the existing intent with this name on Api.ai.
@@ -46,20 +66,15 @@ module Expando::ApiAi::Objects
       def current_version
         @@intents ||= @api_client.get_intents_request
 
-        matching_intent = @@intents.select { |intent| intent[:name] == name }
+        matching_intent = @@intents.select { |intent| intent[:name] == @source_file.intent_name }
 
         # TODO: needs an exception class
-        raise "There is no intent named #{name}" if matching_intent.empty?
+        raise "There is no intent named #{@source_file.intent_name}" if matching_intent.empty?
 
         intent_id = matching_intent.first[:id]
 
         Expando::Logger.log "Fetching latest version of #{name} intent"
         @api_client.get_intent_request(intent_id)
-      end
-
-      # @return [String] The name of this intent.
-      def name
-        @name ||= File.split(@source_file.source_path).last.gsub('.txt', '')
       end
   end
 end
