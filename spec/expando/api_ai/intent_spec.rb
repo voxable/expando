@@ -47,7 +47,7 @@ describe Expando::ApiAi::Objects::Intent, mock_logger: true do
       expect(client).to have_received(:get_intent_request).with(get_intent_response[:id])
     end
 
-    context 'when no intent with the same name is found on Api.ai' do
+    context 'when no intent with the same name is found on API.ai' do
       it 'throws an error' do
         allow(source_file).to receive(:intent_name).and_return('foobar')
 
@@ -58,7 +58,7 @@ describe Expando::ApiAi::Objects::Intent, mock_logger: true do
     # TODO: Making this pass required changing get_intent.json so that it's no longer
     # compatible with actual requests. Fix that.
 =begin
-    pending 'constructs proper templates for the Api.ai API call' do
+    pending 'constructs proper templates for the API.ai API call' do
       launch_scan_intent = JSON.parse( File.read( intent_json_fixture_path ), symbolize_names: true )
       utterances = [ 'launch a @scan:scanName', 'run a @scan:scanName' ]
       launch_scan_intent[ :templates ] = utterances
@@ -69,7 +69,7 @@ describe Expando::ApiAi::Objects::Intent, mock_logger: true do
     # Create a new fixture for comparison.
     context 'when expansion tokens are present in the intent source' do
       subject { Expando::IntentUpdater.new( :launchScanWithExpansion, intents_path: intents_fixture_dir ) }
-      it 'constructs a proper templates for the Api.ai API call' do
+      it 'constructs a proper templates for the API.ai API call' do
         launch_scan_intent = JSON.parse( File.read( intent_json_fixture_path ), symbolize_names: true )
         utterances = [
             'launch @scan:scanName',

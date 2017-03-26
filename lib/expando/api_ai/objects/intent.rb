@@ -64,7 +64,7 @@ module Expando::ApiAi::Objects
         Expando::Expander.expand! @responses_file.lines
       end
 
-      # Fetch the existing intent with this name on Api.ai.
+      # Fetch the existing intent with this name on API.ai.
       #
       # @return [Hash] The current version of the intent object on API.ai.
       def current_version

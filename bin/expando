@@ -50,14 +50,14 @@ pre do |global_options|
   global_options[:responses_path] = File.join(Dir.pwd, 'responses')
 end
 
-desc 'Update an Api.ai agent\'s entities and/or intents'
+desc 'Update an API.ai agent\'s entities and/or intents'
 long_desc <<-DESC
-  Update Expando's entities and intents on Api.ai based on the contents of the
+  Update Expando's entities and intents on API.ai based on the contents of the
   files in the entities and intents directories, respectively.
 DESC
 command [ :update, :u ] do | c |
 
-  c.desc "Update an Api.ai agent's entities"
+  c.desc "Update an API.ai agent's entities"
   c.long_desc <<-DESC
     Updates the specified entities. The entity names can be specified after this
     argument in a space delimited list, and should match the file name of the
@@ -93,7 +93,7 @@ command [ :update, :u ] do | c |
     end
   end
 
-  c.desc "Update an Api.ai agent's intents"
+  c.desc "Update an API.ai agent's intents"
   c.long_desc <<-DESC
     Updates the specified intents. The intent names can be specified after this
     argument in a space delimited list, and should match the file name of the

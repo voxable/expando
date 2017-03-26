@@ -1,5 +1,5 @@
 module Expando::ApiAi::Updaters
-  # Responsible for updating entity objects on Api.ai based on the contents of
+  # Responsible for updating entity objects on API.ai based on the contents of
   # files in `/entities`.
   class EntityUpdater < Base
     # !@attribute name
@@ -17,7 +17,7 @@ module Expando::ApiAi::Updaters
       super
     end
 
-    # Update the named entity on Api.ai.
+    # Update the named entity on API.ai.
     #
     # @return [Hash] if request successful. This is the response body.
     # @return [ApiAiRuby::RequestError] if request is in error.

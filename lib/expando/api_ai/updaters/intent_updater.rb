@@ -1,9 +1,9 @@
 require 'json'
 
 module Expando::ApiAi::Updaters
-  # Updates intent objects on Api.ai based on the contents of Expando source files.
+  # Updates intent objects on API.ai based on the contents of Expando source files.
   class IntentUpdater < Base
-    # Update the named entity on Api.ai.
+    # Update the named entity on API.ai.
     #
     # @return [Hash] if request successful. This is the response body.
     # @return [ApiAiRuby::RequestError] if request is in error.

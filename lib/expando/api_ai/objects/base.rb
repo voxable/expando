@@ -16,7 +16,7 @@ module Expando
 
         private
 
-          # Properly handle the response from Api.ai.
+          # Properly handle the response from API.ai.
           #
           # @param [Hash] response The response from `ApiAiRuby::Client`.
           # @param [Symbol] type Either `:intent` or `:entity`, depending on what is
@@ -39,7 +39,7 @@ module Expando
 
           # Determine if the query was successful.
           #
-          # @param [Hash] response The raw response from Api.ai
+          # @param [Hash] response The raw response from API.ai
           # @return [Boolean] `true` if successful, `false` otherwise.
           def successful?(response)
             response && response[:status] && (response[:status][:code] == 200)

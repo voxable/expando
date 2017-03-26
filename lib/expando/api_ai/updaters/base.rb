@@ -35,12 +35,12 @@ module Expando::ApiAi
              default: proc { DEFAULT_RESPONSES_PATH }
 
       # !@attribute developer_access_token
-      #   @return [String] The Api.ai developer access token.
+      #   @return [String] The API.ai developer access token.
       option :developer_access_token, Expando::Types::Strict::String,
              default: proc { ENV['API_AI_DEVELOPER_ACCESS_TOKEN'] }
 
       # !@attribute client_access_token
-      #   @return [String] The Api.ai client access token.
+      #   @return [String] The API.ai client access token.
       option :client_access_token, Expando::Types::Strict::String,
              default: proc { ENV['API_AI_CLIENT_ACCESS_TOKEN'] }
 

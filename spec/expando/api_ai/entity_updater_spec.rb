@@ -30,7 +30,7 @@ describe Expando::ApiAi::EntityUpdater do
       end
     end
 
-    include_examples 'building the Api.ai client'
+    include_examples 'building the API.ai client'
   end
 
   describe '#update!' do
@@ -43,7 +43,7 @@ describe Expando::ApiAi::EntityUpdater do
       expect( File ).to have_received( :read ).with( File.join(entities_fixture_dir, 'appliances.txt' ) )
     end
 
-    it 'constructs a proper entities object for the Api.ai API call' do
+    it 'constructs a proper entities object for the API.ai API call' do
       appliance_entity = [
           {
               name: 'appliances',
@@ -87,7 +87,7 @@ describe Expando::ApiAi::EntityUpdater do
     context 'when expansion tokens are present in the entity source' do
       subject { Expando::ApiAi::EntityUpdater.new( :appliancesWithExpansion, entities_path: entities_fixture_dir ) }
 
-      it 'constructs a proper entities object for the Api.ai API call' do
+      it 'constructs a proper entities object for the API.ai API call' do
         appliance_entity = [
             {
                 name: 'appliancesWithExpansion',
