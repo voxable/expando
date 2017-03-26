@@ -70,26 +70,16 @@ command [ :update, :u ] do | c |
 
     entities.action do | global_options, options, args |
       # Determine path to entity files
-      entities_path_from_options = options[ :entities_path ] || global_options[ :entities_path ]
-
-      if args.empty?
-        entity_names = Dir.entries( entities_path_from_options )[ 2..-1 ].collect { | f | f.gsub( '.txt', '' ) }
-      else
-        entity_names = args
+      if entities_path_from_options = options[:entities_path] || global_options[:entities_path]
+        entities_path_from_options = File.expand_path(entities_path_from_options)
       end
 
-      entity_names.each do | entity |
-        updater = if entities_path_from_options
-                    Expando::ApiAi::Updaters::EntityUpdater.new( entity,
-                                                client_keys:   global_options[ :credentials ],
-                                                entities_path: File.expand_path( entities_path_from_options ) )
-                  else
-                    Expando::ApiAi::Updaters::EntityUpdater.new( entity,
-                                                client_keys:   global_options[ :credentials ])
-                  end
-
-        updater.update!
-      end
+      Expando::ApiAi::Updaters::EntityUpdater.new(
+        args,
+        intents_path:           entities_path_from_options,
+        developer_access_token: global_options[:credentials][:developer_access_token],
+        client_access_token:    global_options[:credentials][:client_access_token]
+      ).update!
     end
   end
 

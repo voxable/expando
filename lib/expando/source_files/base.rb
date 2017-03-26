@@ -11,7 +11,7 @@ module Expando
       #
       # @return [Array<String>] An array of all of the lines in the file.
       def lines
-        File.read(@source_path).lines.collect{ |line| line.chomp }
+        File.read(@source_path).lines.collect{ |line| line.chomp }.reject{ |line| line.strip.empty? }
       end
 
       # Generate the name of the intent based on the name of its associated source file.
