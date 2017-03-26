@@ -36,13 +36,11 @@ module Expando::ApiAi
 
       # !@attribute developer_access_token
       #   @return [String] The API.ai developer access token.
-      option :developer_access_token, Expando::Types::Strict::String,
-             default: proc { ENV['API_AI_DEVELOPER_ACCESS_TOKEN'] }
+      option :developer_access_token, Expando::Types::Strict::String
 
       # !@attribute client_access_token
       #   @return [String] The API.ai client access token.
-      option :client_access_token, Expando::Types::Strict::String,
-             default: proc { ENV['API_AI_CLIENT_ACCESS_TOKEN'] }
+      option :client_access_token, Expando::Types::Strict::String
 
       def update
         raise NotImplementedError, '#update must be overridden in subclass'

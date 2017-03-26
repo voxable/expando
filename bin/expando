@@ -34,10 +34,11 @@ flag :responses_path,         desc: 'The path to the directory containing intent
 # Make credentials globally accessible
 pre do |global_options|
 
-  # TODO: Why are these being repeated in global_options?
   global_options[:credentials] = {
-    client_access_token:    global_options[:client_access_token],
-    developer_access_token: global_options[:developer_access_token]
+    client_access_token:    global_options[:client_access_token] ||
+                              ENV['API_AI_CLIENT_ACCESS_TOKEN'],
+    developer_access_token: global_options[:developer_access_token] ||
+                              ENV['API_AI_DEVELOPER_ACCESS_TOKEN']
   }
 
   # The default location of intent source files
