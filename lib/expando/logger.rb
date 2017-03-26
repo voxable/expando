@@ -17,11 +17,12 @@ module Expando
     # Log a successful update message.
     #
     # @param [Symbol] type The type of update (`:entity` or `:intent`).
+    # @param [String] name The name of the object that was updated.
     #
     # @return [void]
-    def log_successful_update(type)
-      puts "• ".colorize(:blue) + "#{@name} #{type} successfully updated!".colorize(:green)
-      puts "\nExpando:".colorize(:magenta) + ' Api.ai agent updated.'
+    def log_successful_update(type, name)
+      puts "• ".colorize(:blue) + "#{name} #{type} successfully updated!".colorize(:green)
+      puts "Expando:".colorize(:magenta) + " Api.ai agent updated.\n\n"
     end
 
     # Log a failed update message.

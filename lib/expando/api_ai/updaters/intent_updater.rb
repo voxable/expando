@@ -73,7 +73,7 @@ module Expando::ApiAi::Updaters
         end
 
         # Generate an array of full file paths to the requested intent source files.
-        responses_file_paths = responses_file_names.collect { |name| File.join(intents_path, name) }
+        responses_file_paths = responses_file_names.collect { |name| File.join(responses_path, name) }
 
         # Generate a list of Expando::SourceFiles::IntentFile objects for each intent.
         responses_file_paths.collect { |path| Expando::SourceFiles::ResponsesFile.new(path) }
@@ -87,12 +87,18 @@ module Expando::ApiAi::Updaters
       #   The intent responses source files.
       #
       # @return [Array<Expando::ApiAi::Intent>] The generated intent objects.
-      def generate_intents(intent_files:, responses_files:)
+      def generate_intents(intent_files, responses_files)
         intent_files.collect do |intent_file|
           # Find a matching responses file for this intent file, if one exists.
-          responses_files.select { |responses_file| responses_file.intent_name == intent_file.intent_name  }
+          responses_file = responses_files.select do |responses_file|
+            responses_file.intent_name == intent_file.intent_name
+          end.first
 
-          Expando::ApiAi::Objects::Intent.new(source_file: file, responses_file: file, api_client: client)
+          Expando::ApiAi::Objects::Intent.new(
+            source_file:    intent_file,
+            responses_file: responses_file,
+            api_client:     client
+          )
         end
       end
   end

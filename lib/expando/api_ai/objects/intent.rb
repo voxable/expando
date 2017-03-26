@@ -8,6 +8,11 @@ module Expando::ApiAi::Objects
     # The list of attributes that can be removed from the intent JSON before updating.
     ATTRIBUTES_TO_REMOVE = %w{auto templates state priority webhookUsed lastUpdate fallbackIntent cortanaCommand}
 
+    # !@attribute responses_file
+    #   @return [Expando::SourceFiles::ResponsesFile]
+    #     The Expando source file for this intent's responses.
+    option :responses_file
+
     # Properly perform all Expando transformations (expansion, annotation) to the
     # source for the intent, generate a new version of the intent's JSON, and update
     # it on API.ai.
@@ -21,7 +26,7 @@ module Expando::ApiAi::Objects
       intent_json[:userSays] = processed_utterances
 
       # Replace the responses, if a response file exists for this intent.
-      intent_json[:responses][0][:speech] = responses if responses
+      intent_json[:responses][0][:messages][0][:speech] = responses if @responses_file
 
       # Clean up portions of the JSON response that we don't need in the request
       ATTRIBUTES_TO_REMOVE.each { |key| intent_json.delete(key.to_sym) }

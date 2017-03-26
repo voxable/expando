@@ -25,7 +25,7 @@ module Expando
           def handle_response(response, type)
             begin
               if successful?(response)
-                Expando::Logger.log_successful_update(type)
+                Expando::Logger.log_successful_update(type, @source_file.object_name)
               else
                 Expando::Logger.log_failed_update(type, response)
               end
