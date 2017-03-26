@@ -15,10 +15,11 @@ module Expando
   module Expander
     module_function
 
-    # Generate a new `Expander`.
+    # TODO: Improve documentation for method signature.
+    # Expand the text.
     #
     # @param [Array<String>] lines The text to scan and expand.
-    # @return [Array] The expanded text.
+    # @return [Array<String>] The expanded text.
     def expand!( lines )
       expanded_lines = []
 

@@ -7,5 +7,7 @@ module Expando
     COMMENT_MATCHER    = /^\s*#/
     # Any entity references (e.g. @location:locationName)
     ENTITY_REF_MATCHER = /@(\w*):(\w*)/
+    # All characters until the first entity reference.
+    UNTIL_ENTITY_REF_MATCHER = /^(.*?)(?=(@(\w*):(\w*)))/
   end
 end

@@ -8,7 +8,7 @@ module Expando::ApiAi::Objects
     # !@attribute responses_file
     #   @return [Expando::SourceFiles::ResponsesFile]
     #     The Expando source file for this entity's responses.
-    option :responses_file, optional: true, default: proc { nil }
+    option :responses_file, default: proc { nil }
 
     # Properly perform all Expando transformations (expansion) to the source for
     # the entity, generate a new version of the entity's JSON, and update it on API.ai.

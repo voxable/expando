@@ -6,12 +6,17 @@ module Expando::ApiAi::Objects
   # @see https://docs.api.ai/docs/intents#intent-object
   class Intent < Base
     # The list of attributes that can be removed from the intent JSON before updating.
-    ATTRIBUTES_TO_REMOVE = %w{auto templates state priority webhookUsed lastUpdate fallbackIntent cortanaCommand}
+    ATTRIBUTES_TO_REMOVE = %w{auto state priority webhookUsed lastUpdate fallbackIntent cortanaCommand}
 
     # !@attribute responses_file
     #   @return [Expando::SourceFiles::ResponsesFile]
     #     The Expando source file for this intent's responses.
-    option :responses_file, optional: true, default: proc { nil }
+    option :responses_file, default: proc { nil }
+
+    # !@attribute entity_files
+    #   @return [Array<Expando::SourceFiles::EntitiesFile>]
+    #     The Expando entity source files.
+    option :entity_files, default: proc { [] }
 
     # Properly perform all Expando transformations (expansion, annotation) to the
     # source for the intent, generate a new version of the intent's JSON, and update
@@ -22,8 +27,12 @@ module Expando::ApiAi::Objects
       # Fetch the latest version of the intent from API.ai.
       intent_json = current_version
 
-      # Replace the original utterances with the Expando-processed utterances.
-      intent_json[:userSays] = processed_utterances
+      # Replace the original utterances with the Expando-processed utterances, and
+      # their new associated params.
+      intent_json[:templates] = processed_utterances
+      new_user_says, new_params = user_says_value(intent_json[:responses][0][:parameters])
+      intent_json[:userSays]  = new_user_says
+      intent_json[:responses][0][:parameters] = new_params
 
       # Replace the responses, if a response file exists for this intent.
       intent_json[:responses][0][:messages][0][:speech] = responses if @responses_file
@@ -42,17 +51,71 @@ module Expando::ApiAi::Objects
       #
       # @return [Array<Hash>] The new `userSays` attribute.
       def processed_utterances
-        utterances = Expando::Expander.expand! @source_file.lines
+        @processed_utterances ||= Expando::Expander.expand! @source_file.lines
+      end
 
-        utterances.collect do |utterance|
-          {
-            data: [
-              text: utterance
-            ],
-            # TODO: Make this an option
-            isTemplate: false
-          }
+      # TODO: High- document and test
+      def user_says_value(existing_params)
+        additional_params = Set.new(existing_params)
+
+        new_user_says = processed_utterances.collect do |utterance|
+          # If an entity is referenced on this line...
+          if utterance.match(Expando::Tokens::ENTITY_REF_MATCHER)
+            template = utterance.dup
+            data = []
+
+            # For every matching entity reference...
+            utterance.scan(Expando::Tokens::ENTITY_REF_MATCHER).each do |entity_reference|
+              entity_name, parameter_name = entity_reference
+
+              additional_params << {
+                dataType: "@#{entity_name}",
+                name: parameter_name,
+                value: "$#{parameter_name}",
+                isList: false
+              }
+
+              # Find a matching entity file.
+              # TODO: High - throw an error if none.
+              entity_file = @entity_files.select { |entity_file| entity_file.entity_name == entity_name }.first
+              # Grab a random canonical value for the entity.
+              example_entity_value = entity_file.random_canonical_value
+
+              # Add data entries.
+              data << { text: template.match(Expando::Tokens::UNTIL_ENTITY_REF_MATCHER)[0] }
+              data << {
+                text: example_entity_value,
+                alias: parameter_name,
+                meta: "@#{entity_name}",
+                userDefined: true
+              }
+
+              # Remove the processed portions from the template string
+              template.sub!(Expando::Tokens::UNTIL_ENTITY_REF_MATCHER, '')
+              template.sub!(Expando::Tokens::ENTITY_REF_MATCHER, '')
+            end
+
+            # Add everything that remains.
+            data << {
+              text: template
+            }
+
+            {
+              data: data,
+              isTemplate: false
+            }
+          else
+            {
+              data: [
+                text: utterance
+              ],
+              # TODO: Make this an option
+              isTemplate: false
+            }
+          end
         end
+
+        [new_user_says, additional_params.to_a]
       end
 
       # Generate new responses for this intent based on the Expando responses source.

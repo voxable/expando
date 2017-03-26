@@ -11,9 +11,10 @@ module Expando::ApiAi::Updaters
       # Create source file objects for each intent that needs to be updated.
       intent_files    = generate_intent_files(object_names)
       responses_files = generate_responses_files(object_names)
+      entity_files    = generate_entity_files
 
       # Create intent objects for each intent source file.
-      intents = generate_intents(intent_files, responses_files)
+      intents = generate_intents(intent_files, responses_files, entity_files)
 
       # Update each intent.
       intents.each { |intent| intent.update! }
@@ -85,9 +86,11 @@ module Expando::ApiAi::Updaters
       #   The intent source files.
       # @param [Array<Expando::SourceFiles::ResponsesFile>] responses_files
       #   The intent responses source files.
+      # @param [Array<Expando::SourceFiles::EntitiesFile>] entity_files
+      #   The entity source files.
       #
       # @return [Array<Expando::ApiAi::Intent>] The generated intent objects.
-      def generate_intents(intent_files, responses_files)
+      def generate_intents(intent_files, responses_files, entity_files)
         intent_files.collect do |intent_file|
           # Find a matching responses file for this intent file, if one exists.
           responses_file = responses_files.select do |responses_file|
@@ -97,6 +100,7 @@ module Expando::ApiAi::Updaters
           Expando::ApiAi::Objects::Intent.new(
             source_file:    intent_file,
             responses_file: responses_file,
+            entity_files:   entity_files,
             api_client:     client
           )
         end
