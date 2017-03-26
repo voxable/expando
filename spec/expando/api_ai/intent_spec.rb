@@ -19,7 +19,8 @@ describe Expando::ApiAi::Objects::Intent, mock_logger: true do
       lines: [
         'launch a @scan:scanName',
         'run a @scan:scanName'
-      ]
+      ],
+      intent_name: 'launchScan'
     )
   }
 
@@ -48,7 +49,7 @@ describe Expando::ApiAi::Objects::Intent, mock_logger: true do
 
     context 'when no intent with the same name is found on Api.ai' do
       it 'throws an error' do
-        allow(subject).to receive(:name).and_return('foobar')
+        allow(source_file).to receive(:intent_name).and_return('foobar')
 
         expect{ subject.update! }.to raise_error(RuntimeError, 'There is no intent named foobar')
       end

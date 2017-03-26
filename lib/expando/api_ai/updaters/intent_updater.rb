@@ -9,7 +9,7 @@ module Expando::ApiAi::Updaters
     # @return [ApiAiRuby::RequestError] if request is in error.
     def update!
       # Create source file objects for each intent that needs to be updated.
-      intent_files = generate_intent_files(object_names)
+      intent_files    = generate_intent_files(object_names)
       responses_files = generate_responses_files(object_names)
 
       # Create intent objects for each intent source file.
