@@ -11,7 +11,7 @@ module Expando::ApiAi::Objects
     # !@attribute responses_file
     #   @return [Expando::SourceFiles::ResponsesFile]
     #     The Expando source file for this intent's responses.
-    option :responses_file
+    option :responses_file, optional: true, default: proc { nil }
 
     # Properly perform all Expando transformations (expansion, annotation) to the
     # source for the intent, generate a new version of the intent's JSON, and update

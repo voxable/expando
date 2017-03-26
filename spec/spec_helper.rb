@@ -1,4 +1,3 @@
-require 'climate_control'
 require 'simplecov'
 SimpleCov.start
 

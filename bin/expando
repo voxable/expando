@@ -80,11 +80,11 @@ command [ :update, :u ] do | c |
 
       entity_names.each do | entity |
         updater = if entities_path_from_options
-                    Expando::ApiAi::EntityUpdater.new( entity,
+                    Expando::ApiAi::Updaters::EntityUpdater.new( entity,
                                                 client_keys:   global_options[ :credentials ],
                                                 entities_path: File.expand_path( entities_path_from_options ) )
                   else
-                    Expando::ApiAi::EntityUpdater.new( entity,
+                    Expando::ApiAi::Updaters::EntityUpdater.new( entity,
                                                 client_keys:   global_options[ :credentials ])
                   end
 
