@@ -26,7 +26,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'codeclimate-test-reporter', '~> 1.0.5'
 
   # API.ai integration
-  spec.add_runtime_dependency 'voxable-api-ai-ruby', '~> 1.1.0'
+  spec.add_runtime_dependency 'voxable-api-ai-ruby', '~> 1.1.1'
   # CLI framework
   spec.add_runtime_dependency 'gli', '~> 2.14.0'
   # Colorizing output for CLI (TODO: drop for pastel)
