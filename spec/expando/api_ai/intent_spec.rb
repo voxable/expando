@@ -10,12 +10,16 @@ describe Expando::ApiAi::Objects::Intent, mock_logger: true do
                symbolize_names: true)
   }
 
-  let(:intent_json_fixture_path) { File.join( intents_fixture_dir, 'launchScan.json' ) }
+  let(:intent_json_fixture_path) { intent_fixture_file_path('launchScan') }
 
   let(:source_file) {
     instance_double(
       Expando::SourceFiles::IntentFile,
-      source_path: '/intents/launchScan.txt'
+      source_path: '/intents/launchScan.txt',
+      lines: [
+        'launch a @scan:scanName',
+        'run a @scan:scanName'
+      ]
     )
   }
 
@@ -37,10 +41,17 @@ describe Expando::ApiAi::Objects::Intent, mock_logger: true do
 
   describe '#update!' do
     it "fetches the latest version of the intent's JSON from API.ai" do
-      launch_scan_intent = JSON.parse(File.read(intent_json_fixture_path))
       subject.update!
 
-      expect(client).to have_received(:get_intent_request).with(launch_scan_intent['id'])
+      expect(client).to have_received(:get_intent_request).with(get_intent_response[:id])
+    end
+
+    context 'when no intent with the same name is found on Api.ai' do
+      it 'throws an error' do
+        allow(subject).to receive(:name).and_return('foobar')
+
+        expect{ subject.update! }.to raise_error(RuntimeError, 'There is no intent named foobar')
+      end
     end
   end
 end

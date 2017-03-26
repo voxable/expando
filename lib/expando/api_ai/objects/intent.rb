@@ -8,10 +8,31 @@ module Expando::ApiAi::Objects
 
     # Update this intent on API.ai.
     def update!
-      current_version
+      # Fetch the latest version of the intent from API.ai.
+      intent_json = current_version
+
+      # Replace the `userSays` attribute with the properly expanded utterances.
+      intent_json[:userSays] = processed_utterances
     end
 
     private
+
+      # Generate new user utterances based on the Expando source for this intent.
+      #
+      # @return [Array<Hash>] The new `userSays` attribute.
+      def processed_utterances
+        utterances = Expando::Expander.expand! @source_file.lines
+
+        utterances.collect do |utterance|
+          {
+            data: [
+              text: utterance
+            ],
+            # TODO: Make this an option
+            isTemplate: false
+          }
+        end
+      end
 
       # Properly perform all Expando transformations (expansion, annotation) to the
       # source for the intent and generate a new version of the intent's JSON.
