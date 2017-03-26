@@ -6,6 +6,7 @@ require 'awesome_print'
 
 require 'expando/version'
 require 'expando/types'
+require 'expando/logger'
 require 'expando/expander'
 require 'expando/project_template'
 require 'expando/tokens'

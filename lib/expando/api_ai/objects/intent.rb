@@ -6,41 +6,39 @@ module Expando::ApiAi::Objects
   # @see https://docs.api.ai/docs/intents#intent-object
   class Intent < Base
 
+    # Update this intent on API.ai.
     def update!
-
-    end
-
-    # Properly perform all Expando transformations (expansion, annotation) to the
-    # source for the intent and generate a new version of the intent's JSON.
-    def to_json
-
+      current_version
     end
 
     private
 
-    # Fetch the existing intent with this name on Api.ai.
-    #
-    # @return [Hash] The current version of the intent object on API.ai.
-    def current_version
-      unless @@intents
-        log_message 'Fetching intents'
-        @@intents = @client.get_intents_request
+      # Properly perform all Expando transformations (expansion, annotation) to the
+      # source for the intent and generate a new version of the intent's JSON.
+      def to_json
+
       end
 
-      matching_intent = intents.select { |intent| intent[:name] == name }
+      # Fetch the existing intent with this name on Api.ai.
+      #
+      # @return [Hash] The current version of the intent object on API.ai.
+      def current_version
+        @@intents ||= @api_client.get_intents_request
 
-      # TODO: needs an exception class
-      raise "There is no intent named #{name}" if matching_intent.empty?
+        matching_intent = @@intents.select { |intent| intent[:name] == name }
 
-      intent_id = matching_intent.first[:id]
+        # TODO: needs an exception class
+        raise "There is no intent named #{name}" if matching_intent.empty?
 
-      log_message "Fetching latest version of #{name} intent"
-      @client.get_intent_request(intent_id)
-    end
+        intent_id = matching_intent.first[:id]
 
-    # @return [String] The name of this intent.
-    def name
-      @name ||= File.split(@source_path).last.gsub('.txt', '')
-    end
+        Expando::Logger.log "Fetching latest version of #{name} intent"
+        @api_client.get_intent_request(intent_id)
+      end
+
+      # @return [String] The name of this intent.
+      def name
+        @name ||= File.split(@source_file.source_path).last.gsub('.txt', '')
+      end
   end
 end

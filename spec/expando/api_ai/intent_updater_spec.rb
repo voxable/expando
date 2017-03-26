@@ -10,7 +10,7 @@ describe Expando::ApiAi::Updaters::IntentUpdater do
   let(:token) { 's0m3t0k3n' }
 
   subject {
-    Expando::ApiAi::Updaters::IntentUpdater.new(
+    described_class.new(
       intent_names,
       intents_path: 'intents',
       developer_access_token: token,
@@ -44,14 +44,14 @@ describe Expando::ApiAi::Updaters::IntentUpdater do
         subject.update!
       end
     end
-  end
 
-  it "properly generates an API.ai client for this project's agent" do
-    expect(ApiAiRuby::Client).to receive(:new).with(hash_including({
-      developer_access_token: token,
-      client_access_token:    token
-    })).and_return(double('client')).once
+    it "properly generates an API.ai client for this project's agent" do
+      expect(ApiAiRuby::Client).to receive(:new).with(hash_including({
+        developer_access_token: token,
+        client_access_token:    token
+      })).and_return(double('client')).once
 
-    subject.update!
+      subject.update!
+    end
   end
 end

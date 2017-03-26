@@ -6,7 +6,12 @@ $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 require 'expando'
 require 'rspec'
 
+require 'support/shared_contexts/mocked_logger'
+
 RSpec.configure do |config|
+  # Shared contexts
+  config.include_context 'with mocked logger', :mock_logger => true
+
   config.expect_with :rspec do |c|
     c.syntax = :expect
   end
