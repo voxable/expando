@@ -34,9 +34,25 @@
   "responses": [
     {
       "resetContexts": false,
+      "action": "launchScan",
       "affectedContexts": [],
-      "parameters": [],
-      "speech": []
+      "parameters": [
+        {
+          "required": true,
+          "dataType": "@scan",
+          "name": "scanName",
+          "value": "$scanName",
+          "prompts": [
+            "Okay, which scan would you like to run?"
+          ]
+        }
+      ],
+      "messages": [
+        {
+          "type": 0,
+          "speech": ["launching scan"]
+        }
+      ]
     }
   ],
   "priority": 500000,

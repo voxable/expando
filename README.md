@@ -36,6 +36,8 @@ Expando is a translation language for easily defining user utterance examples wh
 * [Syntax](#syntax)
   * [Phrase combination](#phrase-combination)
   * [Optional phrases](#optional-phrases)
+  * [Referencing API.ai developer entities](#referencing-apiai-developer-entities)
+  * [Referencing API.ai system entities](#referencing-apiai-system-entities)
   * [Comments](#comments)
   * [Metadata](#metadata)
 * [Updating API.AI](#updating-apiai)
@@ -180,6 +182,59 @@ what are your hours
 
 Essentially, you're making the last phrase in the set an empty string.
 
+### Referencing API.ai developer entities
+
+If you had the following [API.ai developer entity](https://docs.api.ai/docs/concept-entities#section-developer-entities) `location` in a file `location.txt`:
+
+```
+home, house
+office, business, work
+```
+
+...you could reference that entity using the API.ai [template mode](https://docs.api.ai/docs/concept-intents#section-example-and-template-modes) syntax in an intent `getTemp.txt`:
+
+```
+(what is|tell me) the temperature at @location:locationName
+```
+
+Expando will mimic [API.ai's automatic annotation](https://docs.api.ai/docs/concept-intents#section-automatic-annotation) when you run `expando update intents` and automatically convert the utterances to [template mode](https://docs.api.ai/docs/concept-intents#section-example-and-template-modes) syntax by inserting randomly selected canonical entity values for each referenced entity:
+
+```
+what is the temperature at home
+tell me the temperature at work
+```
+
+Expando will also automatically annotate the above utterances:
+
+```
+what is the temperature at home
+                           ‾‾‾‾
+                           @location:locationName => entity:    location
+                                                     parameter: locationName 
+```
+
+If the message "what is the temperature at home" was received by the API.ai agent, it would recognize the following:
+
+* `intentName`: `getTemp`
+* `locationName`: `home`                         
+
+### Referencing API.ai system entities
+
+You can reference [API.ai system entities](https://docs.api.ai/docs/concept-entities#section-system-entities) within Expando just as you would any other entity:
+
+```
+I need a ride at @sys.time:pickupTime
+```
+
+Expando will perform the same type of automated expansion that it does for developer entities, automatically inserting example values for the entity:
+
+```
+I need a ride at 2pm
+                 ‾‾‾
+                 @sys.time:pickupTime => entity:    @sys.time
+                                         parameter: pickupTime
+```                             
+            
 ### Comments
 
 Starting a line with a `#` indicates that it is a comment, and should be ignored. The following Expando:

@@ -25,35 +25,40 @@ else
   config_file home_directory_config_filename
 end
 
-flag :client_access_token,    desc: 'Api.ai Client Access Token'
-flag :developer_access_token, desc: 'Api.ai Developer Access Token'
+flag :client_access_token,    desc: 'API.ai Client Access Token'
+flag :developer_access_token, desc: 'API.ai Developer Access Token'
 flag :intents_path,           desc: 'The path to the directory containing intent files'
 flag :entities_path,          desc: 'The path to the directory containing entity files'
+flag :responses_path,         desc: 'The path to the directory containing intent responses files'
 
 # Make credentials globally accessible
-pre do | global_options, command, options, args |
+pre do |global_options|
 
-  # TODO: Why are these being repeated in global_options?
-  global_options[ :credentials ] = {
-    client_access_token:    global_options[ :client_access_token ],
-    developer_access_token: global_options[ :developer_access_token ]
+  global_options[:credentials] = {
+    client_access_token:    global_options[:client_access_token] ||
+                              ENV['API_AI_CLIENT_ACCESS_TOKEN'],
+    developer_access_token: global_options[:developer_access_token] ||
+                              ENV['API_AI_DEVELOPER_ACCESS_TOKEN']
   }
 
   # The default location of intent source files
-  global_options[ :intents_path ] = File.join( Dir.pwd, 'intents')
+  global_options[:intents_path] = File.join(Dir.pwd, 'intents')
 
   # The default location of entity source files
-  global_options[ :entities_path ] = File.join( Dir.pwd, 'entities' )
+  global_options[:entities_path] = File.join(Dir.pwd, 'entities')
+
+  # The default location of intent response source files
+  global_options[:responses_path] = File.join(Dir.pwd, 'responses')
 end
 
-desc 'Update an Api.ai agent\'s entities and/or intents'
+desc 'Update an API.ai agent\'s entities and/or intents'
 long_desc <<-DESC
-  Update Expando's entities and intents on Api.ai based on the contents of the
+  Update Expando's entities and intents on API.ai based on the contents of the
   files in the entities and intents directories, respectively.
 DESC
 command [ :update, :u ] do | c |
 
-  c.desc "Update an Api.ai agent's entities"
+  c.desc "Update an API.ai agent's entities"
   c.long_desc <<-DESC
     Updates the specified entities. The entity names can be specified after this
     argument in a space delimited list, and should match the file name of the
@@ -66,30 +71,20 @@ command [ :update, :u ] do | c |
 
     entities.action do | global_options, options, args |
       # Determine path to entity files
-      entities_path_from_options = options[ :entities_path ] || global_options[ :entities_path ]
-
-      if args.empty?
-        entity_names = Dir.entries( entities_path_from_options )[ 2..-1 ].collect { | f | f.gsub( '.txt', '' ) }
-      else
-        entity_names = args
+      if entities_path_from_options = options[:entities_path] || global_options[:entities_path]
+        entities_path_from_options = File.expand_path(entities_path_from_options)
       end
 
-      entity_names.each do | entity |
-        updater = if entities_path_from_options
-                    Expando::EntityUpdater.new( entity,
-                                                client_keys:   global_options[ :credentials ],
-                                                entities_path: File.expand_path( entities_path_from_options ) )
-                  else
-                    Expando::EntityUpdater.new( entity,
-                                                client_keys:   global_options[ :credentials ])
-                  end
-
-        updater.update!
-      end
+      Expando::ApiAi::Updaters::EntityUpdater.new(
+        args,
+        intents_path:           entities_path_from_options,
+        developer_access_token: global_options[:credentials][:developer_access_token],
+        client_access_token:    global_options[:credentials][:client_access_token]
+      ).update!
     end
   end
 
-  c.desc "Update an Api.ai agent's intents"
+  c.desc "Update an API.ai agent's intents"
   c.long_desc <<-DESC
     Updates the specified intents. The intent names can be specified after this
     argument in a space delimited list, and should match the file name of the
@@ -97,31 +92,21 @@ command [ :update, :u ] do | c |
     all intents are updated.
   DESC
   c.arg 'intent intent[ intent]*'
-  c.command :intents do | intents |
+  c.command :intents do |intents|
     intents.flag :intents_path, desc: 'The path to the directory containing intent files'
 
-    intents.action do | global_options, options, args |
+    intents.action do |global_options, options, args|
       # Determine path to intent files
-      intents_path_from_options = options[ :intents_path ] || global_options[ :intents_path ]
-
-      if args.empty?
-        intent_names = Dir.entries( intents_path_from_options )[ 2..-1 ].collect { | f | f.gsub( '.txt', '' ) }
-      else
-        intent_names = args
+      if intents_path_from_options = options[:intents_path] || global_options[:intents_path]
+        intents_path_from_options = File.expand_path(intents_path_from_options)
       end
 
-      intent_names.each do | intent |
-        updater = if intents_path_from_options
-                    Expando::IntentUpdater.new( intent,
-                                                client_keys:   global_options[ :credentials ],
-                                                intents_path:  File.expand_path( intents_path_from_options ) )
-                  else
-                    Expando::IntentUpdater.new( intent,
-                                                client_keys:   global_options[ :credentials ])
-                  end
-
-        updater.update!
-      end
+      Expando::ApiAi::Updaters::IntentUpdater.new(
+        args,
+        intents_path:           intents_path_from_options,
+        developer_access_token: global_options[:credentials][:developer_access_token],
+        client_access_token:    global_options[:credentials][:client_access_token]
+      ).update!
     end
   end
 
@@ -135,7 +120,6 @@ long_desc <<-DESC
   files in the entities and intents directories, respectively.
 DESC
 command [ :list, :l ] do | c |
-
 
   c.desc 'List intents and their associated metadata'
   c.long_desc <<-DESC

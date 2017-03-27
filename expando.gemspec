@@ -20,16 +20,24 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency 'bundler', '~> 1.9'
   spec.add_development_dependency 'rake', '~> 10.0'
-  spec.add_development_dependency 'rspec', '~> 3.4.0'
+  spec.add_development_dependency 'rspec', '~> 3.5.0'
   spec.add_development_dependency 'rspec_junit_formatter', '~> 0.2.2'
-  spec.add_development_dependency 'climate_control', '~> 0.0.3'
   spec.add_development_dependency 'simplecov', '~> 0.13.0'
   spec.add_development_dependency 'codeclimate-test-reporter', '~> 1.0.5'
 
-  spec.add_runtime_dependency 'voxable-api-ai-ruby', '~> 1.1.0'
+  # API.ai integration
+  spec.add_runtime_dependency 'voxable-api-ai-ruby', '~> 1.1.1'
+  # CLI framework
   spec.add_runtime_dependency 'gli', '~> 2.14.0'
+  # Colorizing output for CLI (TODO: drop for pastel)
   spec.add_runtime_dependency 'colorize', '~> 0.8.1'
+  # Pretty-printing hashes for CLI
   spec.add_runtime_dependency 'awesome_print', '~> 1.7.0'
+  # Parsing arbitrary front-matter metadata for CLI
   spec.add_runtime_dependency 'front_matter_parser', '~> 0.0.4'
+  # Outputting intent lists for CLI
   spec.add_runtime_dependency 'tty-table', '~> 0.8.0'
+  # dry-rb framework
+  spec.add_runtime_dependency 'dry-initializer', '~> 1.3.0'
+  spec.add_runtime_dependency 'dry-types', '0.9.4'
 end

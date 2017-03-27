@@ -18,7 +18,12 @@
           ]
         }
       ],
-      "speech": "okay, launching $scanName scan"
+      "messages": [
+        {
+          "type": 0,
+          "speech": ["launching scan"]
+        }
+      ]
     }
   ]
 }
