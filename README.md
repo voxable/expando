@@ -117,8 +117,6 @@ It's also possible to create expandable entity examples in the same manner. A fi
 
 ## Syntax
 
-Currently, Expando supports phrase combinations, and optional phrases.
-
 ### Phrase combination
 
 Using the above example, we could include the following line of Expando in the file `intents/openHours.txt`:
