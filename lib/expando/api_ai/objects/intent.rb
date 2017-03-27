@@ -54,7 +54,7 @@ module Expando::ApiAi::Objects
         @processed_utterances ||= Expando::Expander.expand! @source_file.lines
       end
 
-      # TODO: High- document and test
+      # TODO: High- document, test, and decompose
       def user_says_value(existing_params)
         additional_params = Set.new(existing_params)
 
@@ -66,7 +66,7 @@ module Expando::ApiAi::Objects
 
             # For every matching entity reference...
             utterance.scan(Expando::Tokens::ENTITY_REF_MATCHER).each do |entity_reference|
-              entity_name, parameter_name = entity_reference
+              entity_name, is_system_entity, parameter_name = entity_reference
 
               additional_params << {
                 dataType: "@#{entity_name}",
@@ -75,11 +75,8 @@ module Expando::ApiAi::Objects
                 isList: false
               }
 
-              # Find a matching entity file.
-              # TODO: High - throw an error if none.
-              entity_file = @entity_files.select { |entity_file| entity_file.entity_name == entity_name }.first
-              # Grab a random canonical value for the entity.
-              example_entity_value = entity_file.random_canonical_value
+              # Find a random value to use for the entity.
+              example_entity_value = example_entity_value(entity_name, is_system_entity)
 
               # Add data entries.
               data << { text: template.match(Expando::Tokens::UNTIL_ENTITY_REF_MATCHER)[0] }
@@ -116,6 +113,29 @@ module Expando::ApiAi::Objects
         end
 
         [new_user_says, additional_params.to_a]
+      end
+
+      # Find a random value for the given entity.
+      #
+      # @param entity_name [String] The name of the entity.
+      # @param is_system_entity [Boolean] true if this is an API.ai system entity.
+      #
+      # @return [String] The random entity value.
+      def example_entity_value(entity_name, is_system_entity)
+        # If this is a system entity...
+        if is_system_entity
+          # ...grab a random canonical value for the entity.
+
+          return Expando::ApiAi::SystemEntityExamples::VALUES[entity_name].sample
+
+        # If this is a developer entity...
+        else
+          # ...find a matching entity file.
+          # TODO: High - throw an error if none.
+          entity_file = @entity_files.select { |entity_file| entity_file.entity_name == entity_name }.first
+          # Grab a random canonical value for the entity.
+          return entity_file.random_canonical_value
+        end
       end
 
       # Generate new responses for this intent based on the Expando responses source.
