@@ -6,20 +6,20 @@
   <a title="Gem Version" href="https://rubygems.org/gems/expando">
     <img src="https://img.shields.io/gem/v/expando.svg" />
   </a>
-   <a title="Linux Build Status" href="https://travis-ci.org/expando-lang/expando">
-    <img src="https://img.shields.io/travis/expando-lang/expando/master.svg?label=Linux%20build" />
+   <a title="Linux Build Status" href="https://travis-ci.org/voxable-labs/expando">
+    <img src="https://img.shields.io/travis/voxable-labs/expando/master.svg?label=Linux%20build" />
   </a>
-  <a title="Code Climate" href="https://codeclimate.com/github/expando-lang/expando">
-    <img src="https://img.shields.io/codeclimate/github/expando-lang/expando.svg" />
+  <a title="Code Climate" href="https://codeclimate.com/github/voxable-labs/expando">
+    <img src="https://img.shields.io/codeclimate/github/voxable-labs/expando.svg" />`
   </a>
-  <a title="Test Coverage" href="https://codeclimate.com/github/expando-lang/expando/coverage">
-    <img src="https://img.shields.io/codeclimate/coverage/github/expando-lang/expando.svg" />
+  <a title="Test Coverage" href="https://codeclimate.com/github/voxable-labs/expando/coverage">
+    <img src="https://img.shields.io/codeclimate/coverage/github/voxable-labs/expando.svg" />
   </a>
-  <a title="Dependency Status" href="https://gemnasium.com/expando-lang/expando">
-    <img src="https://img.shields.io/gemnasium/expando-lang/expando.svg" />
+  <a title="Dependency Status" href="https://gemnasium.com/voxable-labs/expando">
+    <img src="https://img.shields.io/gemnasium/voxable-labs/expando.svg" />
   </a>
-  <a title="Security" href="https://hakiri.io/github/expando-lang/expando/master">
-    <img src="https://hakiri.io/github/expando-lang/expando/master.svg" />
+  <a title="Security" href="https://hakiri.io/github/voxable-labs/expando/master">
+    <img src="https://hakiri.io/github/voxable-labs/expando/master.svg" />
   </a>
 </p>
 
@@ -294,7 +294,7 @@ $ expando update --help
 
 ## Documentation
 
-Documentation for the source code of the `expando` gem itself can be viewed [here](http://www.rubydoc.info/github/expando-lang/expando/master).
+Documentation for the source code of the `expando` gem itself can be viewed [here](http://www.rubydoc.info/github/voxable-labs/expando/master).
 
 ## Credits
 
