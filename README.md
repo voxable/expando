@@ -37,7 +37,7 @@ Expando is a translation language for easily defining user utterance examples wh
   * [Phrase combination](#phrase-combination)
   * [Optional phrases](#optional-phrases)
   * [Referencing API.ai developer entities](#referencing-apiai-developer-entities)
-  * [Adding API.ai text responses](#adding-apiai-responses)
+  * [Adding API.ai text responses](#adding-apiai-text-responses)
   * [Comments](#comments)
   * [Metadata](#metadata)
 * [Updating API.AI](#updating-apiai)
