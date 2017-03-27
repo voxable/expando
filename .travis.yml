@@ -1,41 +1,14 @@
 script: bundle exec rspec spec
 cache: bundler
 language: ruby
-
 rvm:
-  - 2.3.1
-  - 2.2.5
-  - jruby-9.1.2.0
-
+- 2.3.1
+- 2.2.5
+- jruby-9.1.2.0
 addons:
   code_climate:
     repo_token:
-      secure: "\
-        oWhRGUKEW/qCflibguhoCNW0WDpsHEtgChlBR6gV7xW2fch2H9LHDXeAwfezlLLHt\
-        SQYLM+YWqx5rPODnA3qccvrrFGq1cPYkTzdA9aovlrHTQP1Kq9DCFOga8CDXcnAsN\
-        jYVZbqBMqOKCk4zHcSkD4SsxhmOUZ35P2E3zhMofO8eQ6Dvx8mYaQ4hy3cd+x+ksW\
-        MHRjTM0eMabIefF14SftDmVO18VCldN7JscoKNt15BFzsxKN+Llnq1eKZqjQpjNgC\
-        UtZvyeoA1gUliK/qRLL3FZz+XmKr1y0N15uxRIM2SHd6sxSfs2LLayPEbd826xSuH\
-        ZDGJTNlxJEZIfyRNdR5I15BZ/lytGCNINkilaG7bczhMuglBkxSKjZ3Gyn3P4Rq2a\
-        QKkCqBGbKaCskF4FKiSTCny6l9sP5GGfcdlhb6YhIH4bapiMyQT2Y+QvkwucgT3Om\
-        tO1JY7gaJyIhA5w8szsa2EOfkGlMxnGxhZWwbDeF62BmuaVNCWym7FdC7GsFoul4+\
-        UZjQy0MtvL1C8oAfi4LucSw7GCX9mY1ImW2jOhatMWN46B8tXxiLaoFnt+VarpZC6\
-        BEX8bHUPspabfrsBlnwzJbmTWdTyltDWFRisbZKMAC8BRnwxCjhlhv8yCrQ19/vjj\
-        apFnmj0CRNLKbvevi2nFwVB+wAHRPWbuw=\
-      "
-
+      secure: EwSE5H3lIVnA0OlIZ4Qa3KE2bS6eCC458WNqMqgXEllf8FXU//vY2kynskRTQ3PsmO9q0k5LMxkeC5KXPf6nZjuITJ+4efiXL+BhLT50EMJo7OHQdR/sGptFdWl+oTBecWx26OISIfZVb4sVddxW19YDv5JjV5vI+GmBTUzpcdMzH3uwGIuIey/9Zh0wYpx8O/DGLjX0oWQl7nERgy3Rbcxth3u87pYrTn5o5nXqzQn35WoUGpa0MyqUHxAtWI8TqwSD5zCYi74SuVR3mnaj0QtJNAlPrSdzZ4E+mBzxJCvToRZtSlZmMhbt38ypoVLJ64a+lwtAQuWy6Yg924/AGVK2ovibnGSng9hefxYB2P8hTKYRNCwlfxIY66U0FwbI1yFMRlI+cAlMWkAGjZLwl/lZ9ky203vN+ReRcmq2Ryrzw/15yAE2UG+aKAO/WEJbd0DKTsmFPv+O7OVnQWboVv7QNaUcSCy9toicEEPAMlt8yRHe6NX+feNbDMCCzBN2dbZPofgVyYJk956s+Z+3CKZP9OUzYv6DD90SlHsBVsEIgkxh+0RN9twc7hLo42MVFFKy624o50QgFz6W4Tv3J1sRxuCr6kEg6YHkL8XD9Ovqe6XSoggHtDks1GmFIa0rreuwckRT4zYyw0NCkJJwbxKwr8SK+kjcNCLCDw2h708=
 notifications:
   flowdock:
-    secure: "\
-      tTIHwkZu67u3G4wkSYmN0suFk34RKLRX6njmP1JgtYzofTM8y07DyYj0viBbeBAFOV6\
-      TZrhmRhzShd5HwCNaHjYBY/CbLxaJyUgd96J5uw7Z2whOX4egETALuDl1sekjOBXeJp\
-      UQ7UtxhhcMLeAZUGafXOJJ0qP27bjpeij0sgOfYf/3Wad+EJA2ADdgwm3iVZ7lB2DFo\
-      /s2OD/XBf2EDDj8YVU8vZde/FpCZMLV1WGYvzTPhH1Umuni+OlCHsYCLajZ5kuKBswC\
-      9T5Rkx2Ad0gEoMsnZPLgqunsFgi+kkpWRHN+9O4zmG1LfllrRE+cNIPk3kK6J2MyC+Q\
-      FEHpLKfyW8mEsVov3+yDJm/N9+tgQhp+X22UIo4AK4uVBwghpNytYU8O2UgACpk4tPH\
-      K5X/q6nLJRuCzf9bxBzdQO9+oMgr/Scz+9hdRfEer8T59W0YyMuErJc9OxqnWw61JvR\
-      +9eMztpeNdh4XldkAIymG7QjXBJk3l0CkUbhDaJMhiTjDuyuCrFrMp0sDfo//5K4IR/\
-      lF01iYsSFYaPknkYiPXRpcbIRHBQILMRX/ALUUbfNSd3VUwP5V/oYCUEnWlkalxvzWg\
-      7IpwWlZbxqp5N2UR4egeR+1Pn4SW8Sry/BusNox5idrXGc2jS19VVspoLy260Z7ILg9\
-      +oEcVztS3wu3c=\
-    "
+    secure: XHbGGBBN9XBMcAEr+NR1kzQUsLhXdolZ5hW0LIkf0oM1dkpPBrm7m3hKMZXq2OdwouUa0mgrt2Yz1T21mXX7bI//or92lVgWd/a1ptQcL/SN2j7/fN0PvD0KZWbY74poZU8I+hatKPXpVWGB5jsFlpROFAmTTvLz9T2XHNnQm91B7IQjbKRc/6p+2ZoW0avlsUgcUbtih5aitJj30xuwzVXVcaWb/bzuloMz5B3L3kw6tsgTzyJCr1x/BJBsxJQI8jVEzOtc09XNEbeQD9ZQl+7DRN51Q1iq1PiubpIgfNgpyTgqQvPp614T7yiPmvvypBkb6apN4BSJupaeWc8UTjroZvtUNCUQaefzYB/P3zXOS/ZGmXbD3Me3V5KTNpmZ5fx8MbUzTeU5iH4pVHvuf9oiVGah4vlDA2aUjk6PIxdAUVf7jE4/wbNYSi4TlH/DqBGBc1HB6M3/toVJ+BVqnZSfbOwpQOJv2ZY7OLI81uVmMgUyUeUKVxIjSb5YDhH7jh/cNS/FdHGCgMKKTLvJmNoIHKL8Y0dgH3bZWh7yzKpCpkkyXrqZSuAEtSD7Oc5u5QRZWtC9vfi61UFXBgyfbTh/nwgJ+OXZ2JyFjBgCPbs4EvH+0OZaPLFhpDNKTOs/aDHekdXnO0+SNPGxKb2w4Tb5GxKnK+Q2ZXOHETATMt8=
