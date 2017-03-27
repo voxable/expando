@@ -28,7 +28,7 @@ Gem::Specification.new do |spec|
   # API.ai integration
   spec.add_runtime_dependency 'voxable-api-ai-ruby', '~> 1.1.1'
   # CLI framework
-  spec.add_runtime_dependency 'gli', '~> 2.14.0'
+  spec.add_runtime_dependency 'gli', '~> 2.16.0'
   # Colorizing output for CLI (TODO: drop for pastel)
   spec.add_runtime_dependency 'colorize', '~> 0.8.1'
   # Pretty-printing hashes for CLI

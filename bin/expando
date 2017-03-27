@@ -65,7 +65,10 @@ command [ :update, :u ] do | c |
     specific entity in the entities directory. If no entity name is specified,
     all entities are updated.
   DESC
-  c.arg 'entity entity[ entity]*'
+  c.arg 'entity[ entity]*'
+  c.example 'expando update entities', desc: 'Update all intents on API.ai'
+  c.example 'expando update entities location artist',
+            desc: 'Update the location and artist entities on API.ai'
   c.command :entities do | entities |
     entities.flag :entities_path, desc: 'The path to the directory containing entity files'
 
@@ -91,7 +94,10 @@ command [ :update, :u ] do | c |
     specific intent in the intents directory. If no intent name is specified,
     all intents are updated.
   DESC
-  c.arg 'intent intent[ intent]*'
+  c.arg 'intent[ intent]*'
+  c.example 'expando update intents', desc: 'Update all intents on API.ai'
+  c.example 'expando update intents canIReturn openHours',
+            desc: 'Update the canIReturn and openHours intents on API.ai'
   c.command :intents do |intents|
     intents.flag :intents_path, desc: 'The path to the directory containing intent files'
 
@@ -125,6 +131,7 @@ command [ :list, :l ] do | c |
   c.long_desc <<-DESC
     List intents and their associated YAML front-matter metadata.
   DESC
+  c.example 'expando list intents', desc: 'List the metadata for all intents'
   c.command :intents do |intents|
     intents.flag :intents_path, desc: 'The path to the directory containing intent files'
 
@@ -199,6 +206,8 @@ long_desc <<-DESC
   current working directory.
 DESC
 command [ :init, :i ] do | c |
+  c.example 'expando init .', desc: 'Initialize an Expando project in the current directory.'
+
   c.action do
     Expando::ProjectTemplate.init!
   end
