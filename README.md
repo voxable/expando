@@ -37,7 +37,7 @@ Expando is a translation language for easily defining user utterance examples wh
   * [Phrase combination](#phrase-combination)
   * [Optional phrases](#optional-phrases)
   * [Referencing API.ai developer entities](#referencing-apiai-developer-entities)
-  * [Referencing API.ai system entities](#referencing-apiai-system-entities)
+  * [Adding API.ai text responses](#adding-apiai-responses)
   * [Comments](#comments)
   * [Metadata](#metadata)
 * [Updating API.AI](#updating-apiai)
@@ -216,24 +216,22 @@ what is the temperature at home
 If the message "what is the temperature at home" was received by the API.ai agent, it would recognize the following:
 
 * `intentName`: `getTemp`
-* `locationName`: `home`                         
+* `locationName`: `home`                                                      
 
-### Referencing API.ai system entities
+### Adding API.ai text responses
 
-You can reference [API.ai system entities](https://docs.api.ai/docs/concept-entities#section-system-entities) within Expando just as you would any other entity:
+Expando supports adding [API.ai text responses](https://docs.api.ai/docs/concept-intents#section-text-responses) to your intents. In the `responses` directory of your project, create a file with the same name as an existing intent, with one response per line (up to a maximum of 10):
 
-```
-I need a ride at @sys.time:pickupTime
-```
-
-Expando will perform the same type of automated expansion that it does for developer entities, automatically inserting example values for the entity:
+`responses/canIReturn.txt`:
 
 ```
-I need a ride at 2pm
-                 ‾‾‾
-                 @sys.time:pickupTime => entity:    @sys.time
-                                         parameter: pickupTime
-```                             
+Definitely! We'll gladly help with your return.
+Sure thing! I can help you with that.
+```
+
+Upon running `expando update intent canIReturn` to update the intent, these text responses will be added to the API.ai agent for the intent.
+
+All relevant Expando syntax is supported in these files (i.e. everything except [entity referencing](#referencing-apiai-developer-entities). 
             
 ### Comments
 
