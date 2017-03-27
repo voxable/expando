@@ -1,7 +1,10 @@
 # Change Log
 
-**Added:**
+## Unreleased
 
+- Enable [automatic entity referencing and annotation features](https://github.com/voxable-labs/expando#referencing-apiai-developer-entities for API.ai) [PR #6](https://github.com/voxable-labs/expando/pull/6)
+- Surface API.ai responses functionality [PR #6](https://github.com/voxable-labs/expando/pull/6)
+- Refactor `IntentUpdater` and `EntityUpdater` [PR #6](https://github.com/voxable-labs/expando/pull/6)
 - Enable YAML metadata storage for intents. See b2b56af
 
 ## [v0.2.3](https://github.com/expando-lang/expando/tree/v0.2.3) (2016-01-12)
