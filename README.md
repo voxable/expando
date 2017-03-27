@@ -10,7 +10,7 @@
     <img src="https://img.shields.io/travis/voxable-labs/expando/master.svg?label=Linux%20build" />
   </a>
   <a title="Code Climate" href="https://codeclimate.com/github/voxable-labs/expando">
-    <img src="https://img.shields.io/codeclimate/github/voxable-labs/expando.svg" />`
+    <img src="https://img.shields.io/codeclimate/github/voxable-labs/expando.svg" />
   </a>
   <a title="Test Coverage" href="https://codeclimate.com/github/voxable-labs/expando/coverage">
     <img src="https://img.shields.io/codeclimate/coverage/github/voxable-labs/expando.svg" />
