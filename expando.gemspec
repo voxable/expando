@@ -23,7 +23,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rspec', '~> 3.5.0'
   spec.add_development_dependency 'rspec_junit_formatter', '~> 0.2.2'
   spec.add_development_dependency 'simplecov', '~> 0.13.0'
-  spec.add_development_dependency 'codeclimate-test-reporter', '~> 1.0.5'
+  spec.add_development_dependency 'codeclimate-test-reporter', '~> 1.0.8'
 
   # API.ai integration
   spec.add_runtime_dependency 'voxable-api-ai-ruby', '~> 1.1.1'
