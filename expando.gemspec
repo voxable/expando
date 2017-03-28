@@ -20,10 +20,16 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency 'bundler', '~> 1.9'
   spec.add_development_dependency 'rake', '~> 10.0'
+  # Testing
   spec.add_development_dependency 'rspec', '~> 3.5.0'
+  # Formatting test results for Travis CI
   spec.add_development_dependency 'rspec_junit_formatter', '~> 0.2.2'
+  # Measuring code coverage
   spec.add_development_dependency 'simplecov', '~> 0.13.0'
+  # Push coverage results to Code Climate
   spec.add_development_dependency 'codeclimate-test-reporter', '~> 1.0.8'
+  # Code style checking
+  spec.add_development_dependency 'rubocop', '~> 0.48'
 
   # API.ai integration
   spec.add_runtime_dependency 'voxable-api-ai-ruby', '~> 1.1.1'
