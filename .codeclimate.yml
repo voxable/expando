@@ -5,21 +5,17 @@ engines:
     config:
       languages:
       - ruby
-      - javascript
-      - python
-      - php
   fixme:
     enabled: true
+  # Disabled for the moment, due to Code Climate bug.
   rubocop:
+    enabled: false
+  brakeman:
+    enabled: true
+  bundler-audit:
     enabled: true
 ratings:
   paths:
-  - "**.inc"
-  - "**.js"
-  - "**.jsx"
-  - "**.module"
-  - "**.php"
-  - "**.py"
   - "**.rb"
 exclude_paths:
 - spec/

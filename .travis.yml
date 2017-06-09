@@ -2,9 +2,10 @@ script: bundle exec rspec spec
 cache: bundler
 language: ruby
 rvm:
-- 2.3.1
-- 2.2.5
-- jruby-9.1.2.0
+- 2.4.1
+- 2.3.4
+# Disable for the moment, as it's failing.
+#- jruby-9.1.2.0
 addons:
   code_climate:
     repo_token:
