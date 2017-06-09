@@ -134,7 +134,7 @@ DEPENDENCIES
   rake (~> 10.0)
   rspec (~> 3.5.0)
   rspec_junit_formatter (~> 0.2.2)
-  rubocop (~> 0.48)
+  rubocop (~> 0.49.1)
   simplecov (~> 0.13.0)
 
 BUNDLED WITH

@@ -16,3 +16,6 @@
 .ruby-version
 .ruby-gemset
 
+# RuboCop config cache file
+.rubocop-https---raw-githubusercontent-com-voxable-labs-ruby-style-guide-master--rubocop-yml
+
