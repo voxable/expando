@@ -29,7 +29,7 @@ Gem::Specification.new do |spec|
   # Push coverage results to Code Climate
   spec.add_development_dependency 'codeclimate-test-reporter', '~> 1.0.8'
   # Code style checking
-  spec.add_development_dependency 'rubocop', '~> 0.48'
+  spec.add_development_dependency 'rubocop', '~> 0.49.1'
 
   # API.ai integration
   spec.add_runtime_dependency 'voxable-api-ai-ruby', '~> 1.1.1'
