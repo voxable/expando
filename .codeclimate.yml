@@ -17,7 +17,7 @@ engines:
     config:
       file: "rubocop-code-climate.yml"
   brakeman:
-    enabled: true
+    enabled: false
   bundler-audit:
     enabled: true
 ratings:
