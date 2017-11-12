@@ -24,6 +24,12 @@ module Expando
           'from 1 till 3 of May',
           'in 2 days'
         ],
+        'sys.given-name' => [
+          'Matthew',
+          'Jim',
+          'Robert',
+          'Lauren'
+        ],
         'sys.time' => [
           '1 pm',
           '20:30',
