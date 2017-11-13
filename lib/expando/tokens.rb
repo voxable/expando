@@ -6,8 +6,8 @@ module Expando
     # Any line beginning with a '#' as its first non-whitespace character.
     COMMENT_MATCHER    = /^\s*#/
     # Any entity references (e.g. @location:locationName or @sys.any:name)
-    ENTITY_REF_MATCHER = /@((sys\.)?\w*):(\w*)/
+    ENTITY_REF_MATCHER = /@((sys\.)?(\w|-)*):(\w*)/
     # All characters until the first entity reference.
-    UNTIL_ENTITY_REF_MATCHER = /^(.*?)(?=(@((sys\.)?\w*):(\w*)))/
+    UNTIL_ENTITY_REF_MATCHER = /^(.*?)(?=(@((sys\.)?(\w|-)*):(\w*)))/
   end
 end
