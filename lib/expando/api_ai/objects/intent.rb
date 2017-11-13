@@ -66,7 +66,7 @@ module Expando::ApiAi::Objects
 
             # For every matching entity reference...
             utterance.scan(Expando::Tokens::ENTITY_REF_MATCHER).each do |entity_reference|
-              entity_name, is_system_entity, parameter_name = entity_reference
+              entity_name, is_system_entity, last_letter, parameter_name = entity_reference
 
               additional_params << {
                 dataType: "@#{entity_name}",
@@ -83,8 +83,7 @@ module Expando::ApiAi::Objects
               data << {
                 text: example_entity_value,
                 alias: parameter_name,
-                meta: "@#{entity_name}",
-                userDefined: true
+                meta: "@#{entity_name}"
               }
 
               # Remove the processed portions from the template string
