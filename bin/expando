@@ -201,6 +201,43 @@ command [ :list, :l ] do | c |
   end
 end
 
+desc "Import a Dialogflow agent's existing intents/entities"
+long_desc <<-DESC
+  Import an existing agent's intents or entities into your Expando project.
+DESC
+command [:import, :i] do |c|
+  c.desc 'Import an intent from an existing Dialogflow agent'
+  c.long_desc <<-DESC
+    Imports the specified intents. The intent names can be specified after this
+    argument in a space delimited list, and should match the name of the intent
+    in the Dialogflow agent.
+  DESC
+  c.arg 'intent[ intent]*'
+  c.example 'expando import intents canIReturn openHours',
+            desc: 'Import the canIReturn and openHours intents from Dialogflow'
+  c.command :intents do |intents|
+    intents.flag :intents_path, desc: 'The path to the directory containing intent files'
+
+    intents.action do |global_options, options, args|
+      # TODO: Should be a helper method.
+      # Determine path to intent files
+      if intents_path_from_options = options[:intents_path] || global_options[:intents_path]
+        intents_path_from_options = File.expand_path(intents_path_from_options)
+      end
+
+      puts 'hello!'
+=begin
+      Expando::ApiAi::Updaters::IntentImporter.new(
+        args,
+        intents_path:           intents_path_from_options,
+        developer_access_token: global_options[:credentials][:developer_access_token],
+        client_access_token:    global_options[:credentials][:client_access_token]
+      ).update!
+=end
+    end
+  end
+end
+
 desc 'Initialize a new Expando project'
 long_desc <<-DESC
   Create the necessary files and directories for a new Expando project in the
