@@ -18,8 +18,10 @@ module Expando
 
           # Properly handle the response from API.ai.
           #
-          # @param [Hash] response The response from `ApiAiRuby::Client`.
-          # @param [Symbol] type Either `:intent` or `:entity`, depending on what is
+          # @param [Hash] response
+          #   The response from `ApiAiRuby::Client`.
+          # @param [Symbol] type
+          #   Either `:intent` or `:entity`, depending on what is
           #   being updated.
           # @return [void]
           def handle_response(response, type)

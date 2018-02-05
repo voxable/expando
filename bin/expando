@@ -188,11 +188,12 @@ command [ :list, :l ] do | c |
       # Render the table.
       table = TTY::Table.new table_headers, table_data
       renderer = TTY::Table::Renderer::Unicode.new(
-        table,
-        border: {
-          style: :magenta
-        },
-        multiline: true
+        table,{
+          border: {
+            style: :magenta
+          },
+          multiline: true
+        }
       )
 
       puts renderer.render
