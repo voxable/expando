@@ -3,8 +3,12 @@ module Expando
     module SystemEntityExamples
       # Example system entity values to use when replacing/annotating entity values.
       #
-      # @see https://docs.api.ai/docs/concept-entities#section-system-entities
+      # @see https://dialogflow.com/docs/reference/system-entities
       VALUES = {
+        'sys.unit-currency' => [
+          '5 dollars',
+          '25 pounds'
+        ],
         'sys.date-time' => [
           'Tomorrow',
           '5:30 pm',
@@ -29,6 +33,17 @@ module Expando
           'Jim',
           'Robert',
           'Lauren'
+        ],
+        'sys.number-integer' => [
+          '1',
+          '34',
+          '5'
+        ],
+        'sys.number' => [
+          'ten',
+          'twenty',
+          'tenth',
+          'third'
         ],
         'sys.time' => [
           '1 pm',
