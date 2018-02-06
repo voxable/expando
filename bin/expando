@@ -225,15 +225,13 @@ command [:import, :i] do |c|
         intents_path_from_options = File.expand_path(intents_path_from_options)
       end
 
-      puts 'hello!'
-=begin
+
       Expando::ApiAi::Updaters::IntentImporter.new(
         args,
         intents_path:           intents_path_from_options,
         developer_access_token: global_options[:credentials][:developer_access_token],
         client_access_token:    global_options[:credentials][:client_access_token]
       ).update!
-=end
     end
   end
 end

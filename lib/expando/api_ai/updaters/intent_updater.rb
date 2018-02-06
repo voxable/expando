@@ -29,7 +29,7 @@ module Expando::ApiAi::Updaters
       #
       # @return [Array<Expando::SourceFiles::IntentFile>] The generated file objects.
       def generate_intent_files(intent_names = nil)
-        # TODO: Throw an error when a non-existing intent is requested.
+        # TODO: Throw an error when a nonexistent intent is requested.
 
         # Get a list of all intent file names.
         intent_file_names = Dir.entries(intents_path)[2..-1]
