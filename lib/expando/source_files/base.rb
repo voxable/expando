@@ -11,7 +11,7 @@ module Expando
 
       # !@attribute id
       #   @return [String] The Dialogflow ID of this object.
-      option :id, Expando::Types::Strict::String, optional: true
+      option :id, Expando::Types::Strict::String.optional, optional: true
 
       # Generate an array of strings for each line in the file.
       #
