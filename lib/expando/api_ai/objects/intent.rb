@@ -68,6 +68,8 @@ module Expando::ApiAi::Objects
           line
         end
 
+      Expando::Logger.log "Generating source file for #{source_file.intent_name} intent"
+
       # Write the new Expando source to the intent file.
       File.open(source_file.source_path, 'w') do |f|
         f.puts(source_lines)

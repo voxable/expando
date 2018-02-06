@@ -34,12 +34,15 @@ module Expando
         #
         # @return [Array<Expando::SourceFiles::IntentFile>]
         #   The generated file objects.
-        def generate_intent_files(intent_names = nil)
-          Expando::Logger.log "Generating intent source files"
+        def generate_intent_files(intent_names = [])
+          Expando::Logger.log 'Generating intent source files'
 
           # TODO: High- handle error case
           # Fetch the list of intents.
           intents = client.get_intents_request
+
+          # Import every intent if none specified.
+          intent_names = intents.collect { |i| i[:name] } if intent_names.empty?
 
           # For every intent name...
           intent_names.collect do |intent_name|
