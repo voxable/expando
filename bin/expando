@@ -226,12 +226,12 @@ command [:import, :i] do |c|
       end
 
 
-      Expando::ApiAi::Updaters::IntentImporter.new(
+      Expando::ApiAi::Importers::IntentImporter.new(
         args,
         intents_path:           intents_path_from_options,
         developer_access_token: global_options[:credentials][:developer_access_token],
         client_access_token:    global_options[:credentials][:client_access_token]
-      ).update!
+      ).import!
     end
   end
 end

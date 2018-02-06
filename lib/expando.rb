@@ -23,5 +23,6 @@ require 'expando/api_ai/objects/entity'
 require 'expando/api_ai/updaters/base'
 require 'expando/api_ai/updaters/entity_updater'
 require 'expando/api_ai/updaters/intent_updater'
+require 'expando/api_ai/importers/intent_importer'
 
 module Expando; end
