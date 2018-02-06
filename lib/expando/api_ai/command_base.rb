@@ -44,6 +44,14 @@ module Expando
       # !@attribute client_access_token
       #   @return [String] The API.ai client access token.
       option :client_access_token, Expando::Types::Strict::String
+
+      # @return [APIAiRuby::Client] An API.ai API client for this project's agent.
+      def client
+        @client ||= ApiAiRuby::Client.new({
+          client_access_token:    client_access_token,
+          developer_access_token: developer_access_token
+        })
+      end
     end
   end
 end
