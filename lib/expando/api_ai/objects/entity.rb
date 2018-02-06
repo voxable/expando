@@ -1,7 +1,8 @@
 module Expando::ApiAi::Objects
-  # Initialized with a hash representing an existing API.ai entity, and the path
-  # to an Expando file for that entity, generates the JSON for a new version of
-  # the entity.
+  # Initialized with a hash representing an existing API.ai entity, and
+  # (optionally) the path to an Expando file for that entity, can either
+  # generate the JSON for a new version of the entity or import the existing
+  # entity to an Expando source file.
   #
   # @see https://docs.api.ai/docs/entities#entity-object
   class Entity < Base
@@ -20,6 +21,26 @@ module Expando::ApiAi::Objects
       response = @api_client.update_entities_request(entity_json)
 
       handle_response(response, :entity)
+    end
+
+    # Import the existing entity into an Expando source file.
+    def import!
+      # Fetch the latest version of the entity from API.ai.
+      entity_json = current_version
+
+      # For each entry...
+      source_lines =
+        entity_json[:entries].collect do |entry|
+          # Generate a new source line.
+          line = entry[:synonyms].join(', ')
+        end
+
+      Expando::Logger.log "Generating source file for #{source_file.entity_name} entity"
+
+      # Write the new Expando source to the intent file.
+      File.open(source_file.source_path, 'w') do |f|
+        f.puts(source_lines)
+      end
     end
 
     private
@@ -56,6 +77,26 @@ module Expando::ApiAi::Objects
 
         # Join the line back together
         expanded_entities.join(',')
+      end
+    end
+
+    # Fetch the existing entity with this name on Dialogflow.
+    #
+    # @return [Hash]
+    #   The current version of the entity object on Dialogflow.
+    def current_version
+      @retries = 1
+      begin
+        @api_client.get_entity_request(@id)
+      rescue HTTP::Error => e
+        # Periodically, these requests will fail with "Unknown mime type: text/plain"
+        if @retries < 3
+          @retries += 1
+          current_version
+        else
+          puts e.inspect
+          puts e.backtrace
+        end
       end
     end
   end

@@ -1,7 +1,8 @@
 module Expando::ApiAi::Objects
-  # Initialized with a hash representing an existing API.ai intent, and the path
-  # to an Expando file for that intent, can either generate the JSON for a new
-  # version of the intent, or import the existing intent to a source file.
+  # Initialized with a hash representing an existing API.ai intent, and
+  # (optionally) the path to an Expando file for that intent, can either
+  # generate the JSON for a new version of the intent, or import the existing
+  # intent to an Expando source file.
   #
   # @see https://docs.api.ai/docs/intents#intent-object
   class Intent < Base
@@ -46,6 +47,8 @@ module Expando::ApiAi::Objects
     end
 
     # Import the existing intent into an Expando source file.
+    #
+    # @return [void]
     def import!
       # Fetch the latest version of the intent from API.ai.
       intent_json = current_version
@@ -181,6 +184,9 @@ module Expando::ApiAi::Objects
       #
       # @return [Hash] The current version of the intent object on API.ai.
       def current_version
+        # TODO: High - if this is an import command, we should already have an
+        # ID, and can fetch by that, instead.
+
         @@intents ||= @api_client.get_intents_request
 
         matching_intent = @@intents.select { |intent| intent[:name] == @source_file.intent_name }

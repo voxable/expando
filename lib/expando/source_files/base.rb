@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Expando
   module SourceFiles
     # The base class for all Expando source files
@@ -6,6 +8,10 @@ module Expando
 
       # The path to the Expando source file.
       param :source_path, Expando::Types::Strict::String
+
+      # !@attribute id
+      #   @return [String] The Dialogflow ID of this object.
+      option :id, Expando::Types::Strict::String, optional: true
 
       # Generate an array of strings for each line in the file.
       #

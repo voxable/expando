@@ -16,24 +16,5 @@ module Expando::ApiAi::Updaters
       # Update each entity.
       entities.each(&:update!)
     end
-
-    private
-
-    # Generate `Expando::ApiAi::Entity` objects for each passed entity
-    # source file.
-    #
-    # @param [Array<Expando::SourceFiles::EntityFile>] entity_files
-    #   The entity source files.
-    #
-    # @return [Array<Expando::ApiAi::Entity>]
-    #   The generated entity objects.
-    def generate_entities(entity_files)
-      entity_files.collect do |entity_file|
-        Expando::ApiAi::Objects::Entity.new(
-          source_file:    entity_file,
-          api_client:     client
-        )
-      end
-    end
   end
 end

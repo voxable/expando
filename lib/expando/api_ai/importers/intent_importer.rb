@@ -1,4 +1,4 @@
-require 'json'
+# frozen_string_literal: true
 
 module Expando
   module ApiAi

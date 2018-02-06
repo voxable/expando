@@ -32,7 +32,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rubocop', '~> 0.49.1'
 
   # API.ai integration
-  spec.add_runtime_dependency 'voxable-api-ai-ruby', '~> 1.1.1'
+  spec.add_runtime_dependency 'voxable-api-ai-ruby', '~> 2.1.1'
   # CLI framework
   spec.add_runtime_dependency 'gli', '~> 2.16.0'
   # Colorizing output for CLI (TODO: drop for pastel)

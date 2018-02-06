@@ -206,6 +206,8 @@ long_desc <<-DESC
   Import an existing agent's intents or entities into your Expando project.
 DESC
 command [:import, :i] do |c|
+  # TODO: On "import", should import both intents and entities (all).
+
   c.desc 'Import an intent from an existing Dialogflow agent'
   c.long_desc <<-DESC
     Imports the specified intents. The intent names can be specified after this
@@ -227,10 +229,39 @@ command [:import, :i] do |c|
         intents_path_from_options = File.expand_path(intents_path_from_options)
       end
 
-
       Expando::ApiAi::Importers::IntentImporter.new(
         args,
         intents_path:           intents_path_from_options,
+        developer_access_token: global_options[:credentials][:developer_access_token],
+        client_access_token:    global_options[:credentials][:client_access_token]
+      ).import!
+    end
+  end
+
+  c.desc 'Import an entity from an existing Dialogflow agent'
+  c.long_desc <<-DESC
+    Imports the specified entities. The entity names can be specified after this
+    argument in a space delimited list, and should match the name of the entity
+    in the Dialogflow agent.
+  DESC
+  c.arg 'entity[ entity]*'
+  c.example 'expando import entities canIReturn openHours',
+            desc: 'Import the location and artist entities from Dialogflow'
+  c.command :entities do |entities|
+    entities.flag :entities_path, desc: 'The path to the directory containing entity files'
+
+    # TODO: High - need to add a confirmation step, since this is destructive.
+
+    entities.action do |global_options, options, args|
+      # TODO: Should be a helper method.
+      # Determine path to entity files
+      if entities_path_from_options = options[:entities_path] || global_options[:entities_path]
+        entities_path_from_options = File.expand_path(entities_path_from_options)
+      end
+
+      Expando::ApiAi::Importers::EntityImporter.new(
+        args,
+        entities_path:           entities_path_from_options,
         developer_access_token: global_options[:credentials][:developer_access_token],
         client_access_token:    global_options[:credentials][:client_access_token]
       ).import!

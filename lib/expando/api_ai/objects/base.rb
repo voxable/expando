@@ -5,7 +5,6 @@ module Expando
       class Base
         extend ::Dry::Initializer
 
-
         # !@attribute source_file
         #   @return [Expando::SourceFiles::IntentFile, Expando::SourceFiles::EntityFile]
         #     The Expando source file for this object.
@@ -14,6 +13,10 @@ module Expando
         # !@attribute api_client
         #   @return [ApiAiRuby::Client] An API.ai API client for this project's agent.
         option :api_client
+
+        # !@attribute id
+        #   @return [String] The Dialogflow ID of this object.
+        option :id, Expando::Types::Strict::String, optional: true
 
         private
 
