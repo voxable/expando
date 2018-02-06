@@ -218,6 +218,8 @@ command [:import, :i] do |c|
   c.command :intents do |intents|
     intents.flag :intents_path, desc: 'The path to the directory containing intent files'
 
+    # TODO: High - need to add a confirmation step, since this is destructive.
+
     intents.action do |global_options, options, args|
       # TODO: Should be a helper method.
       # Determine path to intent files

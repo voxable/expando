@@ -5,6 +5,7 @@ module Expando
       class Base
         extend ::Dry::Initializer
 
+
         # !@attribute source_file
         #   @return [Expando::SourceFiles::IntentFile, Expando::SourceFiles::EntityFile]
         #     The Expando source file for this object.

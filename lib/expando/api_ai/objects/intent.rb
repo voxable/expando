@@ -1,7 +1,7 @@
 module Expando::ApiAi::Objects
   # Initialized with a hash representing an existing API.ai intent, and the path
-  # to an Expando file for that intent, generates the JSON for a new version of
-  # the intent.
+  # to an Expando file for that intent, can either generate the JSON for a new
+  # version of the intent, or import the existing intent to a source file.
   #
   # @see https://docs.api.ai/docs/intents#intent-object
   class Intent < Base
@@ -43,6 +43,35 @@ module Expando::ApiAi::Objects
       response = @api_client.update_intent_request(intent_json)
 
       handle_response(response, :intent)
+    end
+
+    # Import the existing intent into an Expando source file.
+    def import!
+      # Fetch the latest version of the intent from API.ai.
+      intent_json = current_version
+
+      # For each utterance...
+      source_lines =
+        intent_json[:userSays].collect do |utterance|
+          line = ""
+
+          # Create a templatized version of the line in Expando.
+          utterance[:data].each do |portion|
+            line <<
+              if portion[:alias] && portion[:meta]
+                "#{portion[:meta]}:#{portion[:alias]}"
+              else
+                portion[:text]
+              end
+          end
+
+          line
+        end
+
+      # Write the new Expando source to the intent file.
+      File.open(source_file.source_path, 'w') do |f|
+        f.puts(source_lines)
+      end
     end
 
     private

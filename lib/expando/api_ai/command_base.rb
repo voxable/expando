@@ -45,12 +45,45 @@ module Expando
       #   @return [String] The API.ai client access token.
       option :client_access_token, Expando::Types::Strict::String
 
+      protected
+
+      # @private
       # @return [APIAiRuby::Client] An API.ai API client for this project's agent.
       def client
         @client ||= ApiAiRuby::Client.new({
           client_access_token:    client_access_token,
           developer_access_token: developer_access_token
         })
+      end
+
+      # Generate `Expando::ApiAi::Intent` objects for each passed intent source
+      # file.
+      #
+      # @private
+      #
+      # @param [Array<Expando::SourceFiles::IntentFile>] intent_files
+      #   The intent source files.
+      # @param [Array<Expando::SourceFiles::ResponsesFile>] responses_files
+      #   The intent responses source files.
+      # @param [Array<Expando::SourceFiles::EntitiesFile>] entity_files
+      #   The entity source files.
+      #
+      # @return [Array<Expando::ApiAi::Intent>]
+      #   The generated intent objects.
+      def generate_intents(intent_files, responses_files = [], entity_files = [])
+        intent_files.collect do |intent_file|
+          # Find a matching responses file for this intent file, if one exists.
+          responses_file = responses_files.select { |file|
+            file.intent_name == intent_file.intent_name
+          }.first
+
+          Expando::ApiAi::Objects::Intent.new(
+            source_file:    intent_file,
+            responses_file: responses_file,
+            entity_files:   entity_files,
+            api_client:     client
+          )
+        end
       end
     end
   end

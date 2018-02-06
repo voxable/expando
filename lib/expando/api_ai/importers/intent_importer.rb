@@ -15,8 +15,11 @@ module Expando
           # Create source file objects for each intent that needs to be imported.
           intent_files = generate_intent_files(object_names)
 
+          # Create intent objects for each intent source file.
+          intents = generate_intents(intent_files)
+
           # Import each intent.
-          object_names.each { |intent| import_intent(intent) }
+          intents.each(&:import!)
         end
 
         private
@@ -32,6 +35,8 @@ module Expando
         # @return [Array<Expando::SourceFiles::IntentFile>]
         #   The generated file objects.
         def generate_intent_files(intent_names = nil)
+          Expando::Logger.log "Generating intent source files"
+
           # TODO: High- handle error case
           # Fetch the list of intents.
           intents = client.get_intents_request
@@ -51,20 +56,8 @@ module Expando
             FileUtils.touch(intent_file_path)
 
             # Create the intent file object.
-            Expando::SourceFiles::IntentFile.new(intent_file_path)
+            Expando::SourceFiles::IntentFile.new(intent_file_path, id: intent[:id])
           end
-        end
-
-        # Import an intent to a file in the Expando repo.
-        #
-        # @private
-        #
-        # @param [String] intent
-        #   The name of the intent to import.
-        #
-        # @return [void]
-        def import_intent(intent)
-
         end
       end
     end
