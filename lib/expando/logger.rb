@@ -22,7 +22,7 @@ module Expando
     # @return [void]
     def log_successful_update(type, name)
       puts "• ".colorize(:blue) + "#{name} #{type} successfully updated!".colorize(:green)
-      puts "Expando:".colorize(:magenta) + " API.ai agent updated.\n\n"
+      puts "Expando:".colorize(:magenta) + " Dialogflow agent updated.\n\n"
     end
 
     # Log a failed update message.
