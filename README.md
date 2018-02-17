@@ -268,7 +268,7 @@ I'm feeling grand
 
 ### Metadata
 
-You can store arbitrary metadata on your intents in the form of YAML front-matter:
+You can store arbitrary metadata on your intents and entities in the form of YAML front-matter:
 
 ```ruby
 # ---

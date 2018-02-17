@@ -47,7 +47,9 @@ module Expando::ApiAi::Objects
     # @return [Array<String>] The expanded list of entities.
     def processed_entities
       # For each line in the file...
-      @source_file.lines.collect do |line|
+      @source_file.lines.collect { |line|
+        next nil if line.match(Expando::Tokens::COMMENT_MATCHER)
+
         # ...split the entities by commas.
         entities = line.split(',')
 
@@ -56,6 +58,26 @@ module Expando::ApiAi::Objects
 
         # Join the line back together
         expanded_entities.join(',')
+      }.reject(&:nil?)
+    end
+
+    # Fetch the existing entity with this name on Dialogflow.
+    #
+    # @return [Hash]
+    #   The current version of the entity object on Dialogflow.
+    def current_version
+      @retries = 1
+      begin
+        @api_client.get_entity_request(@id)
+      rescue StandardError => e
+        # Periodically, these requests will fail with "Unknown mime type: text/plain"
+        if @retries < 3
+          @retries += 1
+          current_version
+        else
+          puts e.inspect
+          puts e.backtrace
+        end
       end
     end
   end
