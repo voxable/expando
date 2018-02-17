@@ -54,6 +54,12 @@ module Expando
         'sys.any' => [
           'anything',
           'this is many words'
+        ],
+        'sys.time-period' => [
+          'morning',
+          'in the afternoon',
+          'evening',
+          'at night'
         ]
       }
     end
