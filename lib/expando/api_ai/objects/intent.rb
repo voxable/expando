@@ -32,7 +32,7 @@ module Expando::ApiAi::Objects
       # their new associated params.
       intent_json[:templates] = processed_utterances
       new_user_says, new_params = user_says_value(intent_json[:responses][0][:parameters])
-      intent_json[:userSays]  = new_user_says
+      intent_json[:userSays] = new_user_says
       intent_json[:responses][0][:parameters] = new_params
 
       # Replace the responses, if a response file exists for this intent.
@@ -40,6 +40,9 @@ module Expando::ApiAi::Objects
 
       # Clean up portions of the JSON response that we don't need in the request
       ATTRIBUTES_TO_REMOVE.each { |key| intent_json.delete(key.to_sym) }
+
+      # Remove the params table from the request, to avoid doubling all params.
+      intent_json[:responses].each { |resp| resp.delete(:parameters) }
 
       response = @api_client.update_intent_request(intent_json)
 
