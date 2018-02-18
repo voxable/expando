@@ -41,9 +41,6 @@ module Expando::ApiAi::Objects
       # Clean up portions of the JSON response that we don't need in the request
       ATTRIBUTES_TO_REMOVE.each { |key| intent_json.delete(key.to_sym) }
 
-      # Remove the params table from the request, to avoid doubling all params.
-      intent_json[:responses].each { |resp| resp.delete(:parameters) }
-
       response = @api_client.update_intent_request(intent_json)
 
       handle_response(response, :intent)
@@ -105,12 +102,19 @@ module Expando::ApiAi::Objects
           utterance.scan(Expando::Tokens::ENTITY_REF_MATCHER).each do |entity_reference|
             entity_name, is_system_entity, last_letter, parameter_name = entity_reference
 
-            additional_params << {
-              dataType: "@#{entity_name}",
-              name: parameter_name,
-              value: "$#{parameter_name}",
-              isList: false
-            }
+            param_data_type = "@#{entity_name}"
+            param_value = "$#{parameter_name}"
+
+            # Unless the param is already in the list...
+            unless additional_params.select { |p| p[:name] == parameter_name }.first
+              # ...add the new param to the list of params.
+              additional_params << {
+                dataType: param_data_type,
+                name: parameter_name,
+                value: param_value,
+                isList: false
+              }
+            end
 
             # Find a random value to use for the entity.
             example_entity_value = example_entity_value(entity_name, is_system_entity)

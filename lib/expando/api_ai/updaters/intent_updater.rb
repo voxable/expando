@@ -3,7 +3,7 @@
 require 'json'
 
 module Expando::ApiAi::Updaters
-  # Updates intent objects on API.ai based on the contents of Expando source files.
+  # Updates intent objects on Dialogflow based on the contents of Expando source files.
   class IntentUpdater < Base
     # Update the named intent on API.ai.
     #

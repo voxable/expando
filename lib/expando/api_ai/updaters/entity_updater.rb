@@ -1,5 +1,5 @@
 module Expando::ApiAi::Updaters
-  # Responsible for updating entity objects on API.ai based on the contents of
+  # Responsible for updating entity objects on Dialogflow based on the contents of
   # files in `/entities`.
   class EntityUpdater < Base
     # Update the named entity on API.ai.
