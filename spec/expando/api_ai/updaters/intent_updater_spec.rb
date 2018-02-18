@@ -46,7 +46,7 @@ describe Expando::ApiAi::Updaters::IntentUpdater do
     end
 
     it "properly generates an API.ai client for this project's agent" do
-      expect(ApiAiRuby::Client).to receive(:new).with(hash_including({
+      expect(VoxableApiAiRuby::Client).to receive(:new).with(hash_including({
         developer_access_token: token,
         client_access_token:    token
       })).and_return(double('client')).once

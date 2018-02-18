@@ -11,6 +11,7 @@
 - Enable [referencing API.ai system entities](referencing-apiai-system-entities) [\#8]
 - Enable using comments and YAML frontmatter in entities. See 173baff
 - Fix bug that doubled the parameters on each intent update. See c7afe7d
+- Bump forked version of Dialogflow gem b597851
 
 ## [v0.2.3](https://github.com/expando-lang/expando/tree/v0.2.3) (2016-01-12)
 [Full Changelog](https://github.com/expando-lang/expando/compare/v0.2.2...v0.2.3)

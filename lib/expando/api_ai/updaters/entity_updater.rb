@@ -5,7 +5,7 @@ module Expando::ApiAi::Updaters
     # Update the named entity on API.ai.
     #
     # @return [Hash] if request successful. This is the response body.
-    # @return [ApiAiRuby::RequestError] if request is in error.
+    # @return [VoxableApiAiRuby::RequestError] if request is in error.
     def update!
       # Create source file objects for each entity that needs to be updated.
       entity_files = generate_entity_files(object_names)

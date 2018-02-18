@@ -34,7 +34,7 @@ describe Expando::ApiAi::Objects::Intent, mock_logger: true do
   }
 
   before(:example) do
-    allow(ApiAiRuby::Client).to receive(:new).with(anything()).and_return(@client)
+    allow(VoxableApiAiRuby::Client).to receive(:new).with(anything()).and_return(@client)
     allow(client).to receive(:update_intent_request)
     allow(client).to receive(:get_intents_request).and_return(get_intents_response)
     allow(client).to receive(:get_intent_request).with(anything()).and_return(get_intent_response)
