@@ -48,9 +48,9 @@ module Expando::ApiAi
 
       private
 
-        # @return [APIAiRuby::Client] An API.ai API client for this project's agent.
+        # @return [VoxableApiAiRuby::Client] An API.ai API client for this project's agent.
         def client
-          @client ||= ApiAiRuby::Client.new({
+          @client ||= VoxableApiAiRuby::Client.new({
             client_access_token:    client_access_token,
             developer_access_token: developer_access_token
           })

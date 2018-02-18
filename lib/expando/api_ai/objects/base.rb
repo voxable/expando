@@ -11,7 +11,7 @@ module Expando
         option :source_file
 
         # !@attribute api_client
-        #   @return [ApiAiRuby::Client] An API.ai API client for this project's agent.
+        #   @return [VoxableApiAiRuby::Client] An API.ai API client for this project's agent.
         option :api_client
 
         private
@@ -19,7 +19,7 @@ module Expando
           # Properly handle the response from API.ai.
           #
           # @param [Hash] response
-          #   The response from `ApiAiRuby::Client`.
+          #   The response from `VoxableApiAiRuby::Client`.
           # @param [Symbol] type
           #   Either `:intent` or `:entity`, depending on what is
           #   being updated.
