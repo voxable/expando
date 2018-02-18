@@ -9,7 +9,7 @@ module Expando
         #
         # @return [Boolean]
         #   `true` if request successful.
-        # @return [ApiAiRuby::RequestError]
+        # @return [VoxableApiAiRuby::RequestError]
         #   If request is in error.
         def import!
           # Create source file objects for each intent that needs to be imported.
