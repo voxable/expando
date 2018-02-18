@@ -81,123 +81,127 @@ module Expando::ApiAi::Objects
 
     private
 
-      # Generate new user utterances based on the Expando source for this intent.
-      #
-      # @return [Array<Hash>] The new `userSays` attribute.
-      def processed_utterances
-        @processed_utterances ||= Expando::Expander.expand! @source_file.lines
-      end
+    # Generate new user utterances based on the Expando source for this intent.
+    #
+    # @return [Array<Hash>] The new `userSays` attribute.
+    def processed_utterances
+      @processed_utterances ||= Expando::Expander.expand! @source_file.lines
+    end
 
-      # TODO: High- document, test, and decompose
-      def user_says_value(existing_params)
-        additional_params = Set.new(existing_params)
+    # TODO: High- document, test, and decompose
+    def user_says_value(existing_params)
+      additional_params = Set.new(existing_params)
 
-        new_user_says = processed_utterances.collect do |utterance|
-          # If an entity is referenced on this line...
-          if utterance.match(Expando::Tokens::ENTITY_REF_MATCHER)
-            template = utterance.dup
-            data = []
+      new_user_says = processed_utterances.collect do |utterance|
+        # If an entity is referenced on this line...
+        if utterance.match(Expando::Tokens::ENTITY_REF_MATCHER)
+          template = utterance.dup
+          data = []
 
-            # For every matching entity reference...
-            utterance.scan(Expando::Tokens::ENTITY_REF_MATCHER).each do |entity_reference|
-              entity_name, is_system_entity, last_letter, parameter_name = entity_reference
+          # For every matching entity reference...
+          utterance.scan(Expando::Tokens::ENTITY_REF_MATCHER).each do |entity_reference|
+            entity_name, is_system_entity, last_letter, parameter_name = entity_reference
 
-              additional_params << {
-                dataType: "@#{entity_name}",
-                name: parameter_name,
-                value: "$#{parameter_name}",
-                isList: false
-              }
+            additional_params << {
+              dataType: "@#{entity_name}",
+              name: parameter_name,
+              value: "$#{parameter_name}",
+              isList: false
+            }
 
-              # Find a random value to use for the entity.
-              example_entity_value = example_entity_value(entity_name, is_system_entity)
+            # Find a random value to use for the entity.
+            example_entity_value = example_entity_value(entity_name, is_system_entity)
 
-              # Add data entries.
-              data << { text: template.match(Expando::Tokens::UNTIL_ENTITY_REF_MATCHER)[0] }
-              data << {
-                text: example_entity_value,
-                alias: parameter_name,
-                meta: "@#{entity_name}"
-              }
-
-              # Remove the processed portions from the template string
-              template.sub!(Expando::Tokens::UNTIL_ENTITY_REF_MATCHER, '')
-              template.sub!(Expando::Tokens::ENTITY_REF_MATCHER, '')
-            end
-
-            # Add everything that remains.
+            # Add data entries.
+            data << { text: template.match(Expando::Tokens::UNTIL_ENTITY_REF_MATCHER)[0] }
             data << {
-              text: template
+              text: example_entity_value,
+              alias: parameter_name,
+              meta: "@#{entity_name}"
             }
 
-            {
-              data: data,
-              isTemplate: false
-            }
-          else
-            {
-              data: [
-                text: utterance
-              ],
-              # TODO: Make this an option
-              isTemplate: false
-            }
+            # Remove the processed portions from the template string
+            template.sub!(Expando::Tokens::UNTIL_ENTITY_REF_MATCHER, '')
+            template.sub!(Expando::Tokens::ENTITY_REF_MATCHER, '')
           end
-        end
 
-        [new_user_says, additional_params.to_a]
+          # Add everything that remains.
+          data << {
+            text: template
+          }
+
+          {
+            data: data,
+            isTemplate: false
+          }
+        else
+          {
+            data: [
+              text: utterance
+            ],
+            # TODO: Make this an option
+            isTemplate: false
+          }
+        end
       end
 
-      # Find a random value for the given entity.
-      #
-      # @param entity_name [String] The name of the entity.
-      # @param is_system_entity [Boolean] true if this is an API.ai system entity.
-      #
-      # @return [String] The random entity value.
-      def example_entity_value(entity_name, is_system_entity)
-        # If this is a system entity...
-        if is_system_entity
-          # ...grab a random canonical value for the entity.
+      [new_user_says, additional_params.to_a]
+    end
 
-          return Expando::ApiAi::SystemEntityExamples::VALUES[entity_name].sample
+    # Find a random value for the given entity.
+    #
+    # @param entity_name [String] The name of the entity.
+    # @param is_system_entity [Boolean] true if this is an API.ai system entity.
+    #
+    # @return [String] The random entity value.
+    def example_entity_value(entity_name, is_system_entity)
+      # If this is a system entity...
+      if is_system_entity
+        # ...grab a random canonical value for the entity.
+
+        Expando::ApiAi::SystemEntityExamples::VALUES[entity_name].sample
 
         # If this is a developer entity...
-        else
-          # ...find a matching entity file.
-          # TODO: High - throw an error if none.
-          entity_file = @entity_files.select { |entity_file| entity_file.entity_name == entity_name }.first
-          # Grab a random canonical value for the entity.
-          return entity_file.random_canonical_value
-        end
+      else
+        # ...find a matching entity file.
+        # TODO: High - throw an error if none.
+        entity_file =
+          @entity_files
+            .select { |entity_file| entity_file.entity_name == entity_name }
+            .first
+
+        # Grab a random canonical value for the entity.
+        entity_file.random_canonical_value
       end
+    end
 
-      # Generate new responses for this intent based on the Expando responses source.
-      #
-      # @return [Array<String>] The new responses.
-      def responses
-        return false unless @responses_file
+    # Generate new responses for this intent based on the Expando responses source.
+    #
+    # @return [Array<String>] The new responses.
+    def responses
+      return false unless @responses_file
 
-        Expando::Expander.expand! @responses_file.lines
-      end
+      Expando::Expander.expand! @responses_file.lines
+    end
 
-      # Fetch the existing intent with this name on API.ai.
-      #
-      # @return [Hash] The current version of the intent object on API.ai.
-      def current_version
-        # TODO: High - if this is an import command, we should already have an
-        # ID, and can fetch by that, instead.
+    # Fetch the existing intent with this name on Dialogflow.
+    #
+    # @return [Hash] The current version of the intent object on Dialogflow.
+    def current_version
+      # TODO: High - if this is an import command, we should already have an
+      # ID, and can fetch by that, instead.
 
-        @@intents ||= @api_client.get_intents_request
+      @@intents ||= @api_client.get_intents_request
 
-        matching_intent = @@intents.select { |intent| intent[:name] == @source_file.intent_name }
+      matching_intent = @@intents.select { |intent| intent[:name] == @source_file.intent_name }
 
-        # TODO: needs an exception class
-        raise "There is no intent named #{@source_file.intent_name}" if matching_intent.empty?
+      # TODO: needs an exception class
+      raise "There is no intent named #{@source_file.intent_name}" if matching_intent.empty?
 
-        intent_id = matching_intent.first[:id]
+      intent_id = matching_intent.first[:id]
 
-        Expando::Logger.log "Fetching latest version of #{@source_file.intent_name} intent"
-        @api_client.get_intent_request(intent_id)
-      end
+      Expando::Logger.log "Fetching latest version of #{@source_file.intent_name} intent"
+      @api_client.get_intent_request(intent_id)
+    end
   end
 end

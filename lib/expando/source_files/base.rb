@@ -13,16 +13,22 @@ module Expando
       #   @return [String] The Dialogflow ID of this object.
       option :id, Expando::Types::Strict::String.optional, optional: true
 
-      # Generate an array of strings for each line in the file.
+      # Generate an array of strings for each source line in the file (comments
+      # are ignored).
       #
-      # @return [Array<String>] An array of all of the lines in the file.
+      # @return [Array<String>]
+      #   An array of all of the lines in the file.
       def lines
-        File.read(@source_path).lines.collect{ |line| line.chomp }.reject{ |line| line.strip.empty? }
+        File.read(@source_path)
+          .lines
+          .collect{ |line| line.chomp }
+          .reject{ |line| line.strip.empty? || line.match(Tokens::COMMENT_MATCHER) }
       end
 
       # Generate the name of the intent based on the name of its associated source file.
       #
-      # @return [String] The name of this intent.
+      # @return [String]
+      #   The name of this intent.
       def object_name
         @name ||= File.split(@source_path).last.gsub('.txt', '')
       end
