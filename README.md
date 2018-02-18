@@ -23,28 +23,28 @@
   </a>
 </p>
 
-Expando is a translation language for easily defining user utterance examples when building conversational interfaces for Natural Language Understanding services like [API.AI](https://api.ai), [LUIS](https://www.luis.ai/), or the [Alexa Skills Kit](https://developer.amazon.com/alexa). This is roughly analagous to the concept of building grammars for speech recognition systems. 
+Expando is a translation language for easily defining user utterance examples when building conversational interfaces for Natural Language Understanding services like [Dialogflow](https://Dialogflow), [LUIS](https://www.luis.ai/), or the [Alexa Skills Kit](https://developer.amazon.com/alexa). This is roughly analagous to the concept of building grammars for speech recognition systems.
 
 ## Table of Contents
 
 * [What's all this, then?](#whats-all-this-then)
 * [Installation](#installation)
 * [Getting started](#getting-started)
-  * [Configure API.AI integration](#configure-apiai-integration)
+  * [Configure Dialogflow integration](#configure-apiai-integration)
   * [Set up continuous integration](#set-up-continuous-integration)
   * [Create intent and entity files](#create-intent-and-entity-files)
 * [Syntax](#syntax)
   * [Phrase combination](#phrase-combination)
   * [Optional phrases](#optional-phrases)
-  * [Referencing API.ai developer entities](#referencing-apiai-developer-entities)
-  * [Referencing API.ai system entities](#referencing-apiai-system-entities)
-  * [Adding API.ai text responses](#adding-apiai-text-responses)
+  * [Referencing Dialogflow developer entities](#referencing-apiai-developer-entities)
+  * [Referencing Dialogflow system entities](#referencing-apiai-system-entities)
+  * [Adding Dialogflow text responses](#adding-apiai-text-responses)
   * [Comments](#comments)
   * [Metadata](#metadata)
-* [Updating API.AI](#updating-apiai)
+* [Updating Dialogflow](#updating-apiai)
 * [Documentation](#documentation)
 * [Credits](#credits)
-      
+
 ## What's all this, then?
 
 The following line of Expando:
@@ -69,7 +69,7 @@ This encoding makes it much easier to manage multiple user utterance examples wh
 Using Expando, you can:
 
 * House your intents and entities in version control, simplifying collaboration.
-* Use the CLI to automatically update your intents and entities (only supports API.AI, at the moment).
+* Use the CLI to automatically update your intents and entities (only supports Dialogflow, at the moment).
 * Make use of the expansion syntax to dramatically simplify the encoding of utterance examples.
 
 ## Installation
@@ -96,25 +96,25 @@ $ expando init
 
 This will create `intents` and `entities` directories, for housing the utterance examples themselves, as well as some configuration files.
 
-### Configure API.AI integration
+### Configure Dialogflow integration
 
-If you'll be using Expando to update the intents and entities of an existing API.AI agent, you'll need to copy the client access token and developer access token for the agent to `.expando.rc.yaml`:
+If you'll be using Expando to update the intents and entities of an existing Dialogflow agent, you'll need to copy the client access token and developer access token for the agent to `.expando.rc.yaml`:
 
 ```yaml
-# API.AI credentials - add the credentials for your agent below
+# Dialogflow credentials - add the credentials for your agent below
 :client_access_token: REPLACE_WITH_TOKEN
 :developer_access_token: REPLACE_WITH_TOKEN
 ```
 
 ### Set up continuous integration
 
-The `circle.yaml` file can be used to configure [CircleCI](https://circleci.com/) to enable automatically updating an API.AI agent when commits are pushed to your Expando project's repo.
+The `circle.yaml` file can be used to configure [CircleCI](https://circleci.com/) to enable automatically updating an Dialogflow agent when commits are pushed to your Expando project's repo.
 
 ### Create intent and entity files
 
-Let's assume we have an agent on API.AI named `support-bot`. If we want to use the Expando syntax for one of this agent's intents named `openHours`, we'd create a file in the `intents` directory named `openHours.txt`.
+Let's assume we have an agent on Dialogflow named `support-bot`. If we want to use the Expando syntax for one of this agent's intents named `openHours`, we'd create a file in the `intents` directory named `openHours.txt`.
 
-It's also possible to create expandable entity examples in the same manner. A file named `entities/products.txt` would match to a `products` entity on API.AI.
+It's also possible to create expandable entity examples in the same manner. A file named `entities/products.txt` would match to a `products` entity on Dialogflow.
 
 ## Syntax
 
@@ -181,22 +181,22 @@ what are your hours
 
 Essentially, you're making the last phrase in the set an empty string.
 
-### Referencing API.ai developer entities
+### Referencing Dialogflow developer entities
 
-If you had the following [API.ai developer entity](https://docs.api.ai/docs/concept-entities#section-developer-entities) `location` in a file `location.txt`:
+If you had the following [Dialogflow developer entity](https://docs.Dialogflow/docs/concept-entities#section-developer-entities) `location` in a file `location.txt`:
 
 ```
 home, house
 office, business, work
 ```
 
-...you could reference that entity using the API.ai [template mode](https://docs.api.ai/docs/concept-intents#section-example-and-template-modes) syntax in an intent `getTemp.txt`:
+...you could reference that entity using the Dialogflow [template mode](https://docs.Dialogflow/docs/concept-intents#section-example-and-template-modes) syntax in an intent `getTemp.txt`:
 
 ```
 (what is|tell me) the temperature at @location:locationName
 ```
 
-Expando will mimic [API.ai's automatic annotation](https://docs.api.ai/docs/concept-intents#section-automatic-annotation) when you run `expando update intents` and automatically convert the utterances to [template mode](https://docs.api.ai/docs/concept-intents#section-example-and-template-modes) syntax by inserting randomly selected canonical entity values for each referenced entity:
+Expando will mimic [Dialogflow's automatic annotation](https://docs.Dialogflow/docs/concept-intents#section-automatic-annotation) when you run `expando update intents` and automatically convert the utterances to [template mode](https://docs.Dialogflow/docs/concept-intents#section-example-and-template-modes) syntax by inserting randomly selected canonical entity values for each referenced entity:
 
 ```
 what is the temperature at home
@@ -209,17 +209,17 @@ Expando will also automatically annotate the above utterances:
 what is the temperature at home
                            ‾‾‾‾
                            @location:locationName => entity:    location
-                                                     parameter: locationName 
+                                                     parameter: locationName
 ```
 
-If the message "what is the temperature at home" was received by the API.ai agent, it would recognize the following:
+If the message "what is the temperature at home" was received by the Dialogflow agent, it would recognize the following:
 
 * `intentName`: `getTemp`
 * `locationName`: `home`
 
-### Referencing API.ai system entities
+### Referencing Dialogflow system entities
 
-You can reference [API.ai system entities](https://docs.api.ai/docs/concept-entities#section-system-entities) within Expando just as you would any other entity:
+You can reference [Dialogflow system entities](https://docs.Dialogflow/docs/concept-entities#section-system-entities) within Expando just as you would any other entity:
 
 ```
 I need a ride at @sys.time:pickupTime
@@ -234,9 +234,9 @@ I need a ride at 2pm
                                          parameter: pickupTime
 ```                                                                                  
 
-### Adding API.ai text responses
+### Adding Dialogflow text responses
 
-Expando supports adding [API.ai text responses](https://docs.api.ai/docs/concept-intents#section-text-responses) to your intents. In the `responses` directory of your project, create a file with the same name as an existing intent, with one response per line (up to a maximum of 10):
+Expando supports adding [Dialogflow text responses](https://docs.Dialogflow/docs/concept-intents#section-text-responses) to your intents. In the `responses` directory of your project, create a file with the same name as an existing intent, with one response per line (up to a maximum of 10):
 
 `responses/canIReturn.txt`:
 
@@ -245,10 +245,10 @@ Definitely! We'll gladly help with your return.
 Sure thing! I can help you with that.
 ```
 
-Upon running `expando update intent canIReturn` to update the intent, these text responses will be added to the API.ai agent for the intent.
+Upon running `expando update intent canIReturn` to update the intent, these text responses will be added to the Dialogflow agent for the intent.
 
-All relevant Expando syntax is supported in these files (i.e. everything except [entity referencing](#referencing-apiai-developer-entities). 
-            
+All relevant Expando syntax is supported in these files (i.e. everything except [entity referencing](#referencing-apiai-developer-entities).
+
 ### Comments
 
 Starting a line with a `#` indicates that it is a comment, and should be ignored. The following Expando:
@@ -283,9 +283,9 @@ You can then list this metadata with the command `expando list intents`:
 
 ![metadata example](https://cloud.githubusercontent.com/assets/2220/24306516/dfb6bf7c-108e-11e7-8b19-cfb7b17b7526.png)
 
-## Updating API.AI
+## Updating Dialogflow
 
-In order to update intents or entities on API.AI, use the following commands:
+In order to update intents or entities on Dialogflow, use the following commands:
 
 ```console
 $ expando update intents
