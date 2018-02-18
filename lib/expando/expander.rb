@@ -20,7 +20,7 @@ module Expando
     #
     # @param [Array<String>] lines The text to scan and expand.
     # @return [Array<String>] The expanded text.
-    def expand!( lines )
+    def expand!(lines)
       expanded_lines = []
 
       # Ignore any commented lines
