@@ -1,6 +1,6 @@
 require 'dry-initializer'
 require 'dry-types'
-require 'api-ai-ruby'
+require 'voxable-api-ai-ruby'
 require 'colorize'
 require 'awesome_print'
 
